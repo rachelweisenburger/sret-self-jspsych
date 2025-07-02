@@ -1,9 +1,32 @@
+// --- LOAD MODULES
 var express = require('express');
+
+// --- App
 var app = express();
+
+// --- Static website directories
+app.use(express.static(__dirname + ''));
+app.use('/jsPsych', express.static(__dirname + "/jsPsych"));
+app.set('views', __dirname + '');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
+// --- ROUTING
 app.get('/', function(request, response) {
-    response.send('Hello, Express!');
+    response.render('sret.html');
 });
-var server = app.listen(3000, function(){
-    console.log("Listening on port %d", server.address().port);
+
+app.get('/experiment', function(request, response) {
+    response.render('sret.html');
 });
-/Users/rlw3693/Documents/GitHub/sret-self-jspsych
+
+// --- Server
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
+var server = app.listen(port, function(){
+    console.log('Listening on port %d', server.address().port);
+});
+
