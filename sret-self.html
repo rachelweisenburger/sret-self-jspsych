@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<!--
+  This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) has been
+  programmed by the Bard College Affective Science Lab (Bard College),
+  https://affectlab.bard.edu under the supervision of Prof. Justin Dainer-Best.
+  It may be freely used under the Creative Commons Attribution-NonCommercial 4.0 license
+  (CC BY-NC 4.0), https://creativecommons.org/licenses/by-nc/4.0/ - you are free
+  to share and adapt this material for non-commercial purposes, giving appropriate credit.
+
+  The most recent version was updated in 2025-04-25 to run with jspsych v8.
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+    const jsPsych = initJsPsych();
+
+    const hello_trial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: 'Hello world!'
+    }
+
+    jsPsych.run([hello_trial]);
+  </script>
+</html>
