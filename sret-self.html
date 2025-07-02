@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 
 <!--
-  This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) has been
-  programmed by the Bard College Affective Science Lab (Bard College),
-  https://affectlab.bard.edu under the supervision of Prof. Justin Dainer-Best.
-  It may be freely used under the Creative Commons Attribution-NonCommercial 4.0 license
-  (CC BY-NC 4.0), https://creativecommons.org/licenses/by-nc/4.0/ - you are free
-  to share and adapt this material for non-commercial purposes, giving appropriate credit.
-
-  The most recent version was updated in 2025-04-25 to run with jspsych v8.
+  This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu.
 -->
 
 <!DOCTYPE html>
@@ -21,13 +14,25 @@
   </head>
   <body></body>
   <script>
-    const jsPsych = initJsPsych();
+    const jsPsych = initJsPsych({
+      on_finish: function(data) {
+        var documentcontent = "<p>The experiment is over! The session was " + data.trials[1].session +
+          " and the user ID was " + data.trials[1].ppt +
+          ". Here is all the data: </p><br />" + JSON.stringify(data);
+        document.write(documentcontent);
+      }
+    });
 
-    const hello_trial = {
+    // You can now define your timeline and start the experiment:
+    const timeline = [];
+
+    // Example trial
+    timeline.push({
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: 'Hello world!'
-    }
+      stimulus: 'Press any key to continue.'
+    });
 
-    jsPsych.run([hello_trial]);
+    jsPsych.run(timeline);
   </script>
 </html>
+
