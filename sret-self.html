@@ -7,9 +7,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My experiment</title>
+    <title>sret-self</title>
     <script src="jspsych/jspsych.js"></script>
-    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-browser-check.js"></script>
+    <script src="jspsych/plugin-html-button-response.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
   </head>
   <body></body>
@@ -28,8 +29,9 @@
 
     // Example trial
     timeline.push({
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: 'Press any key to continue.'
+      type: jsPsychHtmlButtonResponse,
+      stimulus: 'Click a button to continue.',
+      choices: ['Continue']  // You can change the button text
     });
 
     jsPsych.run(timeline);
