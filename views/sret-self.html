@@ -39,21 +39,17 @@ const jsPsych = initJsPsych({
     var finalurl = data.trials[1].rc; // redcap_url;
     if (finalurl) {
       /*
-      //finalurl = 'https://sret-lag.herokuapp.com/?' // just start it over if they don't have the URL
+      //finalurl = 'https://https://sret-self-4774526bcb1e.herokuapp.com/?' // just start it over if they don't have the URL
     } else {*/
       finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&' // s= for survey string; code= for access code
     }
     // create a confirmation code to send
     /*var confirmation_code = '';
     switch(session) {
-      case "s1": confirmation_code = 'b5wiNTT5pp'; break;
-      case "s2": confirmation_code = 'qrso6FWM0u'; break;
-      case "s3": confirmation_code = 'XKFAqwTQhz'; break;
-      case "s4": confirmation_code = 'NAeVQD00m8'; break;
-      case "s5": confirmation_code = 'xDAthKWC4Y'; break;
-      case "s6": confirmation_code = 'TqYzHjKW0e'; break;
-      case "s7": confirmation_code = 'iKvvLJV5Zj'; break;
-      case "s8": confirmation_code = 'cPID9ErGBa'; break;
+      case "w0": confirmation_code = 'b5wiNTT5pp'; break;
+      case "w2": confirmation_code = 'qrso6FWM0u'; break;
+      case "w4": confirmation_code = 'XKFAqwTQhz'; break;
+      case "w6": confirmation_code = 'NAeVQD00m8'; break;
       default: confirmation_code = 'none_provided';
     }*/
     //console.log("Posting data for ID " + ppt + " and session " + session);
@@ -110,23 +106,6 @@ jsPsych.data.addProperties({
 const checkMobile = {
   type: jsPsychBrowserCheck,
   features: ["mobile", "browser"],
-  /*on_finish: function(data) {
-    var ff = jsPsych.getCurrentTimelineNodeID();
-    console.log(ff)
-  }*/
-  // Include the below to EXCLUDE folks not on mobile phones; instead we'll simply track it
-  /*
-  inclusion_function: (data) => {
-    return data.mobile === true
-  },
-  exclusion_message: (data) => {
-    if(! data.mobile){
-      return `<div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%; font-size: 2em;">
-        <p>Please participate on a mobile device. If you are on a desktop or laptop, please come back on your phone.</p>
-        </div>
-      `;
-    }
-  },*/
 };
 
 //timeline.push(checkMobile);
@@ -166,22 +145,6 @@ var if_mobile = {
 }
 
 timeline.push(checkMobile, if_mobile);
-
-/* CONSENT
-const consent = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus: `
-    <div id="consent" style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
-    <p>Do you consent to participate?</p>
-    </div>
-    `,
-    choices: ['I agree to take part in this study.'],
-    button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2em;">${choice}</button>`},
-    margin_vertical: '50px',
-};
-
-timeline.push(consent);
-*/
 
 /* stimuli */
 
