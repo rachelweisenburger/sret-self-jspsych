@@ -4,55 +4,433 @@
   This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu.
 -->
 
-<!DOCTYPE html>
 <html>
   <head>
-    <title>sret-self</title>
+    <title>Task</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+           integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+           crossorigin="anonymous"></script>
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugin-browser-check.js"></script>
     <script src="jspsych/plugin-html-button-response.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#dddddd">
   </head>
   <body></body>
-  <script>
-      const jsPsych = initJsPsych({
-        use_webaudio: false,
-        on_finish: function(data) {
-          var ppt = data.trials[1].ppt;
-          var session = data.trials[1].session;
-          console.log("Posting data for ID " + ppt + " and session " + session);
-          $.ajax({
-            type: "POST",
-            url: "/experiment-data",
-            data: JSON.stringify(data),
-            contentType: "application/json"
-          })
-          .done(function() {
-            console.log("hi!")
-            var newurlgo = `http://localhost:3000/?sonaID=${ppt}&session=${session}`
-            window.location.href = newurlgo;
-            console.log("Success posting and user redirected");
-          })
-          .fail(function() {
-            console.log("fail!")
-            console.log("A problem occurred while writing to the database. User redirected.")
-            var newurlgo = `http://localhost:3000/?sonaID=${ppt}&session=${session}`
-            window.location.href = newurlgo;
-          })
+
+<script>
+// data.trials[1].session ==> the session
+// data.trials[1].ppt ==> the participant ID -- the [1] just grabs it from the second trial
+const jsPsych = initJsPsych({
+  use_webaudio: false,
+  /*on_interaction_data_update: function(data) {
+    console.log('{"id": "' + urlvar.sret_id + '", "interaction: "' + JSON.stringify(data) + '}');
+    //jsPsych.data.addProperties({interaction: JSON.stringify(data)})
+  },*/
+  on_finish: function(data) {
+    var ppt = data.trials[1].ppt;
+    var session = data.trials[1].session;
+    var finalurl = data.trials[1].rc; // redcap_url;
+    if (finalurl) {
+      /*
+      //finalurl = 'https://sret-lag.herokuapp.com/?' // just start it over if they don't have the URL
+    } else {*/
+      finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&' // s= for survey string; code= for access code
+    }
+    // create a confirmation code to send
+    /*var confirmation_code = '';
+    switch(session) {
+      case "s1": confirmation_code = 'b5wiNTT5pp'; break;
+      case "s2": confirmation_code = 'qrso6FWM0u'; break;
+      case "s3": confirmation_code = 'XKFAqwTQhz'; break;
+      case "s4": confirmation_code = 'NAeVQD00m8'; break;
+      case "s5": confirmation_code = 'xDAthKWC4Y'; break;
+      case "s6": confirmation_code = 'TqYzHjKW0e'; break;
+      case "s7": confirmation_code = 'iKvvLJV5Zj'; break;
+      case "s8": confirmation_code = 'cPID9ErGBa'; break;
+      default: confirmation_code = 'none_provided';
+    }*/
+    //console.log("Posting data for ID " + ppt + " and session " + session);
+    var newurlgo = `${finalurl}sret_id=${ppt}&sret_session=${session}` //`&sret_conf=${confirmation_code}`
+    //jsPsych.data.displayData('csv')
+    // var all_data = jsPsych.data.get();
+    // get csv representation of data and log to console
+    // console.log(all_data.csv());
+    // console.log({...data, ...jsPsych.data.getInteractionData()})
+    var jqxhr = $.post({
+      url: "/experiment-data",
+      data: JSON.stringify(data),
+      contentType: "application/json"
+    })
+    .done(function(data) {
+      //console.log("Succeed!")
+      if(finalurl) {
+        window.location.href = newurlgo;
+      } else {
+        // if they don't have an RC, tell them there's a problem
+        document.write('<!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;"><h1>Missing redirect</h1><p>This page cannot redirect you as expected. Please be sure that you followed the correct link. While your data has been recorded, you will not be redirected to finish data collection for today. You do not need to complete the task again, but may contact the researchers if you have questions.</p></div></body></html>')
+      }
+      //console.log("Success posting and user redirected");
+    })
+    .fail(function() {
+      //console.log("Fail!")
+      //console.log("A problem occurred while writing to the database. User redirected.")
+      window.location.href = newurlgo;
+    })
+  }
+});
+
+const timeline = []
+
+/* get URL variables */
+var urlvar = jsPsych.data.urlVariables();
+
+jsPsych.data.addProperties({
+  ppt: urlvar.sret_id,
+  session: urlvar.sret_session,
+  rc: urlvar.rc
+});
+
+// console.log("ID " + urlvar.sret_id + " at session " + urlvar.sret_session + " began the task.")
+
+// the URL is formatted as: https://redcap.prc.utexas.edu/redcap/surveys/?s=t5BVsbF5izKnIFYv
+// so we need to grab the "?s=" part
+//const fullurl = window.location.href;
+//const redcap_url = fullurl.substring(fullurl.indexOf('?s=') + 3);
+// console.log("url is " + redcap_url);
+
+
+/* check to confirm that they're on mobile */
+const checkMobile = {
+  type: jsPsychBrowserCheck,
+  features: ["mobile", "browser"],
+  /*on_finish: function(data) {
+    var ff = jsPsych.getCurrentTimelineNodeID();
+    console.log(ff)
+  }*/
+  // Include the below to EXCLUDE folks not on mobile phones; instead we'll simply track it
+  /*
+  inclusion_function: (data) => {
+    return data.mobile === true
+  },
+  exclusion_message: (data) => {
+    if(! data.mobile){
+      return `<div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%; font-size: 2em;">
+        <p>Please participate on a mobile device. If you are on a desktop or laptop, please come back on your phone.</p>
+        </div>
+      `;
+    }
+  },*/
+};
+
+//timeline.push(checkMobile);
+
+const notifyMobile = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%; font-size: 1em; line-height: 1.2em;">
+    <p>We recommend that you participate on a mobile device. If you are on a desktop or laptop, you may want to switch to your smartphone or tablet.</p>
+    <p>(You can right click and copy <a href="${window.location.href}">the URL</a> from this tab to your phone.)</p>
+    </div>
+    `,
+    choices: ['Continue'],
+    button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
+    margin_vertical: '50px',
+};
+
+var if_mobile = {
+    timeline: [notifyMobile],
+    conditional_function: function(){
+        // get the data from the previous trial,
+        // and check whether it's mobile or not
+        var data = jsPsych.data.get().last(1).values()[0];
+        // change CSS for fonts based if they're NOT on mobile:
+        if(!data.mobile) {
+          $('.jspsych-display-element').css('font-size', '1.5em')
+          $('.jspsych-display-element').css('line-height', '1.7em')
+          //dStyle.innerHTML = '.jspsych-display-element {font-family: "Open Sans", "Arial", sans-serif; font-size: 2.5em; line-height: 2em;}';
         }
-      });
+        return(!data.mobile)
+        /*if(data.mobile){
+          return false;
+        } else {
+          return true;
+        }*/
+    }
+}
 
-    // You can now define your timeline and start the experiment:
-    const timeline = [];
+timeline.push(checkMobile, if_mobile);
 
-    // Example trial
-    timeline.push({
-      type: jsPsychHtmlButtonResponse,
-      stimulus: 'Click a button to continue.',
-      choices: ['Continue']  // You can change the button text
-    });
+/* CONSENT
+const consent = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div id="consent" style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
+    <p>Do you consent to participate?</p>
+    </div>
+    `,
+    choices: ['I agree to take part in this study.'],
+    button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2em;">${choice}</button>`},
+    margin_vertical: '50px',
+};
 
-    jsPsych.run(timeline);
-  </script>
+timeline.push(consent);
+*/
+
+/* stimuli */
+
+/* practice trials */
+const practice_stimuli = [
+  {stimulus: "tall", word: 'practice', trialtype: 'practice', valence: 'null'},
+  {stimulus: "young", word: 'practice', trialtype: 'practice', valence: 'null'},
+  {stimulus: "awake", word: 'practice', trialtype: 'practice', valence: 'null'},
+  {stimulus: "sore", word: 'practice', trialtype: 'practice', valence: 'null'},
+  {stimulus: "cold", word: 'practice', trialtype: 'practice', valence: 'null'}
+];
+
+const base_sret_stimuli = [
+  {stimulus: 'successful', word: 'successful', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'terrific', word: 'terrific', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'funny', word: 'funny', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'intelligent', word: 'intelligent', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'amazing', word: 'amazing', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'entertaining', word: 'entertaining', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'fantastic', word: 'fantastic', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'wonderful', word: 'wonderful', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'beautiful', word: 'beautiful', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'happy', word: 'happy', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'great', word: 'great', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'loyal', word: 'loyal', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'cool', word: 'cool', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'joyful', word: 'joyful', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'knowledgeable', word: 'knowledgeable', trialtype: 'core', valence: 'positive'},
+  {stimulus: 'sad', word: 'sad', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'hostile', word: 'hostile', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'burdened', word: 'burdened', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'incompetent', word: 'incompetent', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'inconsiderate', word: 'inconsiderate', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'ashamed', word: 'ashamed', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'irresponsible', word: 'irresponsible', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'bored', word: 'bored', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'mad', word: 'mad', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'lonely', word: 'lonely', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'worried', word: 'worried', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'anguished', word: 'anguished', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'fearful', word: 'fearful', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'angry', word: 'angry', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'paying attention', word: 'paying attention', trialtype: 'attention', valence: 'NA'}
+]
+
+const w0_unique_stimuli = [
+  {stimulus: 'lovable', word: 'lovable', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'glad', word: 'glad', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'nice', word: 'nice', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'satisfied', word: 'satisfied', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'thoughtful', word: 'thoughtful', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'devoted', word: 'devoted', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'capable', word: 'capable', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'handsome', word: 'handsome', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'excellent', word: 'excellent', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'excited', word: 'excited', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'useful', word: 'useful', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'sexy', word: 'sexy', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'extraordinary', word: 'extraordinary', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'honest', word: 'honest', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'loved', word: 'loved', trialtype: 'novel1', valence: 'positive'},
+  {stimulus: 'dreadful', word: 'dreadful', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'disgusted', word: 'disgusted', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'horrible', word: 'horrible', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'lost', word: 'lost', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'annoyed', word: 'annoyed', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'afraid', word: 'afraid', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'heartbroken', word: 'heartbroken', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'weak', word: 'weak', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'brokenhearted', word: 'brokenhearted', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'scared', word: 'scared', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'useless', word: 'useless', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'troubled', word: 'troubled', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'disgraceful', word: 'disgraceful', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'rude', word: 'rude', trialtype: 'novel1', valence: 'negative'},
+  {stimulus: 'dishonorable', word: 'dishonorable', trialtype: 'novel1', valence: 'negative'}
+]
+
+const w2_unique_stimuli = [
+  {stimulus: 'carefree', word: 'carefree', trialtype: 'novel2', valence: 'positive'},
+  {stimulus: 'bad', word: 'bad', trialtype: 'novel2', valence: 'negative'},
+  {stimulus: 'pleased', word: 'pleased', trialtype: 'novel2', valence: 'positive'},
+  {stimulus: 'wretched', word: 'wretched', trialtype: 'novel2', valence: 'negative'},
+  {stimulus: 'lucky', word: 'lucky', trialtype: 'novel2', valence: 'positive'},
+  {stimulus: 'upset', word: 'upset', trialtype: 'novel2', valence: 'negative'},
+  {stimulus: 'exciting', word: 'exciting', trialtype: 'novel2', valence: 'positive'},
+  {stimulus: 'guilty', word: 'guilty', trialtype: 'novel2', valence: 'negative'},
+  {stimulus: 'gorgeous', word: 'gorgeous', trialtype: 'novel2', valence: 'positive'},
+  {stimulus: 'deceitful', word: 'deceitful', trialtype: 'novel2', valence: 'negative'},
+]
+
+const w4_unique_stimuli = [
+  {stimulus: 'cheerful', word: 'cheerful', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'friendly', word: 'friendly', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'compassionate', word: 'compassionate', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'kind', word: 'kind', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'surprised', word: 'surprised', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'depressed', word: 'depressed', trialtype: 'novel3', valence: 'negative'},
+  {stimulus: 'untrustworthy', word: 'untrustworthy', trialtype: 'novel3', valence: 'negative'},
+  {stimulus: 'morbid', word: 'morbid', trialtype: 'novel3', valence: 'negative'},
+  {stimulus: 'obnoxious', word: 'obnoxious', trialtype: 'novel3', valence: 'negative'},
+  {stimulus: 'brutal', word: 'brutal', trialtype: 'novel3', valence: 'negative'}
+]
+
+const w6_unique_stimuli = [
+  {stimulus: 'vigorous', word: 'vigorous', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'adorable', word: 'adorable', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'outstanding', word: 'outstanding', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'confident', word: 'confident', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'fun', word: 'fun', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'stupid', word: 'stupid', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'unattractive', word: 'unattractive', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'unwanted', word: 'unwanted', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'dumb', word: 'dumb', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'sorry', word: 'sorry', trialtype: 'novel4', valence: 'negative'}
+]
+
+
+switch(urlvar.sret_session) {
+  case "w0":
+    sret_stimuli = base_sret_stimuli.concat(s1_unique_stimuli);
+    break;
+  case "w2":
+    sret_stimuli = base_sret_stimuli.concat(s2_unique_stimuli);
+    break;
+  case "w4":
+    sret_stimuli = base_sret_stimuli.concat(s4_unique_stimuli);
+    break;
+  case "w6":
+    sret_stimuli = base_sret_stimuli.concat(s6_unique_stimuli);
+    break;
+  default:
+    sret_stimuli = base_sret_stimuli;
+}
+
+
+const instructions = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function() {
+    var stim = `<div style='width: 85%; margin: 0 auto;'>
+      <p>For this task, you will see a cross on the screen. Please
+      look at the cross when it appears. It will be followed by a
+      single word.</p>
+      <p> The words you will see could be used to describe
+      someone. When the word appears, you will have to decide whether you think
+      that word could be used to describe you.</p>
+      <p>If the word <strong>does</strong> describe you, tap on <strong>"yes"</strong>
+      as fast as you can.</p>
+      <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong>
+      as fast as you can.</p>`
+    if(urlvar.sret_session === "s1" || typeof urlvar.sret_session === "undefined") {
+        stim = stim + `<p>We will start with a few practice words.</p>`
+      }
+    stim = stim + '</div>'
+    return(stim)
+  },
+  choices: ['Next'],
+  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
+  post_trial_gap: 2000
+};
+
+timeline.push(instructions);
+
+var fixation = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<div style="font-size: 3em">+</div>',
+  choices: [],
+  trial_duration: function(){
+    return jsPsych.randomization.sampleWithoutReplacement([600, 700, 800, 900, 1000], 1)[0];
+  }
+};
+
+var sret = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function() {
+        var stim = '<div style="font-size: 3em;">'+jsPsych.evaluateTimelineVariable('stimulus')+'</div>';
+        return stim;
+    },
+  choices: ['yes', 'no'],
+  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`},
+  data: {
+    valence: jsPsych.timelineVariable('valence'),
+    trialtype: jsPsych.timelineVariable('trialtype'),
+    word: jsPsych.timelineVariable('word'),
+  },
+  on_finish: function(data){
+    data.endorse = data.response == 0;
+  }
+}
+
+var practice_procedure = {
+  timeline: [fixation, sret],
+  timeline_variables: practice_stimuli,
+  randomize_order: true
+}
+
+/* check in block */
+var check_in = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function() {
+    var trials = jsPsych.data.get().filter({trialtype: 'practice'});
+    var rt = Math.round(trials.select('rt').mean());
+    if (rt < 300) {
+      var speedcomment = "<p>It takes about half of a second to read a word. Please be sure to think about each word before responding.</p>"
+    } else if (rt > 2000) {
+      var speedcomment = "<p>After deciding on your answer, please respond quickly.</p>"
+    } else {
+      var speedcomment = "You're doing great!"
+    }
+    var rt = rt / 1000
+
+    return "<div style='width: 85%; margin: 0 auto;'><p>Your average response time was "+rt+" seconds.</p>"+
+      speedcomment+
+      "<p>After you read each word, "+
+      "quickly respond as to whether it describes you. </p></div>";
+  },
+  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
+  choices: ['Begin'],
+};
+
+if(urlvar.sret_session === "s1" || typeof urlvar.sret_session === "undefined") {
+  timeline.push(practice_procedure);
+  timeline.push(check_in);
+};
+
+const block_procedure = {
+  timeline: [fixation, sret],
+    timeline_variables: sret_stimuli,
+    randomize_order: true
+}
+
+timeline.push(block_procedure);
+
+const done = {
+  type: jsPsychHtmlButtonResponse,
+  choices: ['Continue'],
+  stimulus: `
+    <div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
+    <p>Thank you for completing this portion of the task.</p>
+    <p>Please click the "continue" button to be redirected to the next part of the study.</p>
+    </div>
+    `,
+  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
+  margin_vertical: '50px',
+}
+
+timeline.push(done);
+
+jsPsych.run(timeline);
+</script>
 </html>
-
