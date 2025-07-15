@@ -4,6 +4,8 @@ const express = require('express'),
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const { sequelize } = require('./models/');
 const config = require('./config/config.json');
+const favicon = require('serve-favicon');
+const path = require('path');
 
 // --- App
 var app = express();
@@ -14,6 +16,7 @@ app.use('/jsPsych', express.static(__dirname + "/jsPsych"));
 app.set('views', __dirname + '');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 // --- Body parser
 app.use(body_parser.json());
