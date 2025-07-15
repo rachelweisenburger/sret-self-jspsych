@@ -15,6 +15,10 @@ app.set('views', __dirname + '');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
+// --- Body parser
+app.use(body_parser.json());
+var urlencodedparser = body_parser.urlencoded({extended:true})
+
 // --- ROUTING
 app.get('/', function(request, response) {
     response.render('sret.html');
@@ -23,6 +27,12 @@ app.get('/', function(request, response) {
 app.get('/experiment', function(request, response) {
     response.render('sret.html');
 });
+
+// --- Tell the data where to go
+app.post('/experiment-data', urlencodedparser, function(request, response) {
+    console.log(request.body);
+    response.redirect('/');
+})
 
 // --- Server
 let port = process.env.PORT;
