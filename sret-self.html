@@ -15,14 +15,32 @@
   </head>
   <body></body>
   <script>
-    const jsPsych = initJsPsych({
-      on_finish: function(data) {
-        var documentcontent = "<p>The experiment is over! The session was " + data.trials[1].session +
-          " and the user ID was " + data.trials[1].ppt +
-          ". Here is all the data: </p><br />" + JSON.stringify(data);
-        document.write(documentcontent);
-      }
-    });
+      const jsPsych = initJsPsych({
+        use_webaudio: false,
+        on_finish: function(data) {
+          var ppt = data.trials[1].ppt;
+          var session = data.trials[1].session;
+          console.log("Posting data for ID " + ppt + " and session " + session);
+          $.ajax({
+            type: "POST",
+            url: "/experiment-data",
+            data: JSON.stringify(data),
+            contentType: "application/json"
+          })
+          .done(function() {
+            console.log("hi!")
+            var newurlgo = `http://localhost:3000/?sonaID=${ppt}&session=${session}`
+            window.location.href = newurlgo;
+            console.log("Success posting and user redirected");
+          })
+          .fail(function() {
+            console.log("fail!")
+            console.log("A problem occurred while writing to the database. User redirected.")
+            var newurlgo = `http://localhost:3000/?sonaID=${ppt}&session=${session}`
+            window.location.href = newurlgo;
+          })
+        }
+      });
 
     // You can now define your timeline and start the experiment:
     const timeline = [];
