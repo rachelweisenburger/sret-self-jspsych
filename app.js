@@ -13,7 +13,7 @@ var app = express();
 // --- Static website directories
 app.use(express.static(__dirname + ''));
 app.use('/jsPsych', express.static(__dirname + "/jsPsych"));
-app.set('views', __dirname); // __dirname is the current directory (root)
+app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
