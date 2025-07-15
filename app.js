@@ -1,5 +1,9 @@
 // --- LOAD MODULES
-var express = require('express');
+const express = require('express'),
+      body_parser = require('body-parser');
+const { Sequelize, Model, DataTypes } = require('sequelize');
+const { sequelize } = require('./models/');
+const config = require('./config/config.json');
 
 // --- App
 var app = express();
