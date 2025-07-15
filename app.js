@@ -33,9 +33,23 @@ app.get('/experiment', function(request, response) {
 
 // --- Tell the data where to go
 app.post('/experiment-data', urlencodedparser, function(request, response) {
-    console.log(request.body);
+    console.log('Made it to app.post!');
+    class Sret extends Model {}
+    Sret.init({
+      data: DataTypes.JSON
+    }, {
+      sequelize,
+      modelName: 'sret'
+    });
+    (async () => {
+      await sequelize.sync();
+      const data = await Sret.create({
+        data: request.body
+      });
+      console.log(data);
+})();
     response.redirect('/');
-})
+});
 
 // --- Server
 let port = process.env.PORT;
