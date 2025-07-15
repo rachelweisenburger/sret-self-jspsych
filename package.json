@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rachelweisenburger/sret-self-jspsych#readme",
   "dependencies": {
-    "ejs": "^3.1.10"
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
   }
 }
