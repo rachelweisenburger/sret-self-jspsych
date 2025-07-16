@@ -265,42 +265,39 @@ const w6_unique_stimuli = [
 
 switch(urlvar.sret_session) {
   case "w0":
-    sret_stimuli = base_sret_stimuli.concat(s1_unique_stimuli);
+    sret_stimuli = base_sret_stimuli.concat(w0_unique_stimuli);
     break;
   case "w2":
-    sret_stimuli = base_sret_stimuli.concat(s2_unique_stimuli);
+    sret_stimuli = base_sret_stimuli.concat(w2_unique_stimuli);
     break;
   case "w4":
-    sret_stimuli = base_sret_stimuli.concat(s4_unique_stimuli);
+    sret_stimuli = base_sret_stimuli.concat(w4_unique_stimuli);
     break;
   case "w6":
-    sret_stimuli = base_sret_stimuli.concat(s6_unique_stimuli);
+    sret_stimuli = base_sret_stimuli.concat(w6_unique_stimuli);
     break;
   default:
     sret_stimuli = base_sret_stimuli;
 }
 
+//Quality Control: Capitalize 12 Random Words
+const capitalizeRandomWords = (stimuli, n = 12) => {
+     // Make a deep copy so you don't mutate base_sret_stimuli
+     const cappedStimuli = JSON.parse(JSON.stringify(stimuli));
+     const indicesToCap = jsPsych.randomization.sampleWithoutReplacement([...Array(cappedStimuli.length).keys()], n);
+     cappedStimuli.forEach((stim, i) => {
+       if (indicesToCap.includes(i)) {
+         stim.stimulus = stim.stimulus.toUpperCase();
+         stim.capitalized = true;
+         stim.trialtype = 'capitalization-check';
+       } else {
+         stim.capitalized = false;
+       }
+     });
+     return cappedStimuli;
+   };
 
-// Randomly select 12 stimulus words to capitalize
-const capitalized_indices = jsPsych.randomization.sampleWithoutReplacement(
-  [...Array(sret_stimuli.length).keys()], 12
-);
-
-sret_stimuli = sret_stimuli.map((stim, i) => {
-  if (capitalized_indices.includes(i)) {
-    return {
-      ...stim,
-      stimulus_display: stim.stimulus.toUpperCase(), // for display
-      capitalized: true
-    };
-  } else {
-    return {
-      ...stim,
-      stimulus_display: stim.stimulus, // original case
-      capitalized: false
-    };
-  }
-});
+    sret_stimuli = capitalizeRandomWords(sret_stimuli);
     
 const instructions = {
   type: jsPsychHtmlButtonResponse,
@@ -341,23 +338,29 @@ var fixation = {
     var sret = {
       type: jsPsychHtmlButtonResponse,
       stimulus: function() {
-        var stim = '<div style="font-size: 3em;">' + jsPsych.evaluateTimelineVariable('stimulus_display') + '</div>';
+        var stim = '<p style="font-size:50px;">' + jsPsych.timelineVariable('stimulus') + '</p>';
         return stim;
+      },
+      prompt: function() {
+        const trialtype = jsPsych.timelineVariable('trialtype');
+        return trialtype === 'capitalization-check'
+          ? "<p>Is this word capitalized?</p>"
+          : "<p>Does this word describe you?</p>";
       },
       choices: ['yes', 'no'],
       button_html: (choice) => {
-        return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`;
+        return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 30px; margin-top: 50px;">${choice}</button>`;
       },
       data: {
         valence: jsPsych.timelineVariable('valence'),
         trialtype: jsPsych.timelineVariable('trialtype'),
         word: jsPsych.timelineVariable('word'),
-        capitalized: jsPsych.timelineVariable('capitalized') // ✅ added
+        capitalized: jsPsych.timelineVariable('capitalized'),
       },
       on_finish: function(data){
         data.endorse = data.response == 0;
       }
-    }
+    };
 
 
 var practice_procedure = {

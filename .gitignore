@@ -2,5 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
-node_modules/
-.DS_Store
+node_modules/.DS_Store
+
