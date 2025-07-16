@@ -282,6 +282,27 @@ switch(urlvar.sret_session) {
 }
 
 
+// Randomly select 12 stimulus words to capitalize
+const capitalized_indices = jsPsych.randomization.sampleWithoutReplacement(
+  [...Array(sret_stimuli.length).keys()], 12
+);
+
+sret_stimuli = sret_stimuli.map((stim, i) => {
+  if (capitalized_indices.includes(i)) {
+    return {
+      ...stim,
+      stimulus_display: stim.stimulus.toUpperCase(), // for display
+      capitalized: true
+    };
+  } else {
+    return {
+      ...stim,
+      stimulus_display: stim.stimulus, // original case
+      capitalized: false
+    };
+  }
+});
+    
 const instructions = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
@@ -296,7 +317,7 @@ const instructions = {
       as fast as you can.</p>
       <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong>
       as fast as you can.</p>`
-    if(urlvar.sret_session === "s1" || typeof urlvar.sret_session === "undefined") {
+    if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
         stim = stim + `<p>We will start with a few practice words.</p>`
       }
     stim = stim + '</div>'
@@ -318,23 +339,27 @@ var fixation = {
   }
 };
 
-var sret = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus: function() {
-        var stim = '<div style="font-size: 3em;">'+jsPsych.evaluateTimelineVariable('stimulus')+'</div>';
+    var sret = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: function() {
+        var stim = '<div style="font-size: 3em;">' + jsPsych.evaluateTimelineVariable('stimulus_display') + '</div>';
         return stim;
-    },
-  choices: ['yes', 'no'],
-  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`},
-  data: {
-    valence: jsPsych.timelineVariable('valence'),
-    trialtype: jsPsych.timelineVariable('trialtype'),
-    word: jsPsych.timelineVariable('word'),
-  },
-  on_finish: function(data){
-    data.endorse = data.response == 0;
-  }
-}
+      },
+      choices: ['yes', 'no'],
+      button_html: (choice) => {
+        return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`;
+      },
+      data: {
+        valence: jsPsych.timelineVariable('valence'),
+        trialtype: jsPsych.timelineVariable('trialtype'),
+        word: jsPsych.timelineVariable('word'),
+        capitalized: jsPsych.timelineVariable('capitalized') // ✅ added
+      },
+      on_finish: function(data){
+        data.endorse = data.response == 0;
+      }
+    }
+
 
 var practice_procedure = {
   timeline: [fixation, sret],
@@ -366,7 +391,7 @@ var check_in = {
   choices: ['Begin'],
 };
 
-if(urlvar.sret_session === "s1" || typeof urlvar.sret_session === "undefined") {
+if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
   timeline.push(practice_procedure);
   timeline.push(check_in);
 };
