@@ -11,7 +11,7 @@ const path = require('path');
 var app = express();
 
 // --- Static website directories
-app.use(express.static(__dirname + ''));
+app.use(express.static('views'));
 app.use('/jsPsych', express.static(__dirname + "/jsPsych"));
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
@@ -23,8 +23,10 @@ app.use(body_parser.json());
 var urlencodedparser = body_parser.urlencoded({extended:true})
 
 // --- ROUTING
+const path = require('path');
+
 app.get('/', function(request, response) {
-    response.render('sret-self.html');
+    response.sendFile(path.join(__dirname, 'vies', 'sret-self.html'));
 });
 
 app.get('/experiment', function(request, response) {
