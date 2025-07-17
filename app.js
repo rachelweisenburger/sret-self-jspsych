@@ -24,7 +24,7 @@ var urlencodedparser = body_parser.urlencoded({extended:true})
 
 // --- ROUTING
 app.get('/', function(request, response) {
-    response.sendFile(path.join(__dirname, 'vies', 'sret-self.html'));
+    response.sendFile(path.join(__dirname, 'views', 'sret-self.html'));
 });
 
 app.get('/experiment', function(request, response) {
