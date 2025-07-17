@@ -23,8 +23,6 @@ app.use(body_parser.json());
 var urlencodedparser = body_parser.urlencoded({extended:true})
 
 // --- ROUTING
-const path = require('path');
-
 app.get('/', function(request, response) {
     response.sendFile(path.join(__dirname, 'vies', 'sret-self.html'));
 });
