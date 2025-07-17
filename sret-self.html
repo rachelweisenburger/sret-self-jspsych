@@ -146,6 +146,22 @@ var if_mobile = {
 
 timeline.push(checkMobile, if_mobile);
 
+/* CONSENT
+const consent = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div id="consent" style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
+    <p>Do you consent to participate?</p>
+    </div>
+    `,
+    choices: ['I agree to take part in this study.'],
+    button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2em;">${choice}</button>`},
+    margin_vertical: '50px',
+};
+
+timeline.push(consent);
+*/
+
 /* stimuli */
 
 /* practice trials */
@@ -187,10 +203,11 @@ const base_sret_stimuli = [
   {stimulus: 'anguished', word: 'anguished', trialtype: 'core', valence: 'negative'},
   {stimulus: 'fearful', word: 'fearful', trialtype: 'core', valence: 'negative'},
   {stimulus: 'angry', word: 'angry', trialtype: 'core', valence: 'negative'},
-  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'core', valence: 'negative'}
+  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'core', valence: 'negative'},
+  {stimulus: 'paying attention', word: 'paying attention', trialtype: 'attention', valence: 'NA'}
 ]
 
-const w0_unique_stimuli = [
+const s1_unique_stimuli = [
   {stimulus: 'lovable', word: 'lovable', trialtype: 'novel1', valence: 'positive'},
   {stimulus: 'glad', word: 'glad', trialtype: 'novel1', valence: 'positive'},
   {stimulus: 'nice', word: 'nice', trialtype: 'novel1', valence: 'positive'},
@@ -223,7 +240,7 @@ const w0_unique_stimuli = [
   {stimulus: 'dishonorable', word: 'dishonorable', trialtype: 'novel1', valence: 'negative'}
 ]
 
-const w2_unique_stimuli = [
+const s2_unique_stimuli = [
   {stimulus: 'carefree', word: 'carefree', trialtype: 'novel2', valence: 'positive'},
   {stimulus: 'bad', word: 'bad', trialtype: 'novel2', valence: 'negative'},
   {stimulus: 'pleased', word: 'pleased', trialtype: 'novel2', valence: 'positive'},
@@ -236,7 +253,7 @@ const w2_unique_stimuli = [
   {stimulus: 'deceitful', word: 'deceitful', trialtype: 'novel2', valence: 'negative'},
 ]
 
-const w4_unique_stimuli = [
+const s3_unique_stimuli = [
   {stimulus: 'cheerful', word: 'cheerful', trialtype: 'novel3', valence: 'positive'},
   {stimulus: 'friendly', word: 'friendly', trialtype: 'novel3', valence: 'positive'},
   {stimulus: 'compassionate', word: 'compassionate', trialtype: 'novel3', valence: 'positive'},
@@ -249,7 +266,7 @@ const w4_unique_stimuli = [
   {stimulus: 'brutal', word: 'brutal', trialtype: 'novel3', valence: 'negative'}
 ]
 
-const w6_unique_stimuli = [
+const s4_unique_stimuli = [
   {stimulus: 'vigorous', word: 'vigorous', trialtype: 'novel4', valence: 'positive'},
   {stimulus: 'adorable', word: 'adorable', trialtype: 'novel4', valence: 'positive'},
   {stimulus: 'outstanding', word: 'outstanding', trialtype: 'novel4', valence: 'positive'},
@@ -262,60 +279,104 @@ const w6_unique_stimuli = [
   {stimulus: 'sorry', word: 'sorry', trialtype: 'novel4', valence: 'negative'}
 ]
 
+const s5_unique_stimuli = [
+  {stimulus: 'playful', word: 'playful', trialtype: 'novel5', valence: 'positive'},
+  {stimulus: 'hopeful', word: 'hopeful', trialtype: 'novel5', valence: 'positive'},
+  {stimulus: 'content', word: 'content', trialtype: 'novel5', valence: 'positive'},
+  {stimulus: 'masterful', word: 'masterful', trialtype: 'novel5', valence: 'positive'},
+  {stimulus: 'gentle', word: 'gentle', trialtype: 'novel5', valence: 'positive'},
+  {stimulus: 'ungrateful', word: 'ungrateful', trialtype: 'novel5', valence: 'negative'},
+  {stimulus: 'rejected', word: 'rejected', trialtype: 'novel5', valence: 'negative'},
+  {stimulus: 'unloved', word: 'unloved', trialtype: 'novel5', valence: 'negative'},
+  {stimulus: 'hopeless', word: 'hopeless', trialtype: 'novel5', valence: 'negative'},
+  {stimulus: 'unappreciated', word: 'unappreciated', trialtype: 'novel5', valence: 'negative'}
+]
+
+const s6_unique_stimuli = [
+  {stimulus: 'talented', word: 'talented', trialtype: 'novel6', valence: 'positive'},
+  {stimulus: 'brilliant', word: 'brilliant', trialtype: 'novel6', valence: 'positive'},
+  {stimulus: 'good', word: 'good', trialtype: 'novel6', valence: 'positive'},
+  {stimulus: 'best', word: 'best', trialtype: 'novel6', valence: 'positive'},
+  {stimulus: 'bright', word: 'bright', trialtype: 'novel6', valence: 'positive'},
+  {stimulus: 'shamed', word: 'shamed', trialtype: 'novel6', valence: 'negative'},
+  {stimulus: 'nasty', word: 'nasty', trialtype: 'novel6', valence: 'negative'},
+  {stimulus: 'inadequate', word: 'inadequate', trialtype: 'novel6', valence: 'negative'},
+  {stimulus: 'helpless', word: 'helpless', trialtype: 'novel6', valence: 'negative'},
+  {stimulus: 'displeased', word: 'displeased', trialtype: 'novel6', valence: 'negative'}
+]
+
 
 switch(urlvar.sret_session) {
-  case "w0":
-    sret_stimuli = base_sret_stimuli.concat(w0_unique_stimuli);
+  case "s1":
+    sret_stimuli = base_sret_stimuli.concat(s1_unique_stimuli);
     break;
-  case "w2":
-    sret_stimuli = base_sret_stimuli.concat(w2_unique_stimuli);
+  case "s2":
+    sret_stimuli = base_sret_stimuli.concat(s2_unique_stimuli);
     break;
-  case "w4":
-    sret_stimuli = base_sret_stimuli.concat(w4_unique_stimuli);
+  case "s3":
+    sret_stimuli = base_sret_stimuli.concat(s3_unique_stimuli);
     break;
-  case "w6":
-    sret_stimuli = base_sret_stimuli.concat(w6_unique_stimuli);
+  case "s4":
+    sret_stimuli = base_sret_stimuli.concat(s4_unique_stimuli);
     break;
+  case "s5":
+    sret_stimuli = base_sret_stimuli.concat(s5_unique_stimuli);
+    break;
+  case "s6":
+    sret_stimuli = base_sret_stimuli.concat(s6_unique_stimuli);
+    break;
+  case "s7":
+    sret_stimuli = base_sret_stimuli.concat(s1_unique_stimuli);
+    break;
+  /*case "s8":
+    sret_stimuli = base_sret_stimuli.concat(s8_unique_stimuli);
+    break;*/
   default:
     sret_stimuli = base_sret_stimuli;
 }
 
-//Quality Control: Capitalize 12 Random Words
-const capitalizeRandomWords = (stimuli, n = 12) => {
-  // Make a deep copy so you don't mutate base_sret_stimuli
-  const cappedStimuli = JSON.parse(JSON.stringify(stimuli));
-  const indicesToCap = jsPsych.randomization.sampleWithoutReplacement([...Array(cappedStimuli.length).keys()], n);
-  cappedStimuli.forEach((stim, i) => {
-    console.log(`Index ${i} BEFORE capitalization: stimulus =`, stim.stimulus, `Type: ${typeof stim.stimulus}`);
-    if (indicesToCap.includes(i)) {
-      if (typeof stim.stimulus === 'string') {
-        stim.stimulus = stim.stimulus.toUpperCase();
-      } else {
-        console.error(`Index ${i} stimulus is NOT a string!`, stim.stimulus);
-      }
-      stim.capitalized = true;
-      stim.trialtype = 'capitalization-check';
-      console.log(`Index ${i} AFTER capitalization: stimulus =`, stim.stimulus);
-    } else {
-      stim.capitalized = false;
-    }
-  });
-  return cappedStimuli;
-};
+//Quality control: randomly capitalize 12 stimulus words
+const numToCapitalize = 12;
+const length = sret_stimuli.length;
 
-sret_stimuli = capitalizeRandomWords(sret_stimuli);
+let capitalizeIndices = new Set();
 
-// In your trial definition, add a console log inside the stimulus function:
-var sret = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus: function() {
-    var stim = jsPsych.timelineVariable('stimulus', true);
-    console.log('Trial stimulus:', stim, `Type: ${typeof stim}`);
-    return `<p style="font-size:50px;">${stim}</p>`;
-  },
-  // ... rest of trial config unchanged
-};
+function isAdjacent(index, indicesSet) {
+  return indicesSet.has(index - 1) || indicesSet.has(index + 1);
+}
+
+// Exclude first two words (indices 0 and 1)
+const allIndices = [...Array(length).keys()].filter(i => i !== 0 && i !== 1);
+
+// Shuffle
+for (let i = allIndices.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [allIndices[i], allIndices[j]] = [allIndices[j], allIndices[i]];
+}
+
+for (let idx of allIndices) {
+  if (capitalizeIndices.size >= numToCapitalize) break;
+
+  if (!isAdjacent(idx, capitalizeIndices)) {
+    capitalizeIndices.add(idx);
+  }
+}
+
+sret_stimuli = sret_stimuli.map((item, index) => {
+  if (capitalizeIndices.has(index)) {
+    return {
+      ...item,
+      stimulus: item.stimulus.toUpperCase(),
+      word: item.word.toUpperCase()
+    };
+  } else {
+    return item;
+  }
+});
+
+
     
+
 const instructions = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
@@ -330,7 +391,7 @@ const instructions = {
       as fast as you can.</p>
       <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong>
       as fast as you can.</p>`
-    if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
+    if(urlvar.sret_session === "s1" || typeof urlvar.sret_session === "undefined") {
         stim = stim + `<p>We will start with a few practice words.</p>`
       }
     stim = stim + '</div>'
@@ -352,35 +413,23 @@ var fixation = {
   }
 };
 
-    var sret = {
-      type: jsPsychHtmlButtonResponse,
-      stimulus: function() {
-        var stim = jsPsych.timelineVariable('stimulus', true);
-        return `<p style="font-size:50px;">${stim}</p>`;
-      },
-      prompt: function() {
-        var trialtype = jsPsych.timelineVariable('trialtype', true);
-        return trialtype === 'capitalization-check'
-          ? "<p>Is this word capitalized?</p>"
-          : "<p>Does this word describe you?</p>";
-      },
-      choices: ['yes', 'no'],
-      button_html: (choice) => {
-        return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 30px; margin-top: 50px;">${choice}</button>`;
-      },
-      data: function() {
-        return {
-          valence: jsPsych.timelineVariable('valence', true),
-          trialtype: jsPsych.timelineVariable('trialtype', true),
-          word: jsPsych.timelineVariable('word', true),
-          capitalized: jsPsych.timelineVariable('capitalized', true)
-        };
-      },
-      on_finish: function(data){
-        data.endorse = data.response == 0;
-      }
-    };
-
+var sret = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function() {
+        var stim = '<div style="font-size: 3em;">'+jsPsych.evaluateTimelineVariable('stimulus')+'</div>';
+        return stim;
+    },
+  choices: ['yes', 'no'],
+  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`},
+  data: {
+    valence: jsPsych.timelineVariable('valence'),
+    trialtype: jsPsych.timelineVariable('trialtype'),
+    word: jsPsych.timelineVariable('word'),
+  },
+  on_finish: function(data){
+    data.endorse = data.response == 0;
+  }
+}
 
 var practice_procedure = {
   timeline: [fixation, sret],
@@ -412,7 +461,7 @@ var check_in = {
   choices: ['Begin'],
 };
 
-if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
+if(urlvar.sret_session === "s1" || typeof urlvar.sret_session === "undefined") {
   timeline.push(practice_procedure);
   timeline.push(check_in);
 };
