@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!--
-  This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu.
+  This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu. Incorporates a quality control trial based on Hitchcock et al., 2023 (doi.org/10.3758/s13415-022-01033-9)
 -->
 
 <html>
@@ -146,22 +146,6 @@ var if_mobile = {
 
 timeline.push(checkMobile, if_mobile);
 
-/* CONSENT
-const consent = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus: `
-    <div id="consent" style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
-    <p>Do you consent to participate?</p>
-    </div>
-    `,
-    choices: ['I agree to take part in this study.'],
-    button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2em;">${choice}</button>`},
-    margin_vertical: '50px',
-};
-
-timeline.push(consent);
-*/
-
 /* stimuli */
 
 /* practice trials */
@@ -207,7 +191,7 @@ const base_sret_stimuli = [
   {stimulus: 'paying attention', word: 'paying attention', trialtype: 'attention', valence: 'NA'}
 ]
 
-const s1_unique_stimuli = [
+const w0_unique_stimuli = [
   {stimulus: 'lovable', word: 'lovable', trialtype: 'novel1', valence: 'positive'},
   {stimulus: 'glad', word: 'glad', trialtype: 'novel1', valence: 'positive'},
   {stimulus: 'nice', word: 'nice', trialtype: 'novel1', valence: 'positive'},
@@ -240,7 +224,7 @@ const s1_unique_stimuli = [
   {stimulus: 'dishonorable', word: 'dishonorable', trialtype: 'novel1', valence: 'negative'}
 ]
 
-const s2_unique_stimuli = [
+const w2_unique_stimuli = [
   {stimulus: 'carefree', word: 'carefree', trialtype: 'novel2', valence: 'positive'},
   {stimulus: 'bad', word: 'bad', trialtype: 'novel2', valence: 'negative'},
   {stimulus: 'pleased', word: 'pleased', trialtype: 'novel2', valence: 'positive'},
@@ -251,35 +235,6 @@ const s2_unique_stimuli = [
   {stimulus: 'guilty', word: 'guilty', trialtype: 'novel2', valence: 'negative'},
   {stimulus: 'gorgeous', word: 'gorgeous', trialtype: 'novel2', valence: 'positive'},
   {stimulus: 'deceitful', word: 'deceitful', trialtype: 'novel2', valence: 'negative'},
-]
-
-const s3_unique_stimuli = [
-  {stimulus: 'cheerful', word: 'cheerful', trialtype: 'novel3', valence: 'positive'},
-  {stimulus: 'friendly', word: 'friendly', trialtype: 'novel3', valence: 'positive'},
-  {stimulus: 'compassionate', word: 'compassionate', trialtype: 'novel3', valence: 'positive'},
-  {stimulus: 'kind', word: 'kind', trialtype: 'novel3', valence: 'positive'},
-  {stimulus: 'surprised', word: 'surprised', trialtype: 'novel3', valence: 'positive'},
-  {stimulus: 'depressed', word: 'depressed', trialtype: 'novel3', valence: 'negative'},
-  {stimulus: 'untrustworthy', word: 'untrustworthy', trialtype: 'novel3', valence: 'negative'},
-  {stimulus: 'morbid', word: 'morbid', trialtype: 'novel3', valence: 'negative'},
-  {stimulus: 'obnoxious', word: 'obnoxious', trialtype: 'novel3', valence: 'negative'},
-  {stimulus: 'brutal', word: 'brutal', trialtype: 'novel3', valence: 'negative'}
-]
-
-const s4_unique_stimuli = [
-  {stimulus: 'vigorous', word: 'vigorous', trialtype: 'novel4', valence: 'positive'},
-  {stimulus: 'adorable', word: 'adorable', trialtype: 'novel4', valence: 'positive'},
-  {stimulus: 'outstanding', word: 'outstanding', trialtype: 'novel4', valence: 'positive'},
-  {stimulus: 'confident', word: 'confident', trialtype: 'novel4', valence: 'positive'},
-  {stimulus: 'fun', word: 'fun', trialtype: 'novel4', valence: 'positive'},
-  {stimulus: 'stupid', word: 'stupid', trialtype: 'novel4', valence: 'negative'},
-  {stimulus: 'unattractive', word: 'unattractive', trialtype: 'novel4', valence: 'negative'},
-  {stimulus: 'unwanted', word: 'unwanted', trialtype: 'novel4', valence: 'negative'},
-  {stimulus: 'dumb', word: 'dumb', trialtype: 'novel4', valence: 'negative'},
-  {stimulus: 'sorry', word: 'sorry', trialtype: 'novel4', valence: 'negative'}
-]
-
-const s5_unique_stimuli = [
   {stimulus: 'playful', word: 'playful', trialtype: 'novel5', valence: 'positive'},
   {stimulus: 'hopeful', word: 'hopeful', trialtype: 'novel5', valence: 'positive'},
   {stimulus: 'content', word: 'content', trialtype: 'novel5', valence: 'positive'},
@@ -292,7 +247,17 @@ const s5_unique_stimuli = [
   {stimulus: 'unappreciated', word: 'unappreciated', trialtype: 'novel5', valence: 'negative'}
 ]
 
-const s6_unique_stimuli = [
+const w4_unique_stimuli = [
+  {stimulus: 'cheerful', word: 'cheerful', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'friendly', word: 'friendly', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'compassionate', word: 'compassionate', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'kind', word: 'kind', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'surprised', word: 'surprised', trialtype: 'novel3', valence: 'positive'},
+  {stimulus: 'depressed', word: 'depressed', trialtype: 'novel3', valence: 'negative'},
+  {stimulus: 'untrustworthy', word: 'untrustworthy', trialtype: 'novel3', valence: 'negative'},
+  {stimulus: 'morbid', word: 'morbid', trialtype: 'novel3', valence: 'negative'},
+  {stimulus: 'obnoxious', word: 'obnoxious', trialtype: 'novel3', valence: 'negative'},
+  {stimulus: 'brutal', word: 'brutal', trialtype: 'novel3', valence: 'negative'},
   {stimulus: 'talented', word: 'talented', trialtype: 'novel6', valence: 'positive'},
   {stimulus: 'brilliant', word: 'brilliant', trialtype: 'novel6', valence: 'positive'},
   {stimulus: 'good', word: 'good', trialtype: 'novel6', valence: 'positive'},
@@ -305,32 +270,33 @@ const s6_unique_stimuli = [
   {stimulus: 'displeased', word: 'displeased', trialtype: 'novel6', valence: 'negative'}
 ]
 
+const w6_unique_stimuli = [
+  {stimulus: 'vigorous', word: 'vigorous', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'adorable', word: 'adorable', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'outstanding', word: 'outstanding', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'confident', word: 'confident', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'fun', word: 'fun', trialtype: 'novel4', valence: 'positive'},
+  {stimulus: 'stupid', word: 'stupid', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'unattractive', word: 'unattractive', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'unwanted', word: 'unwanted', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'dumb', word: 'dumb', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'sorry', word: 'sorry', trialtype: 'novel4', valence: 'negative'}
+]
+
 
 switch(urlvar.sret_session) {
-  case "s1":
-    sret_stimuli = base_sret_stimuli.concat(s1_unique_stimuli);
+  case "w0":
+    sret_stimuli = base_sret_stimuli.concat(w0_unique_stimuli);
     break;
-  case "s2":
-    sret_stimuli = base_sret_stimuli.concat(s2_unique_stimuli);
+  case "w2":
+    sret_stimuli = base_sret_stimuli.concat(w2_unique_stimuli);
     break;
-  case "s3":
-    sret_stimuli = base_sret_stimuli.concat(s3_unique_stimuli);
+  case "w4":
+    sret_stimuli = base_sret_stimuli.concat(w4_unique_stimuli);
     break;
-  case "s4":
-    sret_stimuli = base_sret_stimuli.concat(s4_unique_stimuli);
+  case "w6":
+    sret_stimuli = base_sret_stimuli.concat(w6_unique_stimuli);
     break;
-  case "s5":
-    sret_stimuli = base_sret_stimuli.concat(s5_unique_stimuli);
-    break;
-  case "s6":
-    sret_stimuli = base_sret_stimuli.concat(s6_unique_stimuli);
-    break;
-  case "s7":
-    sret_stimuli = base_sret_stimuli.concat(s1_unique_stimuli);
-    break;
-  /*case "s8":
-    sret_stimuli = base_sret_stimuli.concat(s8_unique_stimuli);
-    break;*/
   default:
     sret_stimuli = base_sret_stimuli;
 }
@@ -348,7 +314,7 @@ function isAdjacent(index, indicesSet) {
 // Exclude first two words (indices 0 and 1)
 const allIndices = [...Array(length).keys()].filter(i => i !== 0 && i !== 1);
 
-// Shuffle
+// Randomize
 for (let i = allIndices.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [allIndices[i], allIndices[j]] = [allIndices[j], allIndices[i]];
@@ -375,8 +341,6 @@ sret_stimuli = sret_stimuli.map((item, index) => {
 });
 
 
-    
-
 const instructions = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
@@ -391,7 +355,7 @@ const instructions = {
       as fast as you can.</p>
       <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong>
       as fast as you can.</p>`
-    if(urlvar.sret_session === "s1" || typeof urlvar.sret_session === "undefined") {
+    if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
         stim = stim + `<p>We will start with a few practice words.</p>`
       }
     stim = stim + '</div>'
@@ -461,7 +425,7 @@ var check_in = {
   choices: ['Begin'],
 };
 
-if(urlvar.sret_session === "s1" || typeof urlvar.sret_session === "undefined") {
+if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
   timeline.push(practice_procedure);
   timeline.push(check_in);
 };
