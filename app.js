@@ -13,7 +13,7 @@ var app = express();
 // --- Static website directories
 app.use(express.static('views'));
 app.use('/jsPsych', express.static(__dirname + "/jsPsych"));
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname + ''));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
@@ -24,7 +24,7 @@ var urlencodedparser = body_parser.urlencoded({extended:true})
 
 // --- ROUTING
 app.get('/', function(request, response) {
-    response.sendFile(path.join(__dirname, 'views', 'sret-self.html'));
+    response.sendFile(path.join(__dirname, 'sret-self.html'));
 });
 
 app.get('/experiment', function(request, response) {
