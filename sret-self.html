@@ -282,22 +282,39 @@ switch(urlvar.sret_session) {
 
 //Quality Control: Capitalize 12 Random Words
 const capitalizeRandomWords = (stimuli, n = 12) => {
-     // Make a deep copy so you don't mutate base_sret_stimuli
-     const cappedStimuli = JSON.parse(JSON.stringify(stimuli));
-     const indicesToCap = jsPsych.randomization.sampleWithoutReplacement([...Array(cappedStimuli.length).keys()], n);
-     cappedStimuli.forEach((stim, i) => {
-       if (indicesToCap.includes(i)) {
-         stim.stimulus = stim.stimulus.toUpperCase();
-         stim.capitalized = true;
-         stim.trialtype = 'capitalization-check';
-       } else {
-         stim.capitalized = false;
-       }
-     });
-     return cappedStimuli;
-   };
+  // Make a deep copy so you don't mutate base_sret_stimuli
+  const cappedStimuli = JSON.parse(JSON.stringify(stimuli));
+  const indicesToCap = jsPsych.randomization.sampleWithoutReplacement([...Array(cappedStimuli.length).keys()], n);
+  cappedStimuli.forEach((stim, i) => {
+    console.log(`Index ${i} BEFORE capitalization: stimulus =`, stim.stimulus, `Type: ${typeof stim.stimulus}`);
+    if (indicesToCap.includes(i)) {
+      if (typeof stim.stimulus === 'string') {
+        stim.stimulus = stim.stimulus.toUpperCase();
+      } else {
+        console.error(`Index ${i} stimulus is NOT a string!`, stim.stimulus);
+      }
+      stim.capitalized = true;
+      stim.trialtype = 'capitalization-check';
+      console.log(`Index ${i} AFTER capitalization: stimulus =`, stim.stimulus);
+    } else {
+      stim.capitalized = false;
+    }
+  });
+  return cappedStimuli;
+};
 
-    sret_stimuli = capitalizeRandomWords(sret_stimuli);
+sret_stimuli = capitalizeRandomWords(sret_stimuli);
+
+// In your trial definition, add a console log inside the stimulus function:
+var sret = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function() {
+    var stim = jsPsych.timelineVariable('stimulus', true);
+    console.log('Trial stimulus:', stim, `Type: ${typeof stim}`);
+    return `<p style="font-size:50px;">${stim}</p>`;
+  },
+  // ... rest of trial config unchanged
+};
     
 const instructions = {
   type: jsPsychHtmlButtonResponse,
