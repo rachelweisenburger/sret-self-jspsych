@@ -188,7 +188,6 @@ const base_sret_stimuli = [
   {stimulus: 'fearful', word: 'fearful', trialtype: 'core', valence: 'negative'},
   {stimulus: 'angry', word: 'angry', trialtype: 'core', valence: 'negative'},
   {stimulus: 'disloyal', word: 'disloyal', trialtype: 'core', valence: 'negative'},
-  {stimulus: 'paying attention', word: 'paying attention', trialtype: 'attention', valence: 'NA'}
 ]
 
 const w0_unique_stimuli = [
@@ -280,7 +279,18 @@ const w6_unique_stimuli = [
   {stimulus: 'unattractive', word: 'unattractive', trialtype: 'novel4', valence: 'negative'},
   {stimulus: 'unwanted', word: 'unwanted', trialtype: 'novel4', valence: 'negative'},
   {stimulus: 'dumb', word: 'dumb', trialtype: 'novel4', valence: 'negative'},
-  {stimulus: 'sorry', word: 'sorry', trialtype: 'novel4', valence: 'negative'}
+  {stimulus: 'sorry', word: 'sorry', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'insecure', word: 'insecure', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'alone', word: 'alone', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'admired', word: 'admired', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'courageous', word: 'courageous', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'unique', word: 'unique', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'optimistic', word: 'optimistic', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'terrible', word: 'terrible', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'cruel', word: 'cruel', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'unlucky', word: 'unlucky', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'respectful', word: 'respectful', trialtype: 'novel4', valence: 'negative'},
+  {stimulus: 'hateful', word: 'hateful', trialtype: 'novel4', valence: 'negative'},
 ]
 
 
@@ -301,7 +311,7 @@ switch(urlvar.sret_session) {
     sret_stimuli = base_sret_stimuli;
 }
 
-//Quality control: randomly capitalize 12 stimulus words
+// Quality control: randomly capitalize 12 stimulus words
 const numToCapitalize = 12;
 const length = sret_stimuli.length;
 
@@ -311,7 +321,7 @@ function isAdjacent(index, indicesSet) {
   return indicesSet.has(index - 1) || indicesSet.has(index + 1);
 }
 
-// Exclude first two words (indices 0 and 1)
+// Exclude first two words of main trial
 const allIndices = [...Array(length).keys()].filter(i => i !== 0 && i !== 1);
 
 // Randomize
