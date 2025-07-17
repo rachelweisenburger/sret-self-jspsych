@@ -24,11 +24,11 @@ var urlencodedparser = body_parser.urlencoded({extended:true})
 
 // --- ROUTING
 app.get('/', function(request, response) {
-    response.render('sret.html');
+    response.render('sret-self.html');
 });
 
 app.get('/experiment', function(request, response) {
-    response.render('sret.html');
+    response.render('sret-self.html');
 });
 
 
