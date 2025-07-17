@@ -338,11 +338,11 @@ var fixation = {
     var sret = {
       type: jsPsychHtmlButtonResponse,
       stimulus: function() {
-        var stim = '<p style="font-size:50px;">' + jsPsych.timelineVariable('stimulus') + '</p>';
-        return stim;
+        var stim = jsPsych.timelineVariable('stimulus', true);
+        return `<p style="font-size:50px;">${stim}</p>`;
       },
       prompt: function() {
-        const trialtype = jsPsych.timelineVariable('trialtype');
+        var trialtype = jsPsych.timelineVariable('trialtype', true);
         return trialtype === 'capitalization-check'
           ? "<p>Is this word capitalized?</p>"
           : "<p>Does this word describe you?</p>";
@@ -351,11 +351,13 @@ var fixation = {
       button_html: (choice) => {
         return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 30px; margin-top: 50px;">${choice}</button>`;
       },
-      data: {
-        valence: jsPsych.timelineVariable('valence'),
-        trialtype: jsPsych.timelineVariable('trialtype'),
-        word: jsPsych.timelineVariable('word'),
-        capitalized: jsPsych.timelineVariable('capitalized'),
+      data: function() {
+        return {
+          valence: jsPsych.timelineVariable('valence', true),
+          trialtype: jsPsych.timelineVariable('trialtype', true),
+          word: jsPsych.timelineVariable('word', true),
+          capitalized: jsPsych.timelineVariable('capitalized', true)
+        };
       },
       on_finish: function(data){
         data.endorse = data.response == 0;
