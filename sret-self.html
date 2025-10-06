@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!--
-  This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu. Incorporates a quality control trial based on Hitchcock et al., 2023 (doi.org/10.3758/s13415-022-01033-9)
+  This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu. Incorporates a quality control trial based on Hitchcock et al., 2023 (doi.org/10.3758/s13415-022-01033-9) and Alejandre-Lara et al., 2021 (doi.org/10.1007/s10608-021-10287-5).
 -->
 
 <html>
@@ -341,13 +341,26 @@ const instructions = {
       <p>For this task, you will see a cross on the screen. Please
       look at the cross when it appears. It will be followed by a
       single word.</p>
-      <p> The words you will see could be used to describe
-      someone. When the word appears, you will have to decide whether you think
-      that word could be used to describe you.</p>
+      <p> Each word will be paired with a cue word at the top of the screen, either "self" or "case".</p>
+      <div>`,
+      
+      `<div style='width: 85%, margin: 0 auto;'>
+      <p> If the cue word is "self", you will have to decide whether you think
+      that the word shown could be used to describe you.</p>
       <p>If the word <strong>does</strong> describe you, tap on <strong>"yes"</strong>
       as fast as you can.</p>
       <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong>
-      as fast as you can.</p>`
+      as fast as you can.</p>
+        <div>`,
+        
+        `<div style='width: 85%, margin: 0 auto;'>
+        <p> If the cue word is "case", you will have to decide whether the word is written in UPPERCASE letters.</p>
+        <p>If the word <strong>is</strong> written in uppercase letters, tap on <strong>"yes"</strong>
+        as fast as you can.</p>
+        <p>If the word <strong>is not</strong> describe you, tap <strong>"no"</strong>
+        as fast as you can.</p>
+      
+      
     if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
         stim = stim + `<p>We will start with a few practice words.</p>`
       }
