@@ -333,42 +333,58 @@ sret_stimuli = sret_stimuli.map((item, index) => {
   }
 });
 
+// === INSTRUCTIONS ===
+const instructions = {
+  type: jsPsychInstructions,
+  pages: [
+    `<div style='width: 85%; margin: 0 auto;'>
+      <p>For this task, you will see a cross on the screen. Please
+      look at the cross when it appears. It will be followed by a
+      single word.</p>
+      <p>Each word will be paired with a cue word at the top of the screen, either "self" or "case".</p>
+    </div>`,
 
-    const instructions = {
-      type: jsPsychInstructions,
-      pages: [
-        `<div style='width: 85%; margin: 0 auto;'>
-          <p>For this task, you will see a cross on the screen. Please
-          look at the cross when it appears. It will be followed by a
-          single word.</p>
-          <p>Each word will be paired with a cue word at the top of the screen, either "self" or "case".</p>
-        </div>`,
+    `<div style='width: 85%; margin: 0 auto;'>
+      <p>If the cue word is "self", you will have to decide whether you think
+      that the word shown could be used to describe you.</p>
+      <p>If the word <strong>does</strong> describe you, tap <strong>"yes"</strong> as fast as you can.</p>
+      <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong> as fast as you can.</p>
+    </div>`,
 
-        `<div style='width: 85%; margin: 0 auto;'>
-          <p>If the cue word is "self", you will have to decide whether you think
-          that the word shown could be used to describe you.</p>
-          <p>If the word <strong>does</strong> describe you, tap <strong>"yes"</strong> as fast as you can.</p>
-          <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong> as fast as you can.</p>
-        </div>`,
+    `<div style='width: 85%; margin: 0 auto;'>
+      <p>If the cue word is "case", you will have to decide whether the word is written in UPPERCASE letters.</p>
+      <p>If the word <strong>is</strong> written in uppercase letters, tap <strong>"yes"</strong> as fast as you can.</p>
+      <p>If the word <strong>is not</strong> written in uppercase letters, tap <strong>"no"</strong> as fast as you can.</p>
+      ${urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined"
+        ? `<p>We will start with a few practice words.</p>`
+        : ``}
+    </div>`
+  ],
+  show_clickable_nav: true,
+  button_label_previous: 'Back',
+  button_label_next: 'Next',
+  post_trial_gap: 2000
+};
 
-        `<div style='width: 85%; margin: 0 auto;'>
-          <p>If the cue word is "case", you will have to decide whether the word is written in UPPERCASE letters.</p>
-          <p>If the word <strong>is</strong> written in uppercase letters, tap <strong>"yes"</strong> as fast as you can.</p>
-          <p>If the word <strong>is not</strong> written in uppercase letters, tap <strong>"no"</strong> as fast as you can.</p>
-          ${urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined"
-            ? `<p>We will start with a few practice words.</p>`
-            : ``}
-        </div>`
-      ],
-      show_clickable_nav: true,
-      button_label_next: 'Next',
-      button_label_previous: 'Back',
-      post_trial_gap: 2000
-    };
+timeline.push(instructions);
 
-    timeline.push(instructions);
-
-
+// === BUTTON STYLING ===
+// This CSS keeps the same green, bold, large button style
+const style = document.createElement('style');
+style.innerHTML = `
+  .jspsych-btn {
+    color: #1B4D3E !important;
+    font-weight: bold !important;
+    font-size: 2.5em !important;
+    background: none !important;
+    border: 2px solid #1B4D3E !important;
+    border-radius: 12px !important;
+    padding: 10px 20px !important;
+    margin: 15px !important;
+  }
+`;
+document.head.appendChild(style);
+    
 var fixation = {
   type: jsPsychHtmlButtonResponse,
   stimulus: '<div style="font-size: 3em">+</div>',
