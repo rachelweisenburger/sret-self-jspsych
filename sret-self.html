@@ -334,45 +334,40 @@ sret_stimuli = sret_stimuli.map((item, index) => {
 });
 
 
-const instructions = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus: function() {
-    var stim = `<div style='width: 85%; margin: 0 auto;'>
-      <p>For this task, you will see a cross on the screen. Please
-      look at the cross when it appears. It will be followed by a
-      single word.</p>
-      <p> Each word will be paired with a cue word at the top of the screen, either "self" or "case".</p>
-      <div>`,
-      
-      `<div style='width: 85%, margin: 0 auto;'>
-      <p> If the cue word is "self", you will have to decide whether you think
-      that the word shown could be used to describe you.</p>
-      <p>If the word <strong>does</strong> describe you, tap on <strong>"yes"</strong>
-      as fast as you can.</p>
-      <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong>
-      as fast as you can.</p>
-        <div>`,
-        
-        `<div style='width: 85%, margin: 0 auto;'>
-        <p> If the cue word is "case", you will have to decide whether the word is written in UPPERCASE letters.</p>
-        <p>If the word <strong>is</strong> written in uppercase letters, tap on <strong>"yes"</strong>
-        as fast as you can.</p>
-        <p>If the word <strong>is not</strong> describe you, tap <strong>"no"</strong>
-        as fast as you can.</p>
-      
-      
-    if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
-        stim = stim + `<p>We will start with a few practice words.</p>`
-      }
-    stim = stim + '</div>'
-    return(stim)
-  },
-  choices: ['Next'],
-  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
-  post_trial_gap: 2000
-};
+    const instructions = {
+      type: jsPsychInstructions,
+      pages: [
+        `<div style='width: 85%; margin: 0 auto;'>
+          <p>For this task, you will see a cross on the screen. Please
+          look at the cross when it appears. It will be followed by a
+          single word.</p>
+          <p>Each word will be paired with a cue word at the top of the screen, either "self" or "case".</p>
+        </div>`,
 
-timeline.push(instructions);
+        `<div style='width: 85%; margin: 0 auto;'>
+          <p>If the cue word is "self", you will have to decide whether you think
+          that the word shown could be used to describe you.</p>
+          <p>If the word <strong>does</strong> describe you, tap <strong>"yes"</strong> as fast as you can.</p>
+          <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong> as fast as you can.</p>
+        </div>`,
+
+        `<div style='width: 85%; margin: 0 auto;'>
+          <p>If the cue word is "case", you will have to decide whether the word is written in UPPERCASE letters.</p>
+          <p>If the word <strong>is</strong> written in uppercase letters, tap <strong>"yes"</strong> as fast as you can.</p>
+          <p>If the word <strong>is not</strong> written in uppercase letters, tap <strong>"no"</strong> as fast as you can.</p>
+          ${urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined"
+            ? `<p>We will start with a few practice words.</p>`
+            : ``}
+        </div>`
+      ],
+      show_clickable_nav: true,
+      button_label_next: 'Next',
+      button_label_previous: 'Back',
+      post_trial_gap: 2000
+    };
+
+    timeline.push(instructions);
+
 
 var fixation = {
   type: jsPsychHtmlButtonResponse,
