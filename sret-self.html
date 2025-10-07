@@ -377,14 +377,7 @@ function equalityTest(a, b) {
 }
 
 all_trials = jsPsych.randomization.shuffleNoRepeats(all_trials, equalityTest);
-
-const block_procedure = {
-  timeline: [fixation, sret],
-  timeline_variables: all_trials,
-  randomize_order: false // already shuffled
-};
-
-    
+   
 // Task Instructions
 const instructions = {
   type: jsPsychInstructions,
@@ -575,8 +568,8 @@ if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
 
 const block_procedure = {
   timeline: [fixation, sret],
-  timeline_variables: sret_stimuli, // now contains cue property
-  randomize_order: true
+  timeline_variables: all_trials,
+  randomize_order: false // already shuffled
 }
 
 timeline.push(block_procedure);
