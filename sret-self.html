@@ -466,6 +466,15 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
+var fixation = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<div style="font-size: 3em">+</div>',
+  choices: [],
+  trial_duration: function(){
+    return jsPsych.randomization.sampleWithoutReplacement([600, 700, 800, 900, 1000], 1)[0];
+  }
+};
+
 // Retry instructions
 const retry_instructions = {
   type: jsPsychHtmlButtonResponse,
@@ -478,15 +487,6 @@ const retry_instructions = {
   `,
   choices: ['Continue'],
   button_html: `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">%choice%</button>`,
-};
-    
-var fixation = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus: '<div style="font-size: 3em">+</div>',
-  choices: [],
-  trial_duration: function(){
-    return jsPsych.randomization.sampleWithoutReplacement([600, 700, 800, 900, 1000], 1)[0];
-  }
 };
     
 var practice_trial = {
@@ -528,6 +528,8 @@ var practice_procedure = {
   timeline_variables: practice_stimuli,
   randomize_order: false
 };
+
+timeline.push(practice_procedure)
     
 var check_case_correctness = {
   timeline: [retry_instructions, practice_procedure_second_round],
