@@ -159,10 +159,11 @@ const practice_stimuli = [
 ];
 
 const practice_stimuli_second_round = [
-  {stimulus: 'short', word: 'short', trialtype: 'practice', valence: 'null', cue: 'case'},
-  {stimulus: 'WEAK', word: 'WEAK', trialtype: 'practice', valence: 'null', cue: 'self'},
-  {stimulus: 'STUDENT', word: 'STUDENT', trialtype: 'practice', valence: 'null', cue: 'case'},
-  {stimulus: 'sibling', word: 'sibling', trialtype: 'practice', valence: 'null', cue: 'self'},
+  {stimulus: 'short', word: 'short', trialtype: 'practice2', valence: 'null', cue: 'case'},
+  {stimulus: 'WEAK', word: 'WEAK', trialtype: 'practice2', valence: 'null', cue: 'self'},
+  {stimulus: 'STUDENT', word: 'STUDENT', trialtype: 'practice2', valence: 'null', cue: 'case'},
+  {stimulus: 'sibling', word: 'sibling', trialtype: 'practice2', valence: 'null', cue: 'self'},
+  {stimulus: 'warm', word: 'warm', trialtype: 'practice2', valence: 'null', cue: 'case'}
 ];
 
 const base_sret_stimuli = [
@@ -369,7 +370,7 @@ function assignCaseTrials(stimuli) {
   }));
 }
     
-// Split into case/self, positive/negative
+// Split trials into case/self, positive/negative
 const case_trials_pos = sret_stimuli.filter(item => item.cue === 'case' && item.valence === 'positive');
 const case_trials_neg = sret_stimuli.filter(item => item.cue === 'case' && item.valence === 'negative');
 const self_trials_pos = sret_stimuli.filter(item => item.cue === 'self' && item.valence === 'positive');
