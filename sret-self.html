@@ -4,6 +4,7 @@
   This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu. Incorporates a quality control trial based on Hitchcock et al., 2023 (doi.org/10.3758/s13415-022-01033-9) and Alejandre-Lara et al., 2021 (doi.org/10.1007/s10608-021-10287-5).
 -->
 
+/* Load jsPsych and plugins */
 <html>
   <head>
     <title>Task</title>
@@ -151,12 +152,20 @@ timeline.push(checkMobile, if_mobile);
 
 /* practice trials */
 const practice_stimuli = [
-  {stimulus: "tall", word: 'practice', trialtype: 'practice', valence: 'null'},
-  {stimulus: "young", word: 'practice', trialtype: 'practice', valence: 'null'},
-  {stimulus: "awake", word: 'practice', trialtype: 'practice', valence: 'null'},
-  {stimulus: "sore", word: 'practice', trialtype: 'practice', valence: 'null'},
-  {stimulus: "cold", word: 'practice', trialtype: 'practice', valence: 'null'}
+  {stimulus: 'TALL', word: 'TALL', trialtype: 'practice', valence: 'null', cue: 'self'},
+  {stimulus: 'young', word: 'young', trialtype: 'practice', valence: 'null', cue: 'case'},
+  {stimulus: 'awake', word: 'awake', trialtype: 'practice', valence: 'null', cue: 'self'},
+  {stimulus: 'SORE', word: 'SORE', trialtype: 'practice', valence: 'null', cue: 'case'},
+  {stimulus: "cold", word: 'cold', trialtype: 'practice', valence: 'null', cue: 'self'}
 ];
+
+const practice_stimuli_second_round = [
+  {stimulus: 'short', word: 'short', trialtype: 'practice', valence: 'null', cue: 'case'},
+  {stimulus: 'WEAK', word: 'WEAK', trialtype: 'practice', valence: 'null', cue: 'self'},
+  {stimulus: 'STUDENT', word: 'STUDENT', trialtype: 'practice', valence: 'null', cue: 'case'},
+  {stimulus: 'sibling', word: 'sibling', trialtype: 'practice', valence: 'null', cue: 'self'},
+];
+
 
 const base_sret_stimuli = [
   {stimulus: 'successful', word: 'successful', trialtype: 'core', valence: 'positive'},
@@ -294,23 +303,45 @@ const w6_unique_stimuli = [
   {stimulus: 'hateful', word: 'hateful', trialtype: 'novel4', valence: 'negative'},
 ]
 
+// Returns a new array of SRET trials with 20 'case' trials (10 pos, 10 neg), rest 'self'
+// The input should be a combined array for the session
+function assignCaseTrials(stimuli) {
+  // Separate by valence
+  const positive = stimuli.filter(item => item.valence === 'positive');
+  const negative = stimuli.filter(item => item.valence === 'negative');
+  
+  // Randomly select 10 positive and 10 negative for 'case'
+  const shuffle = arr => arr.slice().sort(() => Math.random() - 0.5);
+  const casePositive = shuffle(positive).slice(0, 10);
+  const caseNegative = shuffle(negative).slice(0, 10);
+
+  // Get the set of case words
+  const caseSet = new Set([...casePositive, ...caseNegative].map(item => item.word));
+
+  // Map and assign cues
+  return stimuli.map(item => ({
+    ...item,
+    cue: caseSet.has(item.word) ? 'case' : 'self',
+  }));
+}
 
 switch(urlvar.sret_session) {
-  case "w0":
-    sret_stimuli = base_sret_stimuli.concat(w0_unique_stimuli);
-    break;
-  case "w2":
-    sret_stimuli = base_sret_stimuli.concat(w2_unique_stimuli);
-    break;
-  case "w4":
-    sret_stimuli = base_sret_stimuli.concat(w4_unique_stimuli);
-    break;
-  case "w6":
-    sret_stimuli = base_sret_stimuli.concat(w6_unique_stimuli);
-    break;
-  default:
-    sret_stimuli = base_sret_stimuli;
+  case "w0":
+    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w0_unique_stimuli));
+    break;
+  case "w2":
+    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w2_unique_stimuli));
+    break;
+  case "w4":
+    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w4_unique_stimuli));
+    break;
+  case "w6":
+    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w6_unique_stimuli));
+    break;
+  default:
+    sret_stimuli = assignCaseTrials(base_sret_stimuli);
 }
+
 
 // Quality control: randomly capitalize 12 stimulus words
 const numToCapitalize = 12;
@@ -368,6 +399,19 @@ const instructions = {
 
 timeline.push(instructions);
 
+const retry_instructions = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
+      <p>Let's try some more.</p>
+      <p>Remember, if the cue word is <strong>"case"</strong>, you will have to decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
+      <p>If the cue word is <strong>"self"</strong>, you will have to decide whether you think that the word shown could be used to describe you.</p>
+    </div>
+  `,
+  choices: ['Continue'],
+  button_html: `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">%choice%</button>`,
+};
+
 
 // === STYLE THE BUTTONS (matches your jsPsychHtmlButtonResponse look) ===
 const style = document.createElement('style');
@@ -392,16 +436,83 @@ var fixation = {
     return jsPsych.randomization.sampleWithoutReplacement([600, 700, 800, 900, 1000], 1)[0];
   }
 };
+    
+var practice_trial = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function() {
+    const cue = jsPsych.timelineVariable('cue').toUpperCase();
+    const word = jsPsych.timelineVariable('stimulus');
+    return `
+      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
+        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${cue}</div>
+        <div style="font-size: 3em; margin: 2vh 0;">+</div>
+        <div style="margin-bottom: 5vh; font-size: 2.3em;">${word}</div>
+      </div>
+    `;
+  },
+  choices: ['yes', 'no'],
+  button_html: (choice) => `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`,
+  data: {
+    cue: jsPsych.timelineVariable('cue'),
+    valence: jsPsych.timelineVariable('valence'),
+    trialtype: jsPsych.timelineVariable('trialtype'),
+    word: jsPsych.timelineVariable('word'),
+  },
+  on_finish: function(data){
+    // For case trials, mark correct if (cue=='case' && uppercase) or (cue=='case' && !uppercase) etc.
+    if(data.cue === "case") {
+      const isUpper = data.word === data.word.toUpperCase();
+      data.correct = (isUpper && data.response == 0) || (!isUpper && data.response == 1);
+    } else {
+      data.correct = true; // no error-check for 'self'
+    }
+    data.endorse = data.response == 0;
+  }
+}
+    
+var check_case_correctness = {
+  timeline: [retry_instructions, practice_procedure_second_round],
+  conditional_function: function(){
+    // Look at the last 4 practice trials (first practice block)
+    const practice_data = jsPsych.data.get().filter({trialtype: 'practice'}).last(4).values();
+    // Get the two 'case' trials
+    const case_trials = practice_data.filter(trial => trial.cue === "case");
+    // If any of the case trials were incorrect, return true
+    return case_trials.some(trial => trial.correct === false);
+  }
+};
+
+    
+var practice_procedure = {
+  timeline: [fixation, practice_trial],
+  timeline_variables: practice_stimuli,
+  randomize_order: false
+};
+    
+var practice_procedure_second_round = {
+  timeline: [fixation, practice_trial],
+  timeline_variables: practice_stimuli_second_round,
+  randomize_order: false
+};
 
 var sret = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
-        var stim = '<div style="font-size: 3em;">'+jsPsych.evaluateTimelineVariable('stimulus')+'</div>';
-        return stim;
-    },
+    // Ensure this matches your variable naming in timeline_variables
+    const cue = jsPsych.timelineVariable('cue').toUpperCase();
+    const word = jsPsych.timelineVariable('stimulus');
+    return `
+      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
+        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${cue}</div>
+        <div style="font-size: 3em; margin: 2vh 0;">+</div>
+        <div style="margin-bottom: 5vh; font-size: 2.3em;">${word}</div>
+      </div>
+    `;
+  },
   choices: ['yes', 'no'],
   button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`},
   data: {
+    cue: jsPsych.timelineVariable('cue'),
     valence: jsPsych.timelineVariable('valence'),
     trialtype: jsPsych.timelineVariable('trialtype'),
     word: jsPsych.timelineVariable('word'),
@@ -409,12 +520,6 @@ var sret = {
   on_finish: function(data){
     data.endorse = data.response == 0;
   }
-}
-
-var practice_procedure = {
-  timeline: [fixation, sret],
-  timeline_variables: practice_stimuli,
-  randomize_order: true
 }
 
 /* check in block */
@@ -443,13 +548,14 @@ var check_in = {
 
 if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
   timeline.push(practice_procedure);
+  timeline.push(check_case_correctness);
   timeline.push(check_in);
 };
 
 const block_procedure = {
   timeline: [fixation, sret],
-    timeline_variables: sret_stimuli,
-    randomize_order: true
+  timeline_variables: sret_stimuli, // now contains cue property
+  randomize_order: true
 }
 
 timeline.push(block_procedure);
