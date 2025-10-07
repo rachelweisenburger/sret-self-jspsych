@@ -492,8 +492,8 @@ var fixation = {
 var practice_trial = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
-    const cue = jsPsych.timelineVariable('cue').toUpperCase();
-    const word = jsPsych.timelineVariable('stimulus');
+    const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
+    const word = jsPsych.evaluateTimelineVariable('stimulus');
     return `
       <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
         <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${cue}</div>
@@ -551,8 +551,8 @@ var sret = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
     // Ensure this matches your variable naming in timeline_variables
-    const cue = jsPsych.timelineVariable('cue').toUpperCase();
-    const word = jsPsych.timelineVariable('stimulus');
+    const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
+    const word = jsPsych.evaluateTimelineVariable('stimulus');
     return `
       <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
         <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${cue}</div>
