@@ -468,18 +468,6 @@ var practice_trial = {
     data.endorse = data.response == 0;
   }
 }
-    
-var check_case_correctness = {
-  timeline: [retry_instructions, practice_procedure_second_round],
-  conditional_function: function(){
-    // Look at the last 4 practice trials (first practice block)
-    const practice_data = jsPsych.data.get().filter({trialtype: 'practice'}).last(4).values();
-    // Get the two 'case' trials
-    const case_trials = practice_data.filter(trial => trial.cue === "case");
-    // If any of the case trials were incorrect, return true
-    return case_trials.some(trial => trial.correct === false);
-  }
-};
 
     
 var practice_procedure = {
@@ -494,6 +482,18 @@ var practice_procedure_second_round = {
   randomize_order: false
 };
 
+var check_case_correctness = {
+  timeline: [retry_instructions, practice_procedure_second_round],
+  conditional_function: function(){
+    // Look at the last 4 practice trials (first practice block)
+    const practice_data = jsPsych.data.get().filter({trialtype: 'practice'}).last(4).values();
+    // Get the two 'case' trials
+    const case_trials = practice_data.filter(trial => trial.cue === "case");
+    // If any of the case trials were incorrect, return true
+    return case_trials.some(trial => trial.correct === false);
+  }
+};
+    
 var sret = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
