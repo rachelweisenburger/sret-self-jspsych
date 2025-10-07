@@ -451,20 +451,7 @@ const instructions = {
 
 timeline.push(instructions);
 
-const retry_instructions = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus: `
-    <div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
-      <p>Let's try some more.</p>
-      <p>Remember, if the cue word is <strong>"case"</strong>, you will have to decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
-      <p>If the cue word is <strong>"self"</strong>, you will have to decide whether you think that the word shown could be used to describe you.</p>
-    </div>
-  `,
-  choices: ['Continue'],
-  button_html: `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">%choice%</button>`,
-};
-
-
+    
 // === STYLE THE BUTTONS (matches your jsPsychHtmlButtonResponse look) ===
 const style = document.createElement('style');
 style.innerHTML = `
@@ -541,6 +528,25 @@ var check_case_correctness = {
   }
 };
 
+timeline.push(check_case_correctness)
+
+// Retry instructions
+const retry_instructions = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
+      <p>Let's try some more.</p>
+      <p>Remember, if the cue word is <strong>"case"</strong>, you will have to decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
+      <p>If the cue word is <strong>"self"</strong>, you will have to decide whether you think that the word shown could be used to describe you.</p>
+    </div>
+  `,
+  choices: ['Continue'],
+  button_html: `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">%choice%</button>`,
+};
+
+timeline.push(retry_instructions);
+        
+
 var practice_procedure_second_round = {
   timeline: [fixation, practice_trial],
   timeline_variables: practice_stimuli_second_round,
@@ -550,7 +556,6 @@ var practice_procedure_second_round = {
 var sret = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
-    // Ensure this matches your variable naming in timeline_variables
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
     const word = jsPsych.evaluateTimelineVariable('stimulus');
     return `
