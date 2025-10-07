@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!--
-  This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu. Incorporates a quality control trial based on Hitchcock et al., 2023 (doi.org/10.3758/s13415-022-01033-9) and Alejandre-Lara et al., 2021 (doi.org/10.1007/s10608-021-10287-5).
+  This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is being used for the dissertation study of Rachel Weisenburger of the Mood Disorders Lab at UT Austin, entitled: "Depression and the Self: A Longitudinal Examination of Biased Self-Schema and Depression Symptom Dimensions." Code is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu. Incorporates the case trial condition and stimuli words from Hitchcock et al., 2023 (doi.org/10.3758/s13415-022-01033-9) and Alejandre-Lara et al., 2021 (doi.org/10.1007/s10608-021-10287-5).
 -->
 
 <html>
@@ -165,7 +165,6 @@ const practice_stimuli_second_round = [
   {stimulus: 'sibling', word: 'sibling', trialtype: 'practice', valence: 'null', cue: 'self'},
 ];
 
-
 const base_sret_stimuli = [
   {stimulus: 'successful', word: 'successful', trialtype: 'core', valence: 'positive'},
   {stimulus: 'terrific', word: 'terrific', trialtype: 'core', valence: 'positive'},
@@ -302,8 +301,7 @@ const w6_unique_stimuli = [
   {stimulus: 'hateful', word: 'hateful', trialtype: 'novel4', valence: 'negative'},
 ]
 
-// Returns a new array of SRET trials with 20 'case' trials (10 pos, 10 neg), rest 'self'
-// The input should be a combined array for the session
+// Create 20 'case' trials (10 pos, 10 neg), rest 'self'
 function assignCaseTrials(stimuli) {
   // Separate by valence
   const positive = stimuli.filter(item => item.valence === 'positive');
@@ -323,7 +321,8 @@ function assignCaseTrials(stimuli) {
     cue: caseSet.has(item.word) ? 'case' : 'self',
   }));
 }
-
+    
+// setting sret stimuli for each biweekly session
 switch(urlvar.sret_session) {
   case "w0":
     sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w0_unique_stimuli));
@@ -340,30 +339,53 @@ switch(urlvar.sret_session) {
   default:
     sret_stimuli = assignCaseTrials(base_sret_stimuli);
 }
+    
+// 1. Split into case/self, positive/negative
+const case_trials_pos = sret_stimuli.filter(item => item.cue === 'case' && item.valence === 'positive');
+const case_trials_neg = sret_stimuli.filter(item => item.cue === 'case' && item.valence === 'negative');
+const self_trials = sret_stimuli.filter(item => item.cue === 'self');
 
+// 2. Randomly sample 10 positive/negative case trials
+const selected_case_trials =
+  jsPsych.randomization.sampleWithoutReplacement(case_trials_pos, 10)
+  .concat(jsPsych.randomization.sampleWithoutReplacement(case_trials_neg, 10));
 
-// Quality control: randomly capitalize 12 stimulus words
-const numToCapitalize = 12;
-const length = sret_stimuli.length;
+// 3. Capitalize 10 randomly selected case trials
+const shuffledCaseIndices = jsPsych.randomization.sampleWithoutReplacement([...Array(20).keys()], 10);
+const finalized_case_trials = selected_case_trials.map((item, idx) => (
+  shuffledCaseIndices.includes(idx)
+    ? {...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase()}
+    : item
+));
 
-//Randomize
-const shuffledIndices = [...Array(length).keys()]
-  .sort(() => Math.random() - 0.5)
-  .slice(0, numToCapitalize);  // Take first 12 indices
+// 4. Randomly select remaining self trials to reach desired total trial count
+// For example, if you want 50 total trials:
+const totalTrials = 50;
+const numSelfToSample = totalTrials - 20;
+const selected_self_trials = jsPsych.randomization.sampleWithoutReplacement(self_trials, numSelfToSample);
 
-// Capitalize the selected randomized words
-sret_stimuli = sret_stimuli.map((item, index) => {
-  if (shuffledIndices.includes(index)) {
-    return {
-      ...item,
-      stimulus: item.stimulus.toUpperCase(),
-      word: item.word.toUpperCase()
-    };
-  } else {
-    return item;
-  }
-});
+// 5. Combine all trials
+let all_trials = finalized_case_trials.concat(selected_self_trials);
 
+// 6. Shuffle so no two consecutive trials have the same cue, valence, or case status
+function equalityTest(a, b) {
+  return (
+    a.cue === b.cue &&
+    a.valence === b.valence &&
+    (a.stimulus === a.stimulus.toUpperCase()) === (b.stimulus === b.stimulus.toUpperCase())
+  );
+}
+
+all_trials = jsPsych.randomization.shuffleNoRepeats(all_trials, equalityTest);
+
+const block_procedure = {
+  timeline: [fixation, sret],
+  timeline_variables: all_trials,
+  randomize_order: false // already shuffled
+};
+
+    
+// Task Instructions
 const instructions = {
   type: jsPsychInstructions,
   pages: [
@@ -476,12 +498,6 @@ var practice_procedure = {
   randomize_order: false
 };
     
-var practice_procedure_second_round = {
-  timeline: [fixation, practice_trial],
-  timeline_variables: practice_stimuli_second_round,
-  randomize_order: false
-};
-
 var check_case_correctness = {
   timeline: [retry_instructions, practice_procedure_second_round],
   conditional_function: function(){
@@ -492,6 +508,12 @@ var check_case_correctness = {
     // If any of the case trials were incorrect, return true
     return case_trials.some(trial => trial.correct === false);
   }
+};
+
+var practice_procedure_second_round = {
+  timeline: [fixation, practice_trial],
+  timeline_variables: practice_stimuli_second_round,
+  randomize_order: false
 };
     
 var sret = {
