@@ -4,7 +4,6 @@
   This version of the Self-Referent Encoding Task (SRET; Derry & Kuiper, 1981) is adapted based on the programming of Dr. Justin Dainer-Best of the Bard College Affective Science Lab, https://affectlab.bard.edu. Incorporates a quality control trial based on Hitchcock et al., 2023 (doi.org/10.3758/s13415-022-01033-9) and Alejandre-Lara et al., 2021 (doi.org/10.1007/s10608-021-10287-5).
 -->
 
-/* Load jsPsych and plugins */
 <html>
   <head>
     <title>Task</title>
@@ -372,18 +371,18 @@ const instructions = {
       <p>For this task, you will see a cross on the screen. Please
       look at the cross when it appears. It will be followed by a
       single word.</p>
-      <p>Each word will be paired with a cue word at the top of the screen, either "self" or "case".</p>
+      <p>Each word will be paired with a cue word at the top of the screen, either <strong>"self"</strong> or <strong>"case"</strong>.</p>
     </div>`,
 
     `<div style='width: 85%; margin: 0 auto;'>
-      <p>If the cue word is "self", you will have to decide whether you think
+      <p>If the cue word is <strong>"self"</strong>, you will have to decide whether you think
       that the word shown could be used to describe you.</p>
       <p>If the word <strong>does</strong> describe you, tap <strong>"yes"</strong> as fast as you can.</p>
       <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong> as fast as you can.</p>
     </div>`,
 
     `<div style='width: 85%; margin: 0 auto;'>
-      <p>If the cue word is "case", you will have to decide whether the word is written in UPPERCASE letters.</p>
+      <p>If the cue word is <strong>"case"</strong>, you will have to decide whether the word is written in UPPERCASE letters.</p>
       <p>If the word <strong>is</strong> written in uppercase letters, tap <strong>"yes"</strong> as fast as you can.</p>
       <p>If the word <strong>is not</strong> written in uppercase letters, tap <strong>"no"</strong> as fast as you can.</p>
       ${urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined"
