@@ -478,15 +478,15 @@ var fixation = {
 // Retry instructions
 const retry_instructions = {
   type: jsPsychHtmlButtonResponse,
+  choices: ['Continue'],
   stimulus: `
     <div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
       <p>Let's try some more.</p>
       <p>Remember, if the cue word is <strong>"case"</strong>, you will have to decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
       <p>If the cue word is <strong>"self"</strong>, you will have to decide whether you think that the word shown could be used to describe you.</p>
     </div>
-  `,
-  choices: ['Continue'],
-  button_html: {return '<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">%choice%</button>'},
+     `,
+     button_html: '<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">%choice%</button>',
 };
     
 var practice_trial = {
