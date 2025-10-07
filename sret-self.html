@@ -503,7 +503,7 @@ var practice_trial = {
     `;
   },
   choices: ['yes', 'no'],
-  button_html: (choice) => `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`,
+  button_html: '<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">%choice%</button>',
   data: {
     cue: jsPsych.timelineVariable('cue'),
     valence: jsPsych.timelineVariable('valence'),
