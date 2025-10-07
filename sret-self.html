@@ -329,6 +329,24 @@ const w6_unique_stimuli = [
   {stimulus: 'unsociable', word: 'unsociable', trialtype: 'novel4', valence: 'negative'},
   {stimulus: 'pessimistic', word: 'pessimistic', trialtype: 'novel4', valence: 'negative'},
 ]
+    
+// setting sret stimuli for each biweekly session
+switch(urlvar.sret_session) {
+  case "w0":
+    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w0_unique_stimuli));
+    break;
+  case "w2":
+    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w2_unique_stimuli));
+    break;
+  case "w4":
+    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w4_unique_stimuli));
+    break;
+  case "w6":
+    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w6_unique_stimuli));
+    break;
+  default:
+    sret_stimuli = assignCaseTrials(base_sret_stimuli);
+}
 
 // Create 20 'case' trials (10 pos, 10 neg), rest 'self'
 function assignCaseTrials(stimuli) {
@@ -351,52 +369,43 @@ function assignCaseTrials(stimuli) {
   }));
 }
     
-// setting sret stimuli for each biweekly session
-switch(urlvar.sret_session) {
-  case "w0":
-    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w0_unique_stimuli));
-    break;
-  case "w2":
-    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w2_unique_stimuli));
-    break;
-  case "w4":
-    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w4_unique_stimuli));
-    break;
-  case "w6":
-    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w6_unique_stimuli));
-    break;
-  default:
-    sret_stimuli = assignCaseTrials(base_sret_stimuli);
-}
-    
-// 1. Split into case/self, positive/negative
+// Split into case/self, positive/negative
 const case_trials_pos = sret_stimuli.filter(item => item.cue === 'case' && item.valence === 'positive');
 const case_trials_neg = sret_stimuli.filter(item => item.cue === 'case' && item.valence === 'negative');
-const self_trials = sret_stimuli.filter(item => item.cue === 'self');
+const self_trials_pos = sret_stimuli.filter(item => item.cue === 'self' && item.valence === 'positive');
+const self_trials_neg = sret_stimuli.filter(item => item.cue === 'self' && item.valence === 'negative');
 
-// 2. Randomly sample 10 positive/negative case trials
-const selected_case_trials =
-  jsPsych.randomization.sampleWithoutReplacement(case_trials_pos, 10)
-  .concat(jsPsych.randomization.sampleWithoutReplacement(case_trials_neg, 10));
+// Randomly sample 10 positive & 10 negative case trials
+const selected_case_pos = jsPsych.randomization.sampleWithoutReplacement(case_trials_pos, 10);
+const selected_case_neg = jsPsych.randomization.sampleWithoutReplacement(case_trials_neg, 10);
+const selected_case_trials = selected_case_pos.concat(selected_case_neg);
 
-// 3. Capitalize 10 randomly selected case trials
-const shuffledCaseIndices = jsPsych.randomization.sampleWithoutReplacement([...Array(20).keys()], 10);
-const finalized_case_trials = selected_case_trials.map((item, idx) => (
-  shuffledCaseIndices.includes(idx)
-    ? {...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase()}
+// Capitalize 10 (5 positive and 5 negative) of the 20 randomly selected case trials
+const uppercase_case_pos_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
+const uppercase_case_neg_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
+
+const finalized_case_pos = selected_case_pos.map((item, idx) =>
+  uppercase_case_pos_indices.includes(idx)
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
     : item
-));
+);
 
-// 4. Randomly select remaining self trials to reach desired total trial count
-// For example, if you want 50 total trials:
-const totalTrials = 50;
-const numSelfToSample = totalTrials - 20;
-const selected_self_trials = jsPsych.randomization.sampleWithoutReplacement(self_trials, numSelfToSample);
+const finalized_case_neg = selected_case_neg.map((item, idx) =>
+  uppercase_case_neg_indices.includes(idx)
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
+    : item
+);
 
-// 5. Combine all trials
-let all_trials = finalized_case_trials.concat(selected_self_trials);
+// Combine all case trials
+const finalized_case_trials = finalized_case_pos.concat(finalized_case_neg);
 
-// 6. Shuffle so no two consecutive trials have the same cue, valence, or case status
+// Use all self trials
+const finalized_self_trials = self_trials_pos.concat(self_trials_neg);
+
+// Combine all task trials
+let all_trials = finalized_case_trials.concat(finalized_self_trials);
+
+// Shuffle so no two consecutive trials have the same cue, valence, or case status
 function equalityTest(a, b) {
   return (
     a.cue === b.cue &&
