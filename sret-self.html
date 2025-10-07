@@ -515,6 +515,12 @@ var practice_procedure = {
 };
 
 timeline.push(practice_procedure)
+
+var practice_procedure_second_round = {
+  timeline: [fixation, practice_trial],
+  timeline_variables: practice_stimuli_second_round,
+  randomize_order: true
+};
     
 var check_case_correctness = {
   timeline: [retry_instructions, practice_procedure_second_round],
@@ -530,12 +536,6 @@ var check_case_correctness = {
 
 timeline.push(check_case_correctness)
 
-var practice_procedure_second_round = {
-  timeline: [fixation, practice_trial],
-  timeline_variables: practice_stimuli_second_round,
-  randomize_order: false
-};
-    
 var sret = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
