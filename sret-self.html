@@ -440,6 +440,32 @@ button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4
 post_trial_gap: 2000
 };
     
+const instructions_example = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div style="width: 85%; margin: 0 auto; text-align: center; font-size: 2em; font-weight: bold; margin-bottom: 2vh;">
+      Here is an example
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; height: 65vh;">
+      <div style="display: flex; flex-direction: column; align-items: center; width: 45%;">
+        <div style="font-size: 2.3em; font-weight: bold; margin-bottom: 2vh;">SELF</div>
+        <div style="font-size: 3em; margin-bottom: 2vh;">+</div>
+        <div style="font-size: 2.3em;">CHILD</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; width: 45%;">
+        <div style="font-size: 2.3em; font-weight: bold; margin-bottom: 2vh;">CASE</div>
+        <div style="font-size: 3em; margin-bottom: 2vh;">+</div>
+        <div style="font-size: 2.3em;">parent</div>
+      </div>
+    </div>
+  `,
+  choices: ['Next'],
+  button_html: (choice) => {
+    return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`;
+  },
+  post_trial_gap: 2000
+};
+    
 const instructions_pg4 = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
@@ -581,7 +607,7 @@ const check_in = {
     return "<div style='width: 85%; margin: 0 auto;'><p>Your average response time was "+rt+" seconds.</p>"+
       speedcomment+
       "<p>After you read each word, "+
-      "quickly respond as to whether it describes you. </p></div>";
+      "quickly respond as to whether it describes you or is capitalized. </p></div>";
   },
   button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
   choices: ['Begin'],
@@ -601,18 +627,18 @@ const done = {
 }
 
 /* Task Timeline */
-timeline.push(instructions_pg1, instructions_pg2, instructions_pg3, instructions_pg4);
+timeline.push(instructions_pg1, instructions_pg2, instructions_pg3, instructions_example, instructions_pg4);
     
 if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
   timeline.push(practice_procedure); // first practice block
-  timeline.push(check_case_correctness); // retry practice block if case practice trials were incorrect
+  timeline.push(check_case_correctness); // retry practice block if they get one of the case practice trials
   timeline.push(check_in);
 }
 
 const block_procedure = {
   timeline: [fixation, sret],
   timeline_variables: all_trials,
-  randomize_order: false // already shuffled
+  randomize_order: false // already shuffled & randomized above
 }
 
 timeline.push(block_procedure);
