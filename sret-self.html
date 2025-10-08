@@ -429,6 +429,21 @@ button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4
 post_trial_gap: 2000
 };
     
+const instructions_ex_self = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
+        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${SELF}</div>
+        <div style="font-size: 3em; margin: 2vh 0;">+</div>
+        <div style="margin-bottom: 5vh; font-size: 2.3em;">${CHILD}</div>
+      </div>
+    `,
+  choices: ['Next'],
+  button_html: choice =>
+    `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`,
+  post_trial_gap: 2000
+};
+    
 const instructions_pg3 = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `<div style='width: 85%; margin: 0 auto;'>
@@ -440,31 +455,20 @@ button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4
 post_trial_gap: 2000
 };
     
-const instructions_example = {
+const instructions_ex_case = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-    <div style="width: 85%; margin: 0 auto; text-align: center; font-size: 2em; margin-bottom: 4vh;">
-      Ready to practice? Remember to respond as quickly as you can.
-    </div>
-    <div style="display: flex; justify-content: space-around; align-items: center; height: 70vh; gap: 8vw;">
-      <div style="display: flex; flex-direction: column; align-items: center; width: 40%;">
-        <div style="font-size: 3em; margin-bottom: 3vh;">SELF</div>
-        <div style="font-size: 4em; margin-bottom: 3vh;">+</div>
-        <div style="font-size: 3em;">CHILD</div>
+      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
+        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${CASE}</div>
+        <div style="font-size: 3em; margin: 2vh 0;">+</div>
+        <div style="margin-bottom: 5vh; font-size: 2.3em;">${parent}</div>
       </div>
-      <div style="display: flex; flex-direction: column; align-items: center; width: 40%;">
-        <div style="font-size: 3em; margin-bottom: 3vh;">CASE</div>
-        <div style="font-size: 4em; margin-bottom: 3vh;">+</div>
-        <div style="font-size: 3em;">parent</div>
-      </div>
-    </div>
-  `,
+    `,
   choices: ['Next'],
   button_html: choice =>
     `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`,
   post_trial_gap: 2000
 };
-
     
 const instructions_pg4 = {
   type: jsPsychHtmlButtonResponse,
@@ -627,7 +631,7 @@ const done = {
 }
 
 /* Task Timeline */
-timeline.push(instructions_pg1, instructions_pg2, instructions_pg3, instructions_example, instructions_pg4);
+timeline.push(instructions_pg1, instructions_pg2, instructions_ex_self, instructions_pg3, instructions_ex_case, instructions_pg4);
     
 if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
   timeline.push(practice_procedure); // first practice block
