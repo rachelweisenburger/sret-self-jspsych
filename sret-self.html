@@ -147,7 +147,7 @@ var if_mobile = {
 
 timeline.push(checkMobile, if_mobile);
 
-/* stimuli */
+/* Stimuli Setup */
 
 /* practice trials */
 const practice_stimuli = [
@@ -331,93 +331,80 @@ const w6_unique_stimuli = [
   {stimulus: 'pessimistic', word: 'pessimistic', trialtype: 'novel4', valence: 'negative', cue: 'self'},
 ]
     
-// setting sret stimuli for each biweekly session
-switch(urlvar.sret_session) {
-  case "w0":
-    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w0_unique_stimuli));
-    break;
-  case "w2":
-    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w2_unique_stimuli));
-    break;
-  case "w4":
-    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w4_unique_stimuli));
-    break;
-  case "w6":
-    sret_stimuli = assignCaseTrials(base_sret_stimuli.concat(w6_unique_stimuli));
-    break;
-  default:
-    sret_stimuli = assignCaseTrials(base_sret_stimuli);
-}
+/* Defining SRET stimuli for each biweekly session */
+const stimuliMap = {
+    w0: base_sret_stimuli.concat(w0_unique_stimuli),
+    w2: base_sret_stimuli.concat(w2_unique_stimuli),
+    w4: base_sret_stimuli.concat(w4_unique_stimuli),
+    w6: base_sret_stimuli.concat(w6_unique_stimuli),
+};
+const selectedStimuli = stimuliMap[urlvar.sret_session] || base_sret_stimuli;
+const sret_stimuli = assignCaseTrials(selectedStimuli);
 
-// Create 20 'case' trials (10 pos, 10 neg), rest 'self'
-function assignCaseTrials(stimuli) {
-  // Separate by valence
-  const positive = stimuli.filter(item => item.valence === 'positive');
-  const negative = stimuli.filter(item => item.valence === 'negative');
-  
-  // Randomly select 10 positive and 10 negative for 'case'
-  const shuffle = arr => arr.slice().sort(() => Math.random() - 0.5);
-  const casePositive = shuffle(positive).slice(0, 10);
-  const caseNegative = shuffle(negative).slice(0, 10);
+/* Split by valence */
+const all_pos = selectedStimuli.filter(item => item.valence === 'positive');
+const all_neg = selectedStimuli.filter(item => item.valence === 'negative');
 
-  // Get the set of case words
-  const caseSet = new Set([...casePositive, ...caseNegative].map(item => item.word));
+/* Randomly select 20 positive and 20 negative stimuli for 40 total 'self' trials */
+const self_pos = jsPsych.randomization.sampleWithoutReplacement(all_pos, 20);
+const self_neg = jsPsych.randomization.sampleWithoutReplacement(all_neg, 20);
+const self_trials = self_pos.concat(self_neg).map(item => ({ ...item, cue: 'self' }));
 
-  // Map and assign cues
-  return stimuli.map(item => ({
-    ...item,
-    cue: caseSet.has(item.word) ? 'case' : 'self',
-  }));
-}
-    
-// Split trials into case/self, positive/negative
-const case_trials_pos = sret_stimuli.filter(item => item.cue === 'case' && item.valence === 'positive');
-const case_trials_neg = sret_stimuli.filter(item => item.cue === 'case' && item.valence === 'negative');
-const self_trials_pos = sret_stimuli.filter(item => item.cue === 'self' && item.valence === 'positive');
-const self_trials_neg = sret_stimuli.filter(item => item.cue === 'self' && item.valence === 'negative');
+/* Select the remaining 20 stimuli for 'case' trials */
+const remaining_pos = all_pos.filter(item => !self_pos.includes(item));
+const remaining_neg = all_neg.filter(item => !self_neg.includes(item));
+const case_pos = jsPsych.randomization.sampleWithoutReplacement(remaining_pos, 10);
+const case_neg = jsPsych.randomization.sampleWithoutReplacement(remaining_neg, 10);
+const case_trials = case_pos.concat(case_neg).map(item => ({ ...item, cue: 'case' }));
 
-// Randomly sample 10 positive & 10 negative case trials
-const selected_case_pos = jsPsych.randomization.sampleWithoutReplacement(case_trials_pos, 10);
-const selected_case_neg = jsPsych.randomization.sampleWithoutReplacement(case_trials_neg, 10);
-const selected_case_trials = selected_case_pos.concat(selected_case_neg);
+/* Randomly capitalize 10 negative and 10 positive for 20 capitalized 'self' trials */
+const self_pos_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(20).keys()], 10);
+const self_neg_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(20).keys()], 10);
 
-// Capitalize 10 (5 positive and 5 negative) of the 20 randomly selected case trials
-const uppercase_case_pos_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
-const uppercase_case_neg_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
-
-const finalized_case_pos = selected_case_pos.map((item, idx) =>
-  uppercase_case_pos_indices.includes(idx)
+const finalized_self_pos = self_pos.map((item, idx) =>
+  self_pos_indices.includes(idx)
     ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
     : item
 );
-
-const finalized_case_neg = selected_case_neg.map((item, idx) =>
-  uppercase_case_neg_indices.includes(idx)
+const finalized_self_neg = self_neg.map((item, idx) =>
+  self_neg_indices.includes(idx)
     ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
     : item
 );
+const finalized_self_trials = finalized_self_pos.concat(finalized_self_neg);
 
-// Combine all case trials
+/* Randomly capitalize 5 negative and 5 positive for 10 capitalized 'case' trials */
+const case_pos_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
+const case_neg_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
+
+const finalized_case_pos = case_pos.map((item, idx) =>
+  case_pos_indices.includes(idx)
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
+    : item
+);
+const finalized_case_neg = case_neg.map((item, idx) =>
+  case_neg_indices.includes(idx)
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
+    : item
+);
 const finalized_case_trials = finalized_case_pos.concat(finalized_case_neg);
+    
+/* Shuffle so that no two consecutive tirals have the same cue/valence/case */
+let all_trials = finalized_self_trials.concat(finalized_case_trials);
 
-// Use all self trials
-const finalized_self_trials = self_trials_pos.concat(self_trials_neg);
-
-// Combine all task trials
-let all_trials = finalized_case_trials.concat(finalized_self_trials);
-
-// Shuffle so no two consecutive trials have the same cue, valence, or case status
 function equalityTest(a, b) {
   return (
-    a.cue === b.cue &&
-    a.valence === b.valence &&
-    (a.stimulus === a.stimulus.toUpperCase()) === (b.stimulus === b.stimulus.toUpperCase())
-  );
-}
-
+     a.cue === b.cue &&
+     a.valence === b.valence &&
+     // true if both are upper or both are not upper
+     (a.stimulus === a.stimulus.toUpperCase()) === (b.stimulus === b.stimulus.toUpperCase())
+   );
+ }
+    
 all_trials = jsPsych.randomization.shuffleNoRepeats(all_trials, equalityTest);
+
    
-// Task Instructions
+/* Task Instructions */
 const instructions = {
   type: jsPsychInstructions,
   pages: [
@@ -429,14 +416,14 @@ const instructions = {
     </div>`,
 
     `<div style='width: 85%; margin: 0 auto;'>
-      <p>If the cue word is <strong>"self"</strong>, you will have to decide whether you think
+      <p>If the cue word is <strong>"SELF"</strong>, you will have to decide whether you think
       that the word shown could be used to describe you.</p>
       <p>If the word <strong>does</strong> describe you, tap <strong>"yes"</strong> as fast as you can.</p>
       <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong> as fast as you can.</p>
     </div>`,
 
     `<div style='width: 85%; margin: 0 auto;'>
-      <p>If the cue word is <strong>"case"</strong>, you will have to decide whether the word is written in UPPERCASE letters.</p>
+      <p>If the cue word is <strong>"CASE"</strong>, you will have to decide whether the word is written in UPPERCASE letters.</p>
       <p>If the word <strong>is</strong> written in uppercase letters, tap <strong>"yes"</strong> as fast as you can.</p>
       <p>If the word <strong>is not</strong> written in uppercase letters, tap <strong>"no"</strong> as fast as you can.</p>
       ${urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined"
@@ -452,7 +439,8 @@ const instructions = {
 
 timeline.push(instructions);
 
-var fixation = {
+/* Fixation Cross Setup*/
+const fixation = {
   type: jsPsychHtmlButtonResponse,
   stimulus: '<div style="font-size: 3em">+</div>',
   choices: [],
@@ -461,7 +449,7 @@ var fixation = {
   }
 };
 
-// Retry instructions
+/* Retry Instructions */
 const retry_instructions = {
   type: jsPsychInstructions,
   pages: [
@@ -475,8 +463,9 @@ const retry_instructions = {
   button_label_next: 'Continue',
   post_trial_gap: 2000
 };
-    
-var practice_trial = {
+
+/* Practice Trial Block */
+const practice_trial = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
@@ -509,21 +498,19 @@ var practice_trial = {
   }
 }
     
-var practice_procedure = {
+const practice_procedure = {
   timeline: [fixation, practice_trial],
   timeline_variables: practice_stimuli,
   randomize_order: true
 };
 
-timeline.push(practice_procedure)
-
-var practice_procedure_second_round = {
+const practice_procedure_second_round = {
   timeline: [fixation, practice_trial],
   timeline_variables: practice_stimuli_second_round,
   randomize_order: true
 };
     
-var check_case_correctness = {
+const check_case_correctness = {
   timeline: [retry_instructions, practice_procedure_second_round],
   conditional_function: function(){
     // Look at the last 4 practice trials (first practice block)
@@ -535,9 +522,8 @@ var check_case_correctness = {
   }
 };
 
-timeline.push(check_case_correctness)
-
-var sret = {
+/* Main Task Block */
+const sret = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
@@ -563,8 +549,8 @@ var sret = {
   }
 }
 
-/* check in block */
-var check_in = {
+/* Check In Block */
+const check_in = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
     var trials = jsPsych.data.get().filter({trialtype: 'practice'});
@@ -586,21 +572,7 @@ var check_in = {
   button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
   choices: ['Begin'],
 };
-
-if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
-  timeline.push(practice_procedure);
-  timeline.push(check_case_correctness);
-  timeline.push(check_in);
-};
-
-const block_procedure = {
-  timeline: [fixation, sret],
-  timeline_variables: all_trials,
-  randomize_order: false // already shuffled
-}
-
-timeline.push(block_procedure);
-
+    
 const done = {
   type: jsPsychHtmlButtonResponse,
   choices: ['Continue'],
@@ -614,8 +586,26 @@ const done = {
   margin_vertical: '50px',
 }
 
+/* Task Timeline */
+let timeline = [];
+timeline.push(instructions);
+    
+if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
+  timeline.push(practice_procedure); // first practice block
+  timeline.push(check_case_correctness); // retry practice block if case practice trials were incorrect
+  timeline.push(check_in);
+}
+
+const block_procedure = {
+  timeline: [fixation, sret],
+  timeline_variables: all_trials,
+  randomize_order: false // already shuffled
+}
+
+timeline.push(block_procedure);
 timeline.push(done);
 
+/* Run! */
 jsPsych.run(timeline);
 </script>
 </html>
