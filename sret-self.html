@@ -443,28 +443,28 @@ post_trial_gap: 2000
 const instructions_example = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-    <div style="width: 85%; margin: 0 auto; text-align: center; font-size: 2em; font-weight: bold; margin-bottom: 2vh;">
-      Here is an example
+    <div style="width: 85%; margin: 0 auto; text-align: center; font-size: 2em; margin-bottom: 4vh;">
+      Ready to practice? Remember to respond as quickly as you can.
     </div>
-    <div style="display: flex; justify-content: space-between; align-items: center; height: 65vh;">
-      <div style="display: flex; flex-direction: column; align-items: center; width: 45%;">
-        <div style="font-size: 2.3em; font-weight: bold; margin-bottom: 2vh;">SELF</div>
-        <div style="font-size: 3em; margin-bottom: 2vh;">+</div>
-        <div style="font-size: 2.3em;">CHILD</div>
+    <div style="display: flex; justify-content: space-around; align-items: center; height: 70vh; gap: 8vw;">
+      <div style="display: flex; flex-direction: column; align-items: center; width: 40%;">
+        <div style="font-size: 3em; margin-bottom: 3vh;">SELF</div>
+        <div style="font-size: 4em; margin-bottom: 3vh;">+</div>
+        <div style="font-size: 3em;">CHILD</div>
       </div>
-      <div style="display: flex; flex-direction: column; align-items: center; width: 45%;">
-        <div style="font-size: 2.3em; font-weight: bold; margin-bottom: 2vh;">CASE</div>
-        <div style="font-size: 3em; margin-bottom: 2vh;">+</div>
-        <div style="font-size: 2.3em;">parent</div>
+      <div style="display: flex; flex-direction: column; align-items: center; width: 40%;">
+        <div style="font-size: 3em; margin-bottom: 3vh;">CASE</div>
+        <div style="font-size: 4em; margin-bottom: 3vh;">+</div>
+        <div style="font-size: 3em;">parent</div>
       </div>
     </div>
   `,
   choices: ['Next'],
-  button_html: (choice) => {
-    return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`;
-  },
+  button_html: choice =>
+    `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`,
   post_trial_gap: 2000
 };
+
     
 const instructions_pg4 = {
   type: jsPsychHtmlButtonResponse,
