@@ -405,14 +405,22 @@ all_trials = jsPsych.randomization.shuffleNoRepeats(all_trials, equalityTest);
 
    
 /* Task Instructions */
-const instructions = {
+const instructions_pg1 = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: function() {
-    var stim = `<div style='width: 85%; margin: 0 auto;'>
+  stimulus: `<div style='width: 85%; margin: 0 auto;'>
       <p>For this task, you will see a cross on the screen. Please
       look at the cross when it appears. It will be followed by a
       single word.</p>
-      <p>Each word will be paired with a cue word at the top of the screen, either <strong>"self"</strong> or <strong>"case"</strong>.</p>
+      <p>Each word will be paired with a cue word at the top of the screen, either <strong>"self"</strong> or <strong>"case"</strong>.</p>`
+      '</div>',
+choices: ['Next'],
+button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
+post_trial_gap: 2000
+};
+    
+const instructions_pg2 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `<div style='width: 85%; margin: 0 auto;'>
       <p>If the cue word is <strong>"SELF"</strong>, you will have to decide whether you think
       that the word shown could be used to describe you.</p>
       <p>If the word <strong>does</strong> describe you, tap <strong>"yes"</strong> as fast as you can.</p>
@@ -420,8 +428,32 @@ const instructions = {
       <p>If the cue word is <strong>"CASE"</strong>, you will have to decide whether the word is written in UPPERCASE letters.</p>
       <p>If the word <strong>is</strong> written in uppercase letters, tap <strong>"yes"</strong> as fast as you can.</p>
       <p>If the word <strong>is not</strong> written in uppercase letters, tap <strong>"no"</strong> as fast as you can.</p>`
+      '</div>',
+choices: ['Next'],
+button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
+post_trial_gap: 2000
+};
+    
+const instructions_pg3 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `<div style='width: 85%; margin: 0 auto;'>
+      <p>If the cue word is <strong>"CASE"</strong>, you will have to decide whether the word is written in UPPERCASE letters.</p>
+      <p>If the word <strong>is</strong> written in uppercase letters, tap <strong>"yes"</strong> as fast as you can.</p>
+      <p>If the word <strong>is not</strong> written in uppercase letters, tap <strong>"no"</strong> as fast as you can.</p>`
+      '</div>',
+choices: ['Next'],
+button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
+post_trial_gap: 2000
+};
+    
+const instructions_pg4 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function() {
+    var stim = `<div style='width: 85%; margin: 0 auto;'>
+      <p></p>
+      <p>The words will appear very rapidly. After you read each word, respond as quickly as you can.</p>`
   if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
-      stim = stim + `<p>We will start with a few practice words.</p>`
+      stim = stim + `<p>Ready to practice?</p>`
     }
   stim = stim + '</div>'
   return(stim)
@@ -430,6 +462,7 @@ choices: ['Begin'],
 button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
 post_trial_gap: 2000
 };
+    
 
 /* Fixation Cross Setup*/
 const fixation = {
