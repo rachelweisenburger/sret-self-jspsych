@@ -153,7 +153,7 @@ timeline.push(checkMobile, if_mobile);
 const practice_stimuli = [
   {stimulus: 'TALL', word: 'TALL', trialtype: 'practice', valence: 'null', cue: 'self'},
   {stimulus: 'young', word: 'young', trialtype: 'practice', valence: 'null', cue: 'case'},
-  {stimulus: 'awake', word: 'awake', trialtype: 'practice', valence: 'null', cue: 'self'},
+  {stimulus: 'strong', word: 'strong', trialtype: 'practice', valence: 'null', cue: 'self'},
   {stimulus: 'SORE', word: 'SORE', trialtype: 'practice', valence: 'null', cue: 'case'},
   {stimulus: "cold", word: 'cold', trialtype: 'practice', valence: 'null', cue: 'self'}
 ];
@@ -433,9 +433,9 @@ const instructions_ex_self = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
       <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${SELF}</div>
+        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">SELF</div>
         <div style="font-size: 3em; margin: 2vh 0;">+</div>
-        <div style="margin-bottom: 5vh; font-size: 2.3em;">${CHILD}</div>
+        <div style="margin-bottom: 5vh; font-size: 2.3em;">AWAKE</div>
       </div>
     `,
   choices: ['Next'],
@@ -459,9 +459,9 @@ const instructions_ex_case = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
       <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${CASE}</div>
+        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">CASE</div>
         <div style="font-size: 3em; margin: 2vh 0;">+</div>
-        <div style="margin-bottom: 5vh; font-size: 2.3em;">${parent}</div>
+        <div style="margin-bottom: 5vh; font-size: 2.3em;">asleep</div>
       </div>
     `,
   choices: ['Next'],
