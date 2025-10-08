@@ -1,3 +1,23 @@
+# Node modules
+node_modules/
+
+# Mac system files
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+
+# Build outputs (if applicable)
+dist/
+build/
+
+# VSCode settings
+.vscode/
+
 .Rproj.user
 .Rhistory
 .RData
