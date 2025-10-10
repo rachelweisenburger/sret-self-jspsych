@@ -1,0 +1,26 @@
+-- all data dataclip
+SELECT * FROM srets;
+
+-- sret_IDs
+SELECT
+  data -> 'trials' -> 0 -> 'ppt' AS id,
+  data -> 'trials' -> 0 -> 'session' AS session,
+  data -> 'trials' -> 0 -> 'mobile' AS onmobile,
+  "createdAt"::timestamp AT TIME ZONE '-05:00' "when"
+FROM srets
+ORDER BY "when" desc;
+
+-- sret_id_count
+WITH sret_id AS (
+  SELECT
+    data -> 'trials' -> 0 ->> 'ppt' AS ppt,
+    data -> 'trials' -> 0 ->> 'session' AS session
+  FROM
+    srets )
+SELECT 
+  session, 
+  COUNT(DISTINCT(ppt))
+FROM sret_id
+WHERE length(ppt) = 5 AND length(session) = 2
+GROUP BY session
+ORDER BY count DESC ;
