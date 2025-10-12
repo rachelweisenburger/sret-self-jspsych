@@ -47,7 +47,7 @@ const jsPsych = initJsPsych({
 
     // extract from REDCap url
     var participantID = urlvar.record_id;  // REDCap record ID from URL
-    var eventName = typeof eventName !== 'undefined' ? eventName : session + "_" + arm; // e.g., "week_0_arm_2"
+    var eventName = urlvar.event // REDCap longitudinal event name from URL
     
     var finalurl = data.trials[1].rc; // redcap_url;
     if (finalurl) {
@@ -101,7 +101,8 @@ jsPsych.data.addProperties({
   ppt: urlvar.sret_id,
   session: urlvar.sret_session,
   rc: urlvar.rc,
-  event: eventName
+  event: eventName,
+  participantID = urlvar.record_id
 });
 
 // console.log("ID " + urlvar.sret_id + " at session " + urlvar.sret_session + " began the task.")
