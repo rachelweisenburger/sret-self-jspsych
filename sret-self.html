@@ -210,7 +210,7 @@ const base_sret_stimuli = [
   {stimulus: 'disloyal', word: 'disloyal', trialtype: 'core', valence: 'negative', cue: 'self'},
 ]
 
-const w0_unique_stimuli = [
+const week_0_unique_stimuli = [
   {stimulus: 'lovable', word: 'lovable', trialtype: 'novel1', valence: 'positive', cue: 'self'},
   {stimulus: 'glad', word: 'glad', trialtype: 'novel1', valence: 'positive', cue: 'self'},
   {stimulus: 'nice', word: 'nice', trialtype: 'novel1', valence: 'positive', cue: 'self'},
@@ -243,7 +243,7 @@ const w0_unique_stimuli = [
   {stimulus: 'dishonorable', word: 'dishonorable', trialtype: 'novel1', valence: 'negative', cue: 'self'}
 ]
 
-const w2_unique_stimuli = [
+const week_0_unique_stimuli = [
   {stimulus: 'carefree', word: 'carefree', trialtype: 'novel2', valence: 'positive', cue: 'self'},
   {stimulus: 'pleased', word: 'pleased', trialtype: 'novel2', valence: 'positive', cue: 'self'},
   {stimulus: 'lucky', word: 'lucky', trialtype: 'novel2', valence: 'positive', cue: 'self'},
@@ -276,7 +276,7 @@ const w2_unique_stimuli = [
   {stimulus: 'greedy', word: 'greedy', trialtype: 'novel2', valence: 'negative', cue: 'self'}
 ]
 
-const w4_unique_stimuli = [
+const week_4_unique_stimuli = [
   {stimulus: 'cheerful', word: 'cheerful', trialtype: 'novel3', valence: 'positive', cue: 'self'},
   {stimulus: 'friendly', word: 'friendly', trialtype: 'novel3', valence: 'positive', cue: 'self'},
   {stimulus: 'compassionate', word: 'compassionate', trialtype: 'novel3', valence: 'positive', cue: 'self'},
@@ -309,7 +309,7 @@ const w4_unique_stimuli = [
   {stimulus: 'thoughtless', word: 'thoughtless', trialtype: 'novel3', valence: 'negative', cue: 'self'}
 ]
 
-const w6_unique_stimuli = [
+const week_6_unique_stimuli = [
   {stimulus: 'vigorous', word: 'vigorous', trialtype: 'novel4', valence: 'positive', cue: 'self'},
   {stimulus: 'adorable', word: 'adorable', trialtype: 'novel4', valence: 'positive', cue: 'self'},
   {stimulus: 'outstanding', word: 'outstanding', trialtype: 'novel4', valence: 'positive', cue: 'self'},
@@ -344,10 +344,10 @@ const w6_unique_stimuli = [
     
 /* Defining SRET stimuli for each biweekly session */
 const stimuliMap = {
-    w0: base_sret_stimuli.concat(w0_unique_stimuli),
-    w2: base_sret_stimuli.concat(w2_unique_stimuli),
-    w4: base_sret_stimuli.concat(w4_unique_stimuli),
-    w6: base_sret_stimuli.concat(w6_unique_stimuli),
+    week_0: base_sret_stimuli.concat(week_0_unique_stimuli),
+    week_2: base_sret_stimuli.concat(week_2_unique_stimuli),
+    week_4: base_sret_stimuli.concat(week_4_unique_stimuli),
+    week_6: base_sret_stimuli.concat(week_6_unique_stimuli),
 };
 const selectedStimuli = stimuliMap[urlvar.sret_session] || base_sret_stimuli;
 // const sret_stimuli = assignCaseTrials(selectedStimuli);
