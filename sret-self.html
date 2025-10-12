@@ -350,7 +350,7 @@ const stimuliMap = {
     w6: base_sret_stimuli.concat(w6_unique_stimuli),
 };
 const selectedStimuli = stimuliMap[urlvar.sret_session] || base_sret_stimuli;
-// const sret_stimuli = assignCaseTrials(selectedStimuli);
+const sret_stimuli = assignCaseTrials(selectedStimuli);
 
 /* Split by valence */
 const all_pos = selectedStimuli.filter(item => item.valence === 'positive');
