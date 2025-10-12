@@ -343,15 +343,34 @@ const w6_unique_stimuli = [
 ]
     
 /* Defining SRET stimuli for each biweekly session */
-const stimuliMap = {
-    w0: base_sret_stimuli.concat(w0_unique_stimuli),
-    w2: base_sret_stimuli.concat(w2_unique_stimuli),
-    w4: base_sret_stimuli.concat(w4_unique_stimuli),
-    w6: base_sret_stimuli.concat(w6_unique_stimuli),
-};
-const selectedStimuli = stimuliMap[urlvar.sret_session] || base_sret_stimuli;
+// const stimuliMap = {
+//    w0: base_sret_stimuli.concat(w0_unique_stimuli),
+ //   w2: base_sret_stimuli.concat(w2_unique_stimuli),
+ //   w4: base_sret_stimuli.concat(w4_unique_stimuli),
+ //   w6: base_sret_stimuli.concat(w6_unique_stimuli),
+//};
+//const selectedStimuli = stimuliMap[urlvar.sret_session] || base_sret_stimuli;
 
-console.log("Session:", urlvar.sret_session);
+let selectedStimuli;
+
+switch(urlvar.sret_session) {
+  case "w0":
+    selectedStimuli = base_sret_stimuli.concat(w0_unique_stimuli);
+    break;
+  case "w2":
+    selectedStimuli = base_sret_stimuli.concat(w2_unique_stimuli);
+    break;
+  case "w4":
+    selectedStimuli = base_sret_stimuli.concat(w4_unique_stimuli);
+    break;
+  case "w6":
+    selectedStimuli = base_sret_stimuli.concat(w6_unique_stimuli);
+    break;
+  default:
+    selectedStimuli = base_sret_stimuli;
+}
+
+    console.log("Session:", urlvar.sret_session);
 console.log("Stimuli map key exists?", stimuliMap.hasOwnProperty(urlvar.sret_session));
 console.log("Selected stimuli:", selectedStimuli);
 
