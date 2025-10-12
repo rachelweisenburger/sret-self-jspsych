@@ -30,18 +30,6 @@
 // data.trials[1].ppt ==> the participant ID -- the [1] just grabs it from the second trial
 
 var taskStartTime = Date.now() // recording start time
-
-/* get URL variables */
-var urlvar = jsPsych.data.urlVariables();
-var participantID = urlvar.record_id;  // REDCap record ID from URL
-var eventName = urlvar.event;          // REDCap event name from URL (e.g., "week_0_arm_1")
-
-jsPsych.data.addProperties({
-  ppt: urlvar.sret_id,
-  session: urlvar.sret_session,
-  rc: urlvar.rc,
-  event: eventName
-});
     
 /* initialize jsPsych task */
 const jsPsych = initJsPsych({
@@ -51,16 +39,22 @@ const jsPsych = initJsPsych({
   on_finish: function(data) {
     var taskEndTime = Date.now();
     var taskDurationMs = taskEndTime - taskStartTime;
-      // extract participant/session and redcap url from trial data
-    var ppt = data.trials[1].ppt;
-    var session = data.trials[1].session;
-    var compositeID = `${ppt}_${session}`; // participant-session ID
+    
+    // extract participant/session and redcap url from trial data
+    var ppt = data.trials[1].ppt; // record_id
+    var session = data.trials[1].session; // "week_0"
+    var arm = data.trials[1].arm; // "arm_2"
+
+    // extract from REDCap url
+    var participantID = urlvar.record_id;  // REDCap record ID from URL
+    var eventName = typeof eventName !== 'undefined' ? eventName : session + "_" + arm; // e.g., "week_0_arm_2"
+    
     var finalurl = data.trials[1].rc; // redcap_url;
     if (finalurl) {
       /*
       //finalurl = 'https://https://sret-self-4774526bcb1e.herokuapp.com/?' // just start it over if they don't have the URL
     } else {*/
-      finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&' // s= for survey string; code= for access code
+      finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?code=${finalurl}&event=${eventName}&sret_id=${participantID}` // s= for survey string; code= for access code
     }
     // create a confirmation code to send
     /*var confirmation_code = '';
@@ -99,7 +93,16 @@ const jsPsych = initJsPsych({
 
 const timeline = []
 
+/* get URL variables */
+var urlvar = jsPsych.data.urlVariables();
 
+
+jsPsych.data.addProperties({
+  ppt: urlvar.sret_id,
+  session: urlvar.sret_session,
+  rc: urlvar.rc,
+  event: eventName
+});
 
 // console.log("ID " + urlvar.sret_id + " at session " + urlvar.sret_session + " began the task.")
 
