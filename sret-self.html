@@ -48,7 +48,7 @@ const jsPsych = initJsPsych({
       /*
       //finalurl = 'https://https://sret-self-4774526bcb1e.herokuapp.com/?' // just start it over if they don't have the URL
     } else {*/
-      finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?code=${finalurl}&event=${eventName}&sret_id=${participantID}` // s= for survey string; code= for access code
+      finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&' // s= for survey string; code= for access code
     }
     // create a confirmation code to send
     /*var confirmation_code = '';
@@ -335,19 +335,26 @@ const w6_unique_stimuli = [
 ]
     
 /* Defining SRET stimuli for each biweekly session */
-const stimuliMap = {
-    w0: base_sret_stimuli.concat(w0_unique_stimuli),
-    w2: base_sret_stimuli.concat(w2_unique_stimuli),
-    w4: base_sret_stimuli.concat(w4_unique_stimuli),
-    w6: base_sret_stimuli.concat(w6_unique_stimuli),
-};
-
-const sessionKey = urlvar.sret_session ? urlvar.sret_session.trim().toLowerCase() : undefined;
-const selectedStimuli = stimuliMap[urlvar.sret_session] || base_sret_stimuli;
-
+switch(urlvar.sret_session) {
+  case "w0":
+    sret_stimuli = base_sret_stimuli.concat(w0_unique_stimuli);
+    break;
+  case "w2":
+    sret_stimuli = base_sret_stimuli.concat(w2_unique_stimuli);
+    break;
+  case "w4":
+    sret_stimuli = base_sret_stimuli.concat(w4_unique_stimuli);
+    break;
+  case "w6":
+    sret_stimuli = base_sret_stimuli.concat(w6_unique_stimuli);
+    break;
+  default:
+    sret_stimuli = base_sret_stimuli;
+}
+    
 /* Split by valence */
-const all_pos = selectedStimuli.filter(item => item.valence === 'positive');
-const all_neg = selectedStimuli.filter(item => item.valence === 'negative');
+const all_pos = sret_stimuli.filter(item => item.valence === 'positive');
+const all_neg = sret_stimuli.filter(item => item.valence === 'negative');
 
 /* Randomly select 20 positive and 20 negative stimuli for 40 total 'self' trials */
 const self_pos = jsPsych.randomization.sampleWithoutReplacement(all_pos, 20);
