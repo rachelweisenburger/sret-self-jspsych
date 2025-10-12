@@ -370,10 +370,6 @@ switch(urlvar.sret_session) {
     selectedStimuli = base_sret_stimuli;
 }
 
-    console.log("Session:", urlvar.sret_session);
-console.log("Stimuli map key exists?", stimuliMap.hasOwnProperty(urlvar.sret_session));
-console.log("Selected stimuli:", selectedStimuli);
-
 /* Split by valence */
 const all_pos = selectedStimuli.filter(item => item.valence === 'positive');
 const all_neg = selectedStimuli.filter(item => item.valence === 'negative');
