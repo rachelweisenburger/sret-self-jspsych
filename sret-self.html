@@ -28,15 +28,33 @@
 <script>
 // data.trials[1].session ==> the session
 // data.trials[1].ppt ==> the participant ID -- the [1] just grabs it from the second trial
+
+var taskStartTime = Date.now() // recording start time
+
+/* get URL variables */
+var urlvar = jsPsych.data.urlVariables();
+var participantID = urlvar.record_id;  // REDCap record ID from URL
+var eventName = urlvar.event;          // REDCap event name from URL (e.g., "week_0_arm_1")
+
+jsPsych.data.addProperties({
+  ppt: urlvar.sret_id,
+  session: urlvar.sret_session,
+  rc: urlvar.rc,
+  event: eventName
+});
+    
+/* initialize jsPsych task */
 const jsPsych = initJsPsych({
   use_webaudio: false,
-  /*on_interaction_data_update: function(data) {
-    console.log('{"id": "' + urlvar.sret_id + '", "interaction: "' + JSON.stringify(data) + '}');
-    //jsPsych.data.addProperties({interaction: JSON.stringify(data)})
-  },*/
+
+  /* redirect logic & data management */
   on_finish: function(data) {
+    var taskEndTime = Date.now();
+    var taskDurationMs = taskEndTime - taskStartTime;
+      // extract participant/session and redcap url from trial data
     var ppt = data.trials[1].ppt;
     var session = data.trials[1].session;
+    var compositeID = `${ppt}_${session}`; // participant-session ID
     var finalurl = data.trials[1].rc; // redcap_url;
     if (finalurl) {
       /*
@@ -55,11 +73,7 @@ const jsPsych = initJsPsych({
     }*/
     //console.log("Posting data for ID " + ppt + " and session " + session);
     var newurlgo = `${finalurl}sret_id=${ppt}&sret_session=${session}` //`&sret_conf=${confirmation_code}`
-    //jsPsych.data.displayData('csv')
-    // var all_data = jsPsych.data.get();
-    // get csv representation of data and log to console
-    // console.log(all_data.csv());
-    // console.log({...data, ...jsPsych.data.getInteractionData()})
+/* post data to server */
     var jqxhr = $.post({
       url: "/experiment-data",
       data: JSON.stringify(data),
@@ -85,14 +99,7 @@ const jsPsych = initJsPsych({
 
 const timeline = []
 
-/* get URL variables */
-var urlvar = jsPsych.data.urlVariables();
 
-jsPsych.data.addProperties({
-  ppt: urlvar.sret_id,
-  session: urlvar.sret_session,
-  rc: urlvar.rc
-});
 
 // console.log("ID " + urlvar.sret_id + " at session " + urlvar.sret_session + " began the task.")
 
