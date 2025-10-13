@@ -445,11 +445,11 @@ switch(timepoint) {
 }
     
 /* Split by valence */
-const all_pos = sret_stimuli.filter(item => item.valence === 'positive');
-const all_neg = sret_stimuli.filter(item => item.valence === 'negative');
+const all_pos = timepoint.filter(item => item.valence === 'positive');
+const all_neg = timepoint.filter(item => item.valence === 'negative');
 
-console.log("Positive:", all_pos.length);
-console.log("Negative:", all_neg.length);
+// console.log("Positive:", all_pos.length);
+// console.log("Negative:", all_neg.length);
 
 /* Randomly select 20 positive and 20 negative stimuli for 40 total 'self' trials */
 const self_pos = jsPsych.randomization.sampleWithoutReplacement(all_pos, 20);
