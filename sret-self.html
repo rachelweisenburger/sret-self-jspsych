@@ -737,7 +737,7 @@ const done = {
 /* Task Timeline */
 timeline.push(instructions_pg1, instructions_pg2, instructions_ex_self, instructions_pg3, instructions_ex_case, instructions_pg4);
     
-if(urlvar.sret_session === "w0" || typeof urlvar.sret_session === "undefined") {
+if(timepoint === "w0" || typeof urlvar.sret_session === "undefined") {
   timeline.push(practice_procedure); // first practice block
   timeline.push(check_case_correctness); // retry practice block if they get one of the case practice trials
   timeline.push(check_in);
