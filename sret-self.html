@@ -441,12 +441,12 @@ switch(timepoint) {
     sret_stimuli = w6_unique_stimuli;
     break;
   default:
-    sret_stimuli = [];
+    sret_stimuli = w0_unique_stimuli;
 }
     
 /* Split by valence */
-const all_pos = timepoint.filter(item => item.valence === 'positive');
-const all_neg = timepoint.filter(item => item.valence === 'negative');
+const all_pos = sret_stimuli.filter(item => item.valence === 'positive');
+const all_neg = sret_stimuli.filter(item => item.valence === 'negative');
 
 // console.log("Positive:", all_pos.length);
 // console.log("Negative:", all_neg.length);
