@@ -96,6 +96,10 @@ jsPsych.data.addProperties({
   session: urlvar.sret_session,
   rc: urlvar.rc,
 });
+    
+/*Extract just "w0", "w2", "w4", or "w6" from sret_session (e.g., "w0_arm_2") */
+let timepoint = urlvar.sret_session.match(/^w\d+/) ? urlvar.sret_session.match(/^w\d+/)[0] : urlvar.sret_session;
+
 
 // console.log("ID " + urlvar.sret_id + " at session " + urlvar.sret_session + " began the task.")
 
@@ -421,10 +425,9 @@ const w6_unique_stimuli = [
   {stimulus: 'unsociable', word: 'unsociable', trialtype: 'novel4', valence: 'negative', cue: 'self'},
   {stimulus: 'pessimistic', word: 'pessimistic', trialtype: 'novel4', valence: 'negative', cue: 'self'},
 ]
-    
+
 /* Defining SRET stimuli for each biweekly session */
-let sret_stimuli;
-switch(urlvar.sret_session) {
+switch(timepoint) {
   case "w0":
     sret_stimuli = w0_unique_stimuli;
     break;
@@ -444,6 +447,9 @@ switch(urlvar.sret_session) {
 /* Split by valence */
 const all_pos = sret_stimuli.filter(item => item.valence === 'positive');
 const all_neg = sret_stimuli.filter(item => item.valence === 'negative');
+
+console.log("Positive:", all_pos.length);
+console.log("Negative:", all_neg.length);
 
 /* Randomly select 20 positive and 20 negative stimuli for 40 total 'self' trials */
 const self_pos = jsPsych.randomization.sampleWithoutReplacement(all_pos, 20);
