@@ -454,14 +454,12 @@ const all_neg = sret_stimuli.filter(item => item.valence === 'negative');
 /* Randomly select 20 positive and 20 negative stimuli for 40 total 'self' trials */
 const self_pos = jsPsych.randomization.sampleWithoutReplacement(all_pos, 20);
 const self_neg = jsPsych.randomization.sampleWithoutReplacement(all_neg, 20);
-const self_trials = self_pos.concat(self_neg).map(item => ({ ...item, cue: 'self' }));
 
 /* Select the remaining 20 stimuli for 'case' trials */
 const remaining_pos = all_pos.filter(item => !self_pos.includes(item));
 const remaining_neg = all_neg.filter(item => !self_neg.includes(item));
 const case_pos = jsPsych.randomization.sampleWithoutReplacement(remaining_pos, 10);
 const case_neg = jsPsych.randomization.sampleWithoutReplacement(remaining_neg, 10);
-const case_trials = case_pos.concat(case_neg).map(item => ({ ...item, cue: 'case' }));
 
 /* Randomly capitalize 10 negative and 10 positive for 20 capitalized 'self' trials */
 const self_pos_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(20).keys()], 10);
@@ -469,13 +467,13 @@ const self_neg_indices = jsPsych.randomization.sampleWithoutReplacement([...Arra
 
 const finalized_self_pos = self_pos.map((item, idx) =>
   self_pos_indices.includes(idx)
-    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
-    : item
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'self' }
+    : { ...item, cue: 'self' }
 );
 const finalized_self_neg = self_neg.map((item, idx) =>
   self_neg_indices.includes(idx)
-    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
-    : item
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'self' }
+    : { ...item, cue: 'self' }
 );
 const finalized_self_trials = finalized_self_pos.concat(finalized_self_neg);
 
@@ -485,13 +483,13 @@ const case_neg_indices = jsPsych.randomization.sampleWithoutReplacement([...Arra
 
 const finalized_case_pos = case_pos.map((item, idx) =>
   case_pos_indices.includes(idx)
-    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
-    : item
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'case' }
+    : { ...item, cue: 'case' }
 );
 const finalized_case_neg = case_neg.map((item, idx) =>
   case_neg_indices.includes(idx)
-    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase() }
-    : item
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'case' }
+    : { ...item, cue: 'case' }
 );
 const finalized_case_trials = finalized_case_pos.concat(finalized_case_neg);
     
