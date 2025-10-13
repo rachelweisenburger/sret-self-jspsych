@@ -51,16 +51,17 @@ const jsPsych = initJsPsych({
       finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&' // s= for survey string; code= for access code
     }
     // create a confirmation code to send
-    /*var confirmation_code = '';
-    switch(session) {
-      case "w0": confirmation_code = 'b5wiNTT5pp'; break;
-      case "w2": confirmation_code = 'qrso6FWM0u'; break;
-      case "w4": confirmation_code = 'XKFAqwTQhz'; break;
-      case "w6": confirmation_code = 'NAeVQD00m8'; break;
+
+    /* var confirmation_code = '';
+    switch(timepoint) {
+      case "w0": confirmation_code = 'MRX3AYCDP'; break;
+      case "w2": confirmation_code = 'YMDAT3P8H'; break;
+      case "w4": confirmation_code = 'WJMYF3AH8'; break;
+      case "w6": confirmation_code = '9PDLTRPXP'; break;
       default: confirmation_code = 'none_provided';
-    }*/
+    } */
     //console.log("Posting data for ID " + ppt + " and session " + session);
-    var newurlgo = `${finalurl}sret_id=${ppt}&sret_session=${session}` //`&sret_conf=${confirmation_code}`
+    var newurlgo = `${finalurl}${confirmation_code}&sret_id=${ppt}&sret_session=${session}`; //`&sret_conf=${confirmation_code}`
 /* post data to server */
     var jqxhr = $.post({
       url: "/experiment-data",
@@ -96,10 +97,7 @@ jsPsych.data.addProperties({
   session: urlvar.sret_session,
   rc: urlvar.rc,
 });
-    
-/*Extract just "w0", "w2", "w4", or "w6" from sret_session (e.g., "w0_arm_2") */
-let timepoint = urlvar.sret_session.match(/^w\d+/) ? urlvar.sret_session.match(/^w\d+/)[0] : urlvar.sret_session;
-console.log("Session:", urlvar.sret_session, "Timepoint:", timepoint);
+
 
 // console.log("ID " + urlvar.sret_id + " at session " + urlvar.sret_session + " began the task.")
 
@@ -162,7 +160,8 @@ const practice_stimuli = [
   {stimulus: 'young', word: 'young', trialtype: 'practice', valence: 'null', cue: 'case'},
   {stimulus: 'strong', word: 'strong', trialtype: 'practice', valence: 'null', cue: 'self'},
   {stimulus: 'SORE', word: 'SORE', trialtype: 'practice', valence: 'null', cue: 'case'},
-  {stimulus: "cold", word: 'cold', trialtype: 'practice', valence: 'null', cue: 'self'}
+  {stimulus: "cold", word: 'cold', trialtype: 'practice', valence: 'null', cue: 'self'},
+  {stimulus: "full", word: 'full', trialtype: 'practice', valence: 'null', cue: 'case'}
 ];
 
 const practice_stimuli_second_round = [
@@ -170,7 +169,17 @@ const practice_stimuli_second_round = [
   {stimulus: 'WEAK', word: 'WEAK', trialtype: 'practice2', valence: 'null', cue: 'self'},
   {stimulus: 'STUDENT', word: 'STUDENT', trialtype: 'practice2', valence: 'null', cue: 'case'},
   {stimulus: 'sibling', word: 'sibling', trialtype: 'practice2', valence: 'null', cue: 'self'},
-  {stimulus: 'warm', word: 'warm', trialtype: 'practice2', valence: 'null', cue: 'case'}
+  {stimulus: 'warm', word: 'warm', trialtype: 'practice2', valence: 'null', cue: 'case'},
+  {stimulus: 'single', word: 'single', trialtype: 'practice2', valence: 'null', cue: 'self'}
+];
+
+const practice_stimuli_third_round = [
+  {stimulus: 'QUIET', word: 'QUIET', trialtype: 'practice3', valence: 'null', cue: 'case'},
+  {stimulus: 'PROUD', word: 'PROUD', trialtype: 'practice3', valence: 'null', cue: 'self'},
+  {stimulus: 'hungry', word: 'hungry', trialtype: 'practice3', valence: 'null', cue: 'case'},
+  {stimulus: 'married', word: 'married', trialtype: 'practice3', valence: 'null', cue: 'self'},
+  {stimulus: 'silly', word: 'silly', trialtype: 'practice3', valence: 'null', cue: 'case'},
+  {stimulus: 'PARENT', word: 'PARENT', trialtype: 'practice3', valence: 'null', cue: 'self'}
 ];
 
 const w0_unique_stimuli = [
@@ -528,7 +537,7 @@ const instructions_pg2 = {
       that the word shown could be used to describe you.</p>
       <p>If the word <strong>does</strong> describe you, tap <strong>"yes"</strong> as fast as you can.</p>
       <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong> as fast as you can.</p>`,
-choices: ['Next'],
+choices: ['Here is an example.'],
 button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
 post_trial_gap: 0
 };
@@ -554,7 +563,7 @@ const instructions_pg3 = {
       <p>If the cue word is <strong>"CASE"</strong>, you will have to decide whether the word is written in UPPERCASE letters.</p>
       <p>If the word <strong>is</strong> written in uppercase letters, tap <strong>"yes"</strong> as fast as you can.</p>
       <p>If the word <strong>is not</strong> written in uppercase letters, tap <strong>"no"</strong> as fast as you can.</p>`,
-choices: ['Next'],
+choices: ['Here is an example.'],
 button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
 post_trial_gap: 0
 };
@@ -660,16 +669,27 @@ const practice_procedure_second_round = {
   timeline_variables: practice_stimuli_second_round,
   randomize_order: true
 };
-    
+
+/* second practice round */
 const check_case_correctness = {
   timeline: [retry_instructions, practice_procedure_second_round],
   conditional_function: function(){
-    const practice_data = jsPsych.data.get().filter({trialtype: 'practice'}).last(5).values();
+    const practice_data = jsPsych.data.get().filter({trialtype: 'practice'}).last(6).values();
     const case_trials = practice_data.filter(trial => trial.cue === "case");
     return case_trials.some(trial => trial.correct === false);
   }
 };
 
+/* third practice round */
+const check_case_correctness = {
+  timeline: [retry_instructions, practice_procedure_third_round],
+  conditional_function: function(){
+    const practice_data = jsPsych.data.get().filter({trialtype: 'practice2'}).last(6).values();
+    const case_trials = practice_data.filter(trial => trial.cue === "case");
+    return case_trials.some(trial => trial.correct === false);
+  }
+};
+    
 /* Main Task Block */
 const sret = {
   type: jsPsychHtmlButtonResponse,
@@ -736,13 +756,12 @@ const done = {
 
 /* Task Timeline */
 timeline.push(instructions_pg1, instructions_pg2, instructions_ex_self, instructions_pg3, instructions_ex_case, instructions_pg4);
-    
-if(timepoint === "w0" || typeof urlvar.sret_session === "undefined") {
-  timeline.push(practice_procedure); // first practice block
-  timeline.push(check_case_correctness); // retry practice block if they get one of the case practice trials
-  timeline.push(check_in);
-}
 
+timeline.push(practice_procedure);
+timeline.push(check_case_correctness);
+timeline.push(check_case_correctness_third);
+timeline.push(check_in)
+    
 const block_procedure = {
   timeline: [fixation, sret],
   timeline_variables: all_trials,
