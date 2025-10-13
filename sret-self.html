@@ -99,7 +99,7 @@ jsPsych.data.addProperties({
     
 /*Extract just "w0", "w2", "w4", or "w6" from sret_session (e.g., "w0_arm_2") */
 let timepoint = urlvar.sret_session.match(/^w\d+/) ? urlvar.sret_session.match(/^w\d+/)[0] : urlvar.sret_session;
-
+console.log("Session:", urlvar.sret_session, "Timepoint:", timepoint);
 
 // console.log("ID " + urlvar.sret_id + " at session " + urlvar.sret_session + " began the task.")
 
