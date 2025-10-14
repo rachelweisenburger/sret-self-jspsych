@@ -657,16 +657,25 @@ const practice_trial = {
     data.endorse = data.response == 0;
   }
 }
-    
+
+/* first practice round */
 const practice_procedure = {
   timeline: [fixation, practice_trial],
   timeline_variables: practice_stimuli,
   randomize_order: true
 };
 
+/* second practice round */
 const practice_procedure_second_round = {
   timeline: [fixation, practice_trial],
   timeline_variables: practice_stimuli_second_round,
+  randomize_order: true
+};
+    
+/* third practice round */
+const practice_procedure_third_round = {
+  timeline: [fixation, practice_trial],
+  timeline_variables: practice_stimuli_third_round,
   randomize_order: true
 };
 
