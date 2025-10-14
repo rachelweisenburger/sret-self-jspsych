@@ -545,15 +545,16 @@ post_trial_gap: 0
 const instructions_ex_self = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">SELF</div>
-        <div style="font-size: 3em; margin: 2vh 0;">+</div>
-        <div style="margin-bottom: 5vh; font-size: 2.3em;">AWAKE</div>
-      </div>
+     <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
+             <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">SELF</div>
+             <div style="font-size: 3em; margin: 2vh 0;">+</div>
+             <div style="margin-bottom: 5vh; font-size: 2.3em;">AWAKE</div>
+           </div>
     `,
-  choices: ['Next'],
+  choices: ['yes', 'no'],
   button_html: choice =>
     `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`,
+    trial_duration: 10000,
   post_trial_gap: 0
 };
     
@@ -571,15 +572,16 @@ post_trial_gap: 0
 const instructions_ex_case = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">CASE</div>
-        <div style="font-size: 3em; margin: 2vh 0;">+</div>
-        <div style="margin-bottom: 5vh; font-size: 2.3em;">asleep</div>
-      </div>
+     <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
+             <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">SELF</div>
+             <div style="font-size: 3em; margin: 2vh 0;">+</div>
+             <div style="margin-bottom: 5vh; font-size: 2.3em;">AWAKE</div>
+           </div>
     `,
-  choices: ['Next'],
+  choices: ['yes', 'no'],
   button_html: choice =>
     `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`,
+    trial_duration: 10000,
   post_trial_gap: 0
 };
     
