@@ -35,63 +35,56 @@ var taskStartTime = Date.now() // recording start time
 const jsPsych = initJsPsych({
   use_webaudio: false,
 
-  /* redirect logic & data management */
-  on_finish: function(data) {
-    var taskEndTime = Date.now();
-    var taskDurationMs = taskEndTime - taskStartTime;
-    
-    // extract participant/session and redcap url from trial data
-    var ppt = data.trials[1].ppt; // record_id
-    var session = data.trials[1].session; // "week_0"
-    var finalurl = data.trials[1].rc; // redcap_url;
-    if (finalurl) {
-      /*
-      //finalurl = 'https://https://sret-self-4774526bcb1e.herokuapp.com/?' // just start it over if they don't have the URL
-    } else {*/
-      finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&' // s= for survey string; code= for access code
-    }
-    // create a confirmation code to send
-    
-    var confirmation_code = 'TASK_COMPLETE';
-    /* var confirmation_code = '';
-    switch(timepoint) {
-      case "w0": confirmation_code = 'MRX3AYCDP'; break;
-      case "w2": confirmation_code = 'YMDAT3P8H'; break;
-      case "w4": confirmation_code = 'WJMYF3AH8'; break;
-      case "w6": confirmation_code = '9PDLTRPXP'; break;
-      default: confirmation_code = 'none_provided';
-    } */
-    //console.log("Posting data for ID " + ppt + " and session " + session);
-    var newurlgo = `${finalurl}confirmation_code=${confirmation_code}&sret_id=${ppt}&sret_session=${session}`; //`&sret_conf=${confirmation_code}`
-/* post data to server */
-    var jqxhr = $.post({
-      url: "/experiment-data",
-      data: JSON.stringify(data),
-      contentType: "application/json"
-    })
-    .done(function(data) {
-      //console.log("Succeed!")
-      if(finalurl) {
-        window.location.href = newurlgo;
-      } else {
-        // if they don't have an RC, tell them there's a problem
-        document.write('<!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;"><h1>Missing redirect</h1><p>This page cannot redirect you as expected. Please be sure that you followed the correct link. While your data has been recorded, you will not be redirected to finish data collection for today. You do not need to complete the task again, but may contact the researchers if you have questions.</p></div></body></html>')
-      }
-      //console.log("Success posting and user redirected");
-    })
-    .fail(function() {
-      //console.log("Fail!")
-      //console.log("A problem occurred while writing to the database. User redirected.")
-      window.location.href = newurlgo;
-    })
-  }
+var surveyCodeMap = {
+'week_0_arm_1': '4RMCANPJA', // sona arm
+'week_2_arm_1': 'PNRK3FMEA',
+'week_4_arm_1': 'EAK8KP4PT',
+'week_6_arm_1': 'FPCRTDEC8',
+'week_0_arm_2': 'LLRMWNYFM', // main study arm
+'week_2_arm_2': 'FF9NWPEMF',
+'week_4_arm_2': '3F48PTC3K',
+'week_6_arm_2': 'KRD9M4WPM'
+};
+
+/* redirect logic & data management */
+on_finish: function(data) {
+var ppt = data.trials[1].ppt;           // record_id
+var session = data.trials[1].session;   // "week_0", etc.
+var arm = data.trials[1].arm;            // "arm_1", "arm_2"
+var session_arm_key = session + '_' + arm;
+var survey_code = surveyCodeMap[session_arm_key];
+var confirmation_code = 'TASK_COMPLETE';
+
+if (!survey_code) {
+  document.write(`
+    <!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
+      <h1>Missing redirect</h1>
+      <p>This page cannot redirect you as expected. Please check the link or contact the research team. Your data was recorded.</p>
+    </div></body></html>`);
+  return;
+}
+
+var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&confirmation_code=${confirmation_code}&sret_id=${ppt}&sret_session=${session}`;
+
+// Post data then redirect
+$.post({
+  url: "/experiment-data",
+  data: JSON.stringify(data),
+  contentType: "application/json"
+})
+.done(function() {
+  window.location.href = finalurl;
+})
+.fail(function() {
+  // Redirect anyway if posting fails
+  window.location.href = finalurl;
 });
+}
 
 const timeline = []
 
 /* get URL variables */
 var urlvar = jsPsych.data.urlVariables();
-
 
 jsPsych.data.addProperties({
   ppt: urlvar.sret_id,
