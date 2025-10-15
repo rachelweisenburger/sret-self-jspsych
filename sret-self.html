@@ -39,10 +39,12 @@ const jsPsych = initJsPsych({
       var urlvar = jsPsych.data.urlVariables();
       var ppt = urlvar.record_id;
       var event = urlvar.event;
-      var return_code = urlvar.rc;
       
-      // Build the redirect URL back to REDCap
-      var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?__return=${return_code}`;
+      // Hardcode the survey code since everyone goes to "affective" next
+      var survey_code = 'vfzhVkcucwSsYrhL';
+      
+      // Build the redirect URL using the survey code
+      var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&record=${ppt}`;
       
       // Post data to your server
       $.post({
@@ -51,16 +53,11 @@ const jsPsych = initJsPsych({
         contentType: "application/json"
       })
       .done(function() {
-        if(return_code) {
-          window.location.href = finalurl;
-        } else {
-          document.write('<!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;"><h1>Missing redirect</h1><p>This page cannot redirect you as expected. Please be sure that you followed the correct link. While your data has been recorded, you will not be redirected to finish data collection for today. You do not need to complete the task again, but may contact the researchers if you have questions.</p></div></body></html>')
-        }
+        window.location.href = finalurl;
       })
       .fail(function() {
-        if(return_code) {
-          window.location.href = finalurl;
-        }
+        // Even if data save fails, redirect so participant can continue
+        window.location.href = finalurl;
       })
   }
 });
@@ -75,13 +72,13 @@ var event_name = urlvar.event || '';
 
 // Extract session from event name
 var session = 'w0'; // default
-if (event_name.includes('baseline')) {
+if (event_name.includes('baseline') || event_name.includes('w0')) {
   session = 'w0';
-} else if (event_name.includes('week_2') || event_name.includes('2_week') || event_name.includes('week2')) {
+} else if (event_name.includes('week_2') || event_name.includes('2_week') || event_name.includes('week2') || event_name.includes('w2')) {
   session = 'w2';
-} else if (event_name.includes('week_4') || event_name.includes('4_week') || event_name.includes('week4')) {
+} else if (event_name.includes('week_4') || event_name.includes('4_week') || event_name.includes('week4') || event_name.includes('w4')) {
   session = 'w4';
-} else if (event_name.includes('week_6') || event_name.includes('6_week') || event_name.includes('week6')) {
+} else if (event_name.includes('week_6') || event_name.includes('6_week') || event_name.includes('week6') || event_name.includes('w6')) {
   session = 'w6';
 }
 
@@ -99,7 +96,6 @@ jsPsych.data.addProperties({
   session: session,
   arm: arm,
   event_name: event_name,
-  rc: urlvar.rc,
   task_start: taskStartTime
 });
     
