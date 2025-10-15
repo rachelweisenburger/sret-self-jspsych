@@ -625,8 +625,29 @@ const retry_instructions = {
     button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`},
     post_trial_gap: 0
   };
+    
+/* Correction feedback for caps? practice trials */
+const caps_correction = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `<div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
+      <p>Remember, if the cue word is <strong>"caps?"</strong>, you will have to decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
+    </div>`,
+  choices: ['Continue'],
+  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`},
+  post_trial_gap: 500
+};
+    
+/* but only show if previous trial was caps? and incorrect */
+const conditional_caps_correction = {
+  timeline: [caps_correction],
+  conditional_function: function(){
+    const last_trial = jsPsych.data.get().last(1).values()[0];
+    // Show correction if it was a caps? trial AND they got it wrong
+    return (last_trial.cue === "caps?" && last_trial.correct === false);
+  }
+};
 
-/* Practice Trial Block */
+/* practice trial */
 const practice_trial = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
@@ -649,12 +670,12 @@ const practice_trial = {
     word: jsPsych.timelineVariable('word'),
   },
   on_finish: function(data){
-    // For case trials, mark correct if (cue=='caps' && uppercase) or (cue=='caps' && !uppercase) etc.
+    // For caps? trials, mark correct if (cue=='caps?' && uppercase) or (cue=='caps?' && !uppercase) etc.
     if(data.cue === "caps?") {
       const isUpper = data.word === data.word.toUpperCase();
       data.correct = (isUpper && data.response == 0) || (!isUpper && data.response == 1);
     } else {
-      data.correct = true; // no error-check for 'self'
+      data.correct = true; // no error-check for 'self?'
     }
     data.endorse = data.response == 0;
   }
@@ -662,21 +683,21 @@ const practice_trial = {
 
 /* first practice round */
 const practice_procedure = {
-  timeline: [fixation, practice_trial],
+  timeline: [fixation, practice_trial, conditional_caps_correction],  // with correction
   timeline_variables: practice_stimuli,
   randomize_order: true
 };
 
 /* second practice round */
 const practice_procedure_second_round = {
-  timeline: [fixation, practice_trial],
+  timeline: [fixation, practice_trial, conditional_caps_correction],  // Added correction
   timeline_variables: practice_stimuli_second_round,
   randomize_order: true
 };
     
 /* third practice round */
 const practice_procedure_third_round = {
-  timeline: [fixation, practice_trial],
+  timeline: [fixation, practice_trial, conditional_caps_correction],  // Added correction
   timeline_variables: practice_stimuli_third_round,
   randomize_order: true
 };
