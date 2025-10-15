@@ -51,7 +51,8 @@ const jsPsych = initJsPsych({
       finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&' // s= for survey string; code= for access code
     }
     // create a confirmation code to send
-
+    
+    var confirmation_code = 'TASK_COMPLETE';
     /* var confirmation_code = '';
     switch(timepoint) {
       case "w0": confirmation_code = 'MRX3AYCDP'; break;
@@ -61,7 +62,7 @@ const jsPsych = initJsPsych({
       default: confirmation_code = 'none_provided';
     } */
     //console.log("Posting data for ID " + ppt + " and session " + session);
-    var newurlgo = `${finalurl}${confirmation_code}&sret_id=${ppt}&sret_session=${session}`; //`&sret_conf=${confirmation_code}`
+    var newurlgo = `${finalurl}confirmation_code=${confirmation_code}&sret_id=${ppt}&sret_session=${session}`; //`&sret_conf=${confirmation_code}`
 /* post data to server */
     var jqxhr = $.post({
       url: "/experiment-data",
@@ -617,9 +618,9 @@ const fixation = {
 const retry_instructions = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `<div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
-      <p>Let's try some more.</p>
-      <p>Remember, if the cue word is <strong>"caps?"</strong>, you will have to decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
-      <p>If the cue word is <strong>"self?"</strong>, you will have to decide whether you think that the word shown could be <strong>used to describe you</strong>.</p>
+      <p>Let's try some more!</p>
+      <p>Remember, decide whether the word is written in <strong>UPPERCASE</strong> letters if the cue word is <strong>"caps?"</strong>.</p>
+      <p>If the cue word is <strong>"self?"</strong>, then decide whether you think that the word shown could be <strong>used to describe you</strong>.</p>
     </div>`,
     choices: ['Continue'],
     button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`},
