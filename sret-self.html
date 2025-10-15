@@ -156,283 +156,283 @@ timeline.push(checkMobile, if_mobile);
 
 /* practice trials */
 const practice_stimuli = [
-  {stimulus: 'TALL', word: 'TALL', trialtype: 'practice', valence: 'null', cue: 'self'},
-  {stimulus: 'young', word: 'young', trialtype: 'practice', valence: 'null', cue: 'case'},
-  {stimulus: 'strong', word: 'strong', trialtype: 'practice', valence: 'null', cue: 'self'},
-  {stimulus: 'SORE', word: 'SORE', trialtype: 'practice', valence: 'null', cue: 'case'},
-  {stimulus: "cold", word: 'cold', trialtype: 'practice', valence: 'null', cue: 'self'},
-  {stimulus: "full", word: 'full', trialtype: 'practice', valence: 'null', cue: 'case'}
+  {stimulus: 'TALL', word: 'TALL', trialtype: 'practice', valence: 'null', cue: 'self?'},
+  {stimulus: 'young', word: 'young', trialtype: 'practice', valence: 'null', cue: 'caps?'},
+  {stimulus: 'strong', word: 'strong', trialtype: 'practice', valence: 'null', cue: 'self?'},
+  {stimulus: 'SORE', word: 'SORE', trialtype: 'practice', valence: 'null', cue: 'caps?'},
+  {stimulus: "cold", word: 'cold', trialtype: 'practice', valence: 'null', cue: 'self?'},
+  {stimulus: "full", word: 'full', trialtype: 'practice', valence: 'null', cue: 'caps?'}
 ];
 
 const practice_stimuli_second_round = [
-  {stimulus: 'short', word: 'short', trialtype: 'practice2', valence: 'null', cue: 'case'},
-  {stimulus: 'WEAK', word: 'WEAK', trialtype: 'practice2', valence: 'null', cue: 'self'},
-  {stimulus: 'STUDENT', word: 'STUDENT', trialtype: 'practice2', valence: 'null', cue: 'case'},
-  {stimulus: 'sibling', word: 'sibling', trialtype: 'practice2', valence: 'null', cue: 'self'},
-  {stimulus: 'warm', word: 'warm', trialtype: 'practice2', valence: 'null', cue: 'case'},
-  {stimulus: 'single', word: 'single', trialtype: 'practice2', valence: 'null', cue: 'self'}
+  {stimulus: 'short', word: 'short', trialtype: 'practice2', valence: 'null', cue: 'caps?'},
+  {stimulus: 'WEAK', word: 'WEAK', trialtype: 'practice2', valence: 'null', cue: 'self?'},
+  {stimulus: 'STUDENT', word: 'STUDENT', trialtype: 'practice2', valence: 'null', cue: 'caps?'},
+  {stimulus: 'sibling', word: 'sibling', trialtype: 'practice2', valence: 'null', cue: 'self?'},
+  {stimulus: 'warm', word: 'warm', trialtype: 'practice2', valence: 'null', cue: 'caps?'},
+  {stimulus: 'single', word: 'single', trialtype: 'practice2', valence: 'null', cue: 'self?'}
 ];
 
 const practice_stimuli_third_round = [
-  {stimulus: 'QUIET', word: 'QUIET', trialtype: 'practice3', valence: 'null', cue: 'case'},
-  {stimulus: 'PROUD', word: 'PROUD', trialtype: 'practice3', valence: 'null', cue: 'self'},
-  {stimulus: 'hungry', word: 'hungry', trialtype: 'practice3', valence: 'null', cue: 'case'},
-  {stimulus: 'married', word: 'married', trialtype: 'practice3', valence: 'null', cue: 'self'},
-  {stimulus: 'silly', word: 'silly', trialtype: 'practice3', valence: 'null', cue: 'case'},
-  {stimulus: 'PARENT', word: 'PARENT', trialtype: 'practice3', valence: 'null', cue: 'self'}
+  {stimulus: 'QUIET', word: 'QUIET', trialtype: 'practice3', valence: 'null', cue: 'caps?'},
+  {stimulus: 'PROUD', word: 'PROUD', trialtype: 'practice3', valence: 'null', cue: 'self?'},
+  {stimulus: 'hungry', word: 'hungry', trialtype: 'practice3', valence: 'null', cue: 'caps?'},
+  {stimulus: 'married', word: 'married', trialtype: 'practice3', valence: 'null', cue: 'self?'},
+  {stimulus: 'silly', word: 'silly', trialtype: 'practice3', valence: 'null', cue: 'caps?'},
+  {stimulus: 'PARENT', word: 'PARENT', trialtype: 'practice3', valence: 'null', cue: 'self?'}
 ];
 
 const w0_unique_stimuli = [
-  {stimulus: 'successful', word: 'successful', trialtype: 'novel1', valence: 'positive', cue: 'self'}, // first 30 stimuli = "core" stimuli
-  {stimulus: 'terrific', word: 'terrific', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'funny', word: 'funny', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'intelligent', word: 'intelligent', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'amazing', word: 'amazing', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'entertaining', word: 'entertaining', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'fantastic', word: 'fantastic', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'wonderful', word: 'wonderful', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'beautiful', word: 'beautiful', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'happy', word: 'happy', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'great', word: 'great', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'loyal', word: 'loyal', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'cool', word: 'cool', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'joyful', word: 'joyful', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'knowledgeable', word: 'knowledgeable', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'sad', word: 'sad', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'hostile', word: 'hostile', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'burdened', word: 'burdened', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'incompetent', word: 'incompetent', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'inconsiderate', word: 'inconsiderate', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'ashamed', word: 'ashamed', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'irresponsible', word: 'irresponsible', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'bored', word: 'bored', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'mad', word: 'mad', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'lonely', word: 'lonely', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'worried', word: 'worried', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'anguished', word: 'anguished', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'fearful', word: 'fearful', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'angry', word: 'angry', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'lovable', word: 'lovable', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'glad', word: 'glad', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'nice', word: 'nice', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'satisfied', word: 'satisfied', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'thoughtful', word: 'thoughtful', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'devoted', word: 'devoted', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'capable', word: 'capable', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'handsome', word: 'handsome', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'excellent', word: 'excellent', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'excited', word: 'excited', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'useful', word: 'useful', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'sexy', word: 'sexy', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'extraordinary', word: 'extraordinary', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'honest', word: 'honest', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'loved', word: 'loved', trialtype: 'novel1', valence: 'positive', cue: 'self'},
-  {stimulus: 'dreadful', word: 'dreadful', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'disgusted', word: 'disgusted', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'horrible', word: 'horrible', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'lost', word: 'lost', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'annoyed', word: 'annoyed', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'afraid', word: 'afraid', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'heartbroken', word: 'heartbroken', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'weak', word: 'weak', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'brokenhearted', word: 'brokenhearted', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'scared', word: 'scared', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'useless', word: 'useless', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'troubled', word: 'troubled', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'disgraceful', word: 'disgraceful', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'rude', word: 'rude', trialtype: 'novel1', valence: 'negative', cue: 'self'},
-  {stimulus: 'dishonorable', word: 'dishonorable', trialtype: 'novel1', valence: 'negative', cue: 'self'}
+  {stimulus: 'successful', word: 'successful', trialtype: 'novel1', valence: 'positive', cue: 'self?'}, // first 30 stimuli = "core" stimuli
+  {stimulus: 'terrific', word: 'terrific', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'funny', word: 'funny', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'intelligent', word: 'intelligent', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'amazing', word: 'amazing', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'entertaining', word: 'entertaining', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'fantastic', word: 'fantastic', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'wonderful', word: 'wonderful', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'beautiful', word: 'beautiful', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'happy', word: 'happy', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'great', word: 'great', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'loyal', word: 'loyal', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'cool', word: 'cool', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'joyful', word: 'joyful', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'knowledgeable', word: 'knowledgeable', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'sad', word: 'sad', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'hostile', word: 'hostile', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'burdened', word: 'burdened', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'incompetent', word: 'incompetent', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'inconsiderate', word: 'inconsiderate', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'ashamed', word: 'ashamed', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'irresponsible', word: 'irresponsible', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'bored', word: 'bored', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'mad', word: 'mad', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'lonely', word: 'lonely', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'worried', word: 'worried', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'anguished', word: 'anguished', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'fearful', word: 'fearful', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'angry', word: 'angry', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'lovable', word: 'lovable', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'glad', word: 'glad', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'nice', word: 'nice', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'satisfied', word: 'satisfied', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'thoughtful', word: 'thoughtful', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'devoted', word: 'devoted', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'capable', word: 'capable', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'handsome', word: 'handsome', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'excellent', word: 'excellent', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'excited', word: 'excited', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'useful', word: 'useful', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'sexy', word: 'sexy', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'extraordinary', word: 'extraordinary', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'honest', word: 'honest', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'loved', word: 'loved', trialtype: 'novel1', valence: 'positive', cue: 'self?'},
+  {stimulus: 'dreadful', word: 'dreadful', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'disgusted', word: 'disgusted', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'horrible', word: 'horrible', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'lost', word: 'lost', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'annoyed', word: 'annoyed', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'afraid', word: 'afraid', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'heartbroken', word: 'heartbroken', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'weak', word: 'weak', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'brokenhearted', word: 'brokenhearted', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'scared', word: 'scared', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'useless', word: 'useless', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'troubled', word: 'troubled', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'disgraceful', word: 'disgraceful', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'rude', word: 'rude', trialtype: 'novel1', valence: 'negative', cue: 'self?'},
+  {stimulus: 'dishonorable', word: 'dishonorable', trialtype: 'novel1', valence: 'negative', cue: 'self?'}
 ]
 
 
 const w2_unique_stimuli = [
-  {stimulus: 'successful', word: 'successful', trialtype: 'novel2', valence: 'positive', cue: 'self'}, // first 30 stimuli = "core" stimuli
-  {stimulus: 'terrific', word: 'terrific', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'funny', word: 'funny', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'intelligent', word: 'intelligent', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'amazing', word: 'amazing', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'entertaining', word: 'entertaining', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'fantastic', word: 'fantastic', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'wonderful', word: 'wonderful', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'beautiful', word: 'beautiful', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'happy', word: 'happy', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'great', word: 'great', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'loyal', word: 'loyal', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'cool', word: 'cool', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'joyful', word: 'joyful', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'knowledgeable', word: 'knowledgeable', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'sad', word: 'sad', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'hostile', word: 'hostile', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'burdened', word: 'burdened', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'incompetent', word: 'incompetent', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'inconsiderate', word: 'inconsiderate', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'ashamed', word: 'ashamed', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'irresponsible', word: 'irresponsible', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'bored', word: 'bored', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'mad', word: 'mad', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'lonely', word: 'lonely', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'worried', word: 'worried', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'anguished', word: 'anguished', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'fearful', word: 'fearful', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'angry', word: 'angry', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'carefree', word: 'carefree', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'pleased', word: 'pleased', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'lucky', word: 'lucky', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'exciting', word: 'exciting', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'gorgeous', word: 'gorgeous', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'playful', word: 'playful', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'hopeful', word: 'hopeful', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'content', word: 'content', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'masterful', word: 'masterful', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'gentle', word: 'gentle', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'charming', word: 'charming', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'likeable', word: 'likeable', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'appreciative', word: 'appreciative', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'resourceful', word: 'resourceful', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'helpful', word: 'helpful', trialtype: 'novel2', valence: 'positive', cue: 'self'},
-  {stimulus: 'bad', word: 'bad', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'wretched', word: 'wretched', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'upset', word: 'upset', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'guilty', word: 'guilty', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'deceitful', word: 'deceitful', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'ungrateful', word: 'ungrateful', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'rejected', word: 'rejected', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'unloved', word: 'unloved', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'hopeless', word: 'hopeless', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'unappreciated', word: 'unappreciated', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'superficial', word: 'superficial', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'vain', word: 'vain', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'cowardly', word: 'cowardly', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'conceited', word: 'conceited', trialtype: 'novel2', valence: 'negative', cue: 'self'},
-  {stimulus: 'greedy', word: 'greedy', trialtype: 'novel2', valence: 'negative', cue: 'self'}
+  {stimulus: 'successful', word: 'successful', trialtype: 'novel2', valence: 'positive', cue: 'self?'}, // first 30 stimuli = "core" stimuli
+  {stimulus: 'terrific', word: 'terrific', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'funny', word: 'funny', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'intelligent', word: 'intelligent', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'amazing', word: 'amazing', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'entertaining', word: 'entertaining', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'fantastic', word: 'fantastic', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'wonderful', word: 'wonderful', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'beautiful', word: 'beautiful', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'happy', word: 'happy', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'great', word: 'great', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'loyal', word: 'loyal', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'cool', word: 'cool', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'joyful', word: 'joyful', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'knowledgeable', word: 'knowledgeable', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'sad', word: 'sad', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'hostile', word: 'hostile', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'burdened', word: 'burdened', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'incompetent', word: 'incompetent', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'inconsiderate', word: 'inconsiderate', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'ashamed', word: 'ashamed', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'irresponsible', word: 'irresponsible', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'bored', word: 'bored', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'mad', word: 'mad', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'lonely', word: 'lonely', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'worried', word: 'worried', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'anguished', word: 'anguished', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'fearful', word: 'fearful', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'angry', word: 'angry', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'carefree', word: 'carefree', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'pleased', word: 'pleased', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'lucky', word: 'lucky', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'exciting', word: 'exciting', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'gorgeous', word: 'gorgeous', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'playful', word: 'playful', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'hopeful', word: 'hopeful', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'content', word: 'content', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'masterful', word: 'masterful', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'gentle', word: 'gentle', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'charming', word: 'charming', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'likeable', word: 'likeable', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'appreciative', word: 'appreciative', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'resourceful', word: 'resourceful', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'helpful', word: 'helpful', trialtype: 'novel2', valence: 'positive', cue: 'self?'},
+  {stimulus: 'bad', word: 'bad', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'wretched', word: 'wretched', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'upset', word: 'upset', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'guilty', word: 'guilty', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'deceitful', word: 'deceitful', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'ungrateful', word: 'ungrateful', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'rejected', word: 'rejected', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'unloved', word: 'unloved', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'hopeless', word: 'hopeless', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'unappreciated', word: 'unappreciated', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'superficial', word: 'superficial', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'vain', word: 'vain', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'cowardly', word: 'cowardly', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'conceited', word: 'conceited', trialtype: 'novel2', valence: 'negative', cue: 'self?'},
+  {stimulus: 'greedy', word: 'greedy', trialtype: 'novel2', valence: 'negative', cue: 'self?'}
 ]
 
 const w4_unique_stimuli = [
-  {stimulus: 'successful', word: 'successful', trialtype: 'novel3', valence: 'positive', cue: 'self'}, // first 30 stimuli = "core" stimuli
-  {stimulus: 'terrific', word: 'terrific', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'funny', word: 'funny', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'intelligent', word: 'intelligent', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'amazing', word: 'amazing', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'entertaining', word: 'entertaining', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'fantastic', word: 'fantastic', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'wonderful', word: 'wonderful', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'beautiful', word: 'beautiful', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'happy', word: 'happy', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'great', word: 'great', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'loyal', word: 'loyal', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'cool', word: 'cool', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'joyful', word: 'joyful', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'knowledgeable', word: 'knowledgeable', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'sad', word: 'sad', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'hostile', word: 'hostile', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'burdened', word: 'burdened', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'incompetent', word: 'incompetent', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'inconsiderate', word: 'inconsiderate', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'ashamed', word: 'ashamed', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'irresponsible', word: 'irresponsible', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'bored', word: 'bored', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'mad', word: 'mad', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'lonely', word: 'lonely', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'worried', word: 'worried', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'anguished', word: 'anguished', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'fearful', word: 'fearful', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'angry', word: 'angry', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'cheerful', word: 'cheerful', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'friendly', word: 'friendly', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'compassionate', word: 'compassionate', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'kind', word: 'kind', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'surprised', word: 'surprised', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'talented', word: 'talented', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'brilliant', word: 'brilliant', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'good', word: 'good', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'best', word: 'best', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'bright', word: 'bright', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'dependable', word: 'dependable', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'generous', word: 'generous', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'pleasant', word: 'pleasant', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'attentive', word: 'attentive', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'clever', word: 'clever', trialtype: 'novel3', valence: 'positive', cue: 'self'},
-  {stimulus: 'depressed', word: 'depressed', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'untrustworthy', word: 'untrustworthy', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'morbid', word: 'morbid', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'obnoxious', word: 'obnoxious', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'brutal', word: 'brutal', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'shamed', word: 'shamed', trialtype: 'novel6', valence: 'negative', cue: 'self'},
-  {stimulus: 'nasty', word: 'nasty', trialtype: 'novel6', valence: 'negative', cue: 'self'},
-  {stimulus: 'inadequate', word: 'inadequate', trialtype: 'novel6', valence: 'negative', cue: 'self'},
-  {stimulus: 'helpless', word: 'helpless', trialtype: 'novel6', valence: 'negative', cue: 'self'},
-  {stimulus: 'displeased', word: 'displeased', trialtype: 'novel6', valence: 'negative', cue: 'self'},
-  {stimulus: 'neglectful', word: 'neglectful', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'foolish', word: 'foolish', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'boring', word: 'boring', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'sloppy', word: 'sloppy', trialtype: 'novel3', valence: 'negative', cue: 'self'},
-  {stimulus: 'thoughtless', word: 'thoughtless', trialtype: 'novel3', valence: 'negative', cue: 'self'}
+  {stimulus: 'successful', word: 'successful', trialtype: 'novel3', valence: 'positive', cue: 'self?'}, // first 30 stimuli = "core" stimuli
+  {stimulus: 'terrific', word: 'terrific', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'funny', word: 'funny', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'intelligent', word: 'intelligent', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'amazing', word: 'amazing', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'entertaining', word: 'entertaining', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'fantastic', word: 'fantastic', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'wonderful', word: 'wonderful', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'beautiful', word: 'beautiful', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'happy', word: 'happy', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'great', word: 'great', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'loyal', word: 'loyal', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'cool', word: 'cool', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'joyful', word: 'joyful', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'knowledgeable', word: 'knowledgeable', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'sad', word: 'sad', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'hostile', word: 'hostile', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'burdened', word: 'burdened', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'incompetent', word: 'incompetent', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'inconsiderate', word: 'inconsiderate', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'ashamed', word: 'ashamed', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'irresponsible', word: 'irresponsible', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'bored', word: 'bored', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'mad', word: 'mad', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'lonely', word: 'lonely', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'worried', word: 'worried', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'anguished', word: 'anguished', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'fearful', word: 'fearful', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'angry', word: 'angry', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'cheerful', word: 'cheerful', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'friendly', word: 'friendly', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'compassionate', word: 'compassionate', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'kind', word: 'kind', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'surprised', word: 'surprised', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'talented', word: 'talented', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'brilliant', word: 'brilliant', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'good', word: 'good', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'best', word: 'best', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'bright', word: 'bright', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'dependable', word: 'dependable', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'generous', word: 'generous', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'pleasant', word: 'pleasant', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'attentive', word: 'attentive', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'clever', word: 'clever', trialtype: 'novel3', valence: 'positive', cue: 'self?'},
+  {stimulus: 'depressed', word: 'depressed', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'untrustworthy', word: 'untrustworthy', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'morbid', word: 'morbid', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'obnoxious', word: 'obnoxious', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'brutal', word: 'brutal', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'shamed', word: 'shamed', trialtype: 'novel6', valence: 'negative', cue: 'self?'},
+  {stimulus: 'nasty', word: 'nasty', trialtype: 'novel6', valence: 'negative', cue: 'self?'},
+  {stimulus: 'inadequate', word: 'inadequate', trialtype: 'novel6', valence: 'negative', cue: 'self?'},
+  {stimulus: 'helpless', word: 'helpless', trialtype: 'novel6', valence: 'negative', cue: 'self?'},
+  {stimulus: 'displeased', word: 'displeased', trialtype: 'novel6', valence: 'negative', cue: 'self?'},
+  {stimulus: 'neglectful', word: 'neglectful', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'foolish', word: 'foolish', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'boring', word: 'boring', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'sloppy', word: 'sloppy', trialtype: 'novel3', valence: 'negative', cue: 'self?'},
+  {stimulus: 'thoughtless', word: 'thoughtless', trialtype: 'novel3', valence: 'negative', cue: 'self?'}
 ]
 
 const w6_unique_stimuli = [
-  {stimulus: 'successful', word: 'successful', trialtype: 'novel4', valence: 'positive', cue: 'self'}, // first 30 stimuli = "core" stimuli
-  {stimulus: 'terrific', word: 'terrific', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'funny', word: 'funny', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'intelligent', word: 'intelligent', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'amazing', word: 'amazing', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'entertaining', word: 'entertaining', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'fantastic', word: 'fantastic', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'wonderful', word: 'wonderful', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'beautiful', word: 'beautiful', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'happy', word: 'happy', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'great', word: 'great', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'loyal', word: 'loyal', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'cool', word: 'cool', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'joyful', word: 'joyful', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'knowledgeable', word: 'knowledgeable', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'sad', word: 'sad', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'hostile', word: 'hostile', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'burdened', word: 'burdened', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'incompetent', word: 'incompetent', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'inconsiderate', word: 'inconsiderate', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'ashamed', word: 'ashamed', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'irresponsible', word: 'irresponsible', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'bored', word: 'bored', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'mad', word: 'mad', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'lonely', word: 'lonely', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'worried', word: 'worried', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'anguished', word: 'anguished', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'fearful', word: 'fearful', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'angry', word: 'angry', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'vigorous', word: 'vigorous', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'adorable', word: 'adorable', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'outstanding', word: 'outstanding', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'confident', word: 'confident', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'fun', word: 'fun', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'courageous', word: 'courageous', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'unique', word: 'unique', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'optimistic', word: 'optimistic', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'admired', word: 'admired', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'skillful', word: 'skillful', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'adventurous', word: 'adventurous', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'gracious', word: 'gracious', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'lively', word: 'lively', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'purposeful', word: 'purposeful', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'observant', word: 'observant', trialtype: 'novel4', valence: 'positive', cue: 'self'},
-  {stimulus: 'stupid', word: 'stupid', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'unattractive', word: 'unattractive', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'unwanted', word: 'unwanted', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'dumb', word: 'dumb', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'sorry', word: 'sorry', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'insecure', word: 'insecure', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'alone', word: 'alone', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'terrible', word: 'terrible', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'cruel', word: 'cruel', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'unlucky', word: 'unlucky', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'hateful', word: 'hateful', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'heartless', word: 'heartless', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'egotistical', word: 'egotistical', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'unsociable', word: 'unsociable', trialtype: 'novel4', valence: 'negative', cue: 'self'},
-  {stimulus: 'pessimistic', word: 'pessimistic', trialtype: 'novel4', valence: 'negative', cue: 'self'},
+  {stimulus: 'successful', word: 'successful', trialtype: 'novel4', valence: 'positive', cue: 'self?'}, // first 30 stimuli = "core" stimuli
+  {stimulus: 'terrific', word: 'terrific', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'funny', word: 'funny', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'intelligent', word: 'intelligent', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'amazing', word: 'amazing', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'entertaining', word: 'entertaining', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'fantastic', word: 'fantastic', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'wonderful', word: 'wonderful', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'beautiful', word: 'beautiful', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'happy', word: 'happy', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'great', word: 'great', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'loyal', word: 'loyal', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'cool', word: 'cool', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'joyful', word: 'joyful', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'knowledgeable', word: 'knowledgeable', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'sad', word: 'sad', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'hostile', word: 'hostile', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'burdened', word: 'burdened', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'incompetent', word: 'incompetent', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'inconsiderate', word: 'inconsiderate', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'ashamed', word: 'ashamed', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'irresponsible', word: 'irresponsible', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'bored', word: 'bored', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'mad', word: 'mad', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'lonely', word: 'lonely', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'worried', word: 'worried', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'anguished', word: 'anguished', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'fearful', word: 'fearful', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'angry', word: 'angry', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'disloyal', word: 'disloyal', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'vigorous', word: 'vigorous', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'adorable', word: 'adorable', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'outstanding', word: 'outstanding', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'confident', word: 'confident', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'fun', word: 'fun', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'courageous', word: 'courageous', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'unique', word: 'unique', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'optimistic', word: 'optimistic', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'admired', word: 'admired', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'skillful', word: 'skillful', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'adventurous', word: 'adventurous', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'gracious', word: 'gracious', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'lively', word: 'lively', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'purposeful', word: 'purposeful', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'observant', word: 'observant', trialtype: 'novel4', valence: 'positive', cue: 'self?'},
+  {stimulus: 'stupid', word: 'stupid', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'unattractive', word: 'unattractive', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'unwanted', word: 'unwanted', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'dumb', word: 'dumb', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'sorry', word: 'sorry', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'insecure', word: 'insecure', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'alone', word: 'alone', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'terrible', word: 'terrible', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'cruel', word: 'cruel', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'unlucky', word: 'unlucky', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'hateful', word: 'hateful', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'heartless', word: 'heartless', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'egotistical', word: 'egotistical', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'unsociable', word: 'unsociable', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
+  {stimulus: 'pessimistic', word: 'pessimistic', trialtype: 'novel4', valence: 'negative', cue: 'self?'},
 ]
 
 /* Defining SRET stimuli for each biweekly session */
@@ -464,11 +464,11 @@ const all_neg = sret_stimuli.filter(item => item.valence === 'negative');
 const self_pos = jsPsych.randomization.sampleWithoutReplacement(all_pos, 20);
 const self_neg = jsPsych.randomization.sampleWithoutReplacement(all_neg, 20);
 
-/* Select the remaining 20 stimuli for 'case' trials */
+/* Select the remaining 20 stimuli for 'caps' trials */
 const remaining_pos = all_pos.filter(item => !self_pos.includes(item));
 const remaining_neg = all_neg.filter(item => !self_neg.includes(item));
-const case_pos = jsPsych.randomization.sampleWithoutReplacement(remaining_pos, 10);
-const case_neg = jsPsych.randomization.sampleWithoutReplacement(remaining_neg, 10);
+const caps_pos = jsPsych.randomization.sampleWithoutReplacement(remaining_pos, 10);
+const caps_neg = jsPsych.randomization.sampleWithoutReplacement(remaining_neg, 10);
 
 /* Randomly capitalize 10 negative and 10 positive for 20 capitalized 'self' trials */
 const self_pos_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(20).keys()], 10);
@@ -476,34 +476,34 @@ const self_neg_indices = jsPsych.randomization.sampleWithoutReplacement([...Arra
 
 const finalized_self_pos = self_pos.map((item, idx) =>
   self_pos_indices.includes(idx)
-    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'self' }
-    : { ...item, cue: 'self' }
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'self?' }
+    : { ...item, cue: 'self?' }
 );
 const finalized_self_neg = self_neg.map((item, idx) =>
   self_neg_indices.includes(idx)
-    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'self' }
-    : { ...item, cue: 'self' }
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'self?' }
+    : { ...item, cue: 'self?' }
 );
 const finalized_self_trials = finalized_self_pos.concat(finalized_self_neg);
 
-/* Randomly capitalize 5 negative and 5 positive for 10 capitalized 'case' trials */
-const case_pos_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
-const case_neg_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
+/* Randomly capitalize 5 negative and 5 positive for 10 capitalized 'caps' trials */
+const caps_pos_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
+const caps_neg_indices = jsPsych.randomization.sampleWithoutReplacement([...Array(10).keys()], 5);
 
-const finalized_case_pos = case_pos.map((item, idx) =>
-  case_pos_indices.includes(idx)
-    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'case' }
-    : { ...item, cue: 'case' }
+const finalized_caps_pos = caps_pos.map((item, idx) =>
+  caps_pos_indices.includes(idx)
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'caps?' }
+    : { ...item, cue: 'caps?' }
 );
-const finalized_case_neg = case_neg.map((item, idx) =>
-  case_neg_indices.includes(idx)
-    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'case' }
-    : { ...item, cue: 'case' }
+const finalized_caps_neg = caps_neg.map((item, idx) =>
+  caps_neg_indices.includes(idx)
+    ? { ...item, stimulus: item.stimulus.toUpperCase(), word: item.word.toUpperCase(), cue: 'caps?' }
+    : { ...item, cue: 'caps?' }
 );
-const finalized_case_trials = finalized_case_pos.concat(finalized_case_neg);
+const finalized_caps_trials = finalized_caps_pos.concat(finalized_caps_neg);
     
 /* Shuffle so that no two consecutive tirals have the same cue/valence/case */
-let all_trials = finalized_self_trials.concat(finalized_case_trials);
+let all_trials = finalized_self_trials.concat(finalized_caps_trials);
 
 function equalityTest(a, b) {
   return (
@@ -524,7 +524,7 @@ const instructions_pg1 = {
       <p>For this task, you will see a cross on the screen. Please
       look at the cross when it appears. It will be followed by a
       single word.</p>
-      <p>Each word will be paired with a cue word at the top of the screen, either <strong>"self"</strong> or <strong>"case"</strong>.</p>`,
+      <p>Each word will be paired with a cue word at the top of the screen, either <strong>"self?"</strong> or <strong>"caps?"</strong>.</p>`,
 choices: ['Next'],
 button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`},
 post_trial_gap: 0
@@ -533,7 +533,7 @@ post_trial_gap: 0
 const instructions_pg2 = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `<div style='width: 85%; margin: 0 auto; font-size: 1.2em;'>
-      <p>If the cue word is <strong>"SELF"</strong>, you will have to decide whether you think
+      <p>If the cue word is <strong>"SELF?"</strong>, you will have to decide whether you think
       that the word shown could be used to describe you.</p>
       <p>If the word <strong>does</strong> describe you, tap <strong>"yes"</strong> as fast as you can.</p>
       <p>If the word <strong>does not</strong> describe you, tap <strong>"no"</strong> as fast as you can.</p>`,
@@ -546,7 +546,7 @@ const instructions_ex_self = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-             <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">SELF</div>
+             <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">SELF?</div>
              <div style="font-size: 3em; margin: 2vh 0;">+</div>
              <div style="margin-bottom: 5vh; font-size: 2.3em;">AWAKE</div>
            </div>
@@ -561,7 +561,7 @@ const instructions_ex_self = {
 const instructions_pg3 = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `<div style='width: 85%; margin: 0 auto; font-size: 1.2em;'>
-      <p>If the cue word is <strong>"CASE"</strong>, you will have to decide whether the word is written in UPPERCASE letters.</p>
+      <p>If the cue word is <strong>"CAPS?"</strong>, you will have to decide whether the word is written in UPPERCASE letters.</p>
       <p>If the word <strong>is</strong> written in uppercase letters, tap <strong>"yes"</strong> as fast as you can.</p>
       <p>If the word <strong>is not</strong> written in uppercase letters, tap <strong>"no"</strong> as fast as you can.</p>`,
 choices: ['Like this.'],
@@ -569,11 +569,11 @@ button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4
 post_trial_gap: 0
 };
     
-const instructions_ex_case = {
+const instructions_ex_caps = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-             <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">SELF</div>
+             <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">CAPS?</div>
              <div style="font-size: 3em; margin: 2vh 0;">+</div>
              <div style="margin-bottom: 5vh; font-size: 2.3em;">AWAKE</div>
            </div>
@@ -618,8 +618,8 @@ const retry_instructions = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `<div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
       <p>Let's try some more.</p>
-      <p>Remember, if the cue word is <strong>"case"</strong>, you will have to decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
-      <p>If the cue word is <strong>"self"</strong>, you will have to decide whether you think that the word shown could be <strong>used to describe you</strong>.</p>
+      <p>Remember, if the cue word is <strong>"caps?"</strong>, you will have to decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
+      <p>If the cue word is <strong>"self?"</strong>, you will have to decide whether you think that the word shown could be <strong>used to describe you</strong>.</p>
     </div>`,
     choices: ['Continue'],
     button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`},
@@ -649,8 +649,8 @@ const practice_trial = {
     word: jsPsych.timelineVariable('word'),
   },
   on_finish: function(data){
-    // For case trials, mark correct if (cue=='case' && uppercase) or (cue=='case' && !uppercase) etc.
-    if(data.cue === "case") {
+    // For case trials, mark correct if (cue=='caps' && uppercase) or (cue=='caps' && !uppercase) etc.
+    if(data.cue === "caps?") {
       const isUpper = data.word === data.word.toUpperCase();
       data.correct = (isUpper && data.response == 0) || (!isUpper && data.response == 1);
     } else {
@@ -686,7 +686,7 @@ const check_case_correctness = {
   timeline: [retry_instructions, practice_procedure_second_round],
   conditional_function: function(){
     const practice_data = jsPsych.data.get().filter({trialtype: 'practice'}).last(6).values();
-    const case_trials = practice_data.filter(trial => trial.cue === "case");
+    const case_trials = practice_data.filter(trial => trial.cue === "caps?");
     return case_trials.some(trial => trial.correct === false);
   }
 };
@@ -696,7 +696,7 @@ const check_case_correctness_third = {
   timeline: [retry_instructions, practice_procedure_third_round],
   conditional_function: function(){
     const practice_data = jsPsych.data.get().filter({trialtype: 'practice2'}).last(6).values();
-    const case_trials = practice_data.filter(trial => trial.cue === "case");
+    const case_trials = practice_data.filter(trial => trial.cue === "caps?");
     return case_trials.some(trial => trial.correct === false);
   }
 };
@@ -766,7 +766,7 @@ const done = {
 }
 
 /* Task Timeline */
-timeline.push(instructions_pg1, instructions_pg2, instructions_ex_self, instructions_pg3, instructions_ex_case, instructions_pg4);
+timeline.push(instructions_pg1, instructions_pg2, instructions_ex_self, instructions_pg3, instructions_ex_caps, instructions_pg4);
 
 timeline.push(practice_procedure);
 timeline.push(check_case_correctness);
