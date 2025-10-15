@@ -37,58 +37,81 @@ use_webaudio: false,
 
 /* redirect logic & data management */
 on_finish: function(data) {
-// Get URL variables directly since they're not reliably in trials
-var urlvar = jsPsych.data.getURLVariable();
-var ppt = urlvar.sret_id;
-var session = urlvar.sret_session;   // "w0", etc.
-var arm = urlvar.sret_arm;           // "arm_1", "arm_2"
+    // Get URL variables using correct jsPsych v8 method
+    var urlvar = jsPsych.data.urlVariables();
+    var ppt = urlvar.sret_id;
+    var session = urlvar.sret_session;   // "w0", etc.
+    var arm = urlvar.sret_arm;           // "arm_1", "arm_2"
 
-var surveyCodeMap = {
-  'w0_arm_1': '4RMCANPJA', // sona arm
-  'w2_arm_1': 'PNRK3FMEA',
-  'w4_arm_1': 'EAK8KP4PT',
-  'w6_arm_1': 'FPCRTDEC8',
-  'w0_arm_2': 'LLRMWNYFM', // main arm
-  'w2_arm_2': 'FF9NWPEMF',
-  'w4_arm_2': '3F48PTC3K',
-  'w6_arm_2': 'KRD9M4WPM'
-};
+    var surveyCodeMap = {
+      'w0_arm_1': '4RMCANPJA', // sona arm
+      'w2_arm_1': 'PNRK3FMEA',
+      'w4_arm_1': 'EAK8KP4PT',
+      'w6_arm_1': 'FPCRTDEC8',
+      'w0_arm_2': 'LLRMWNYFM', // main arm
+      'w2_arm_2': 'FF9NWPEMF',
+      'w4_arm_2': '3F48PTC3K',
+      'w6_arm_2': 'KRD9M4WPM'
+    };
 
-// Validation
-if (!ppt || !session || !arm) {
-  document.write(`
-    <!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
-      <h1>Missing Information</h1>
-      <p>Required URL parameters are missing. Please contact the research team.</p>
-      <p>Missing: ${!ppt ? 'sret_id ' : ''}${!session ? 'sret_session ' : ''}${!arm ? 'sret_arm' : ''}</p>
-    </div></body></html>`);
-  return;
+    // Validation
+    if (!ppt || !session || !arm) {
+      document.write(`
+        <!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
+          <h1>Missing Information</h1>
+          <p>Required URL parameters are missing. Please contact the research team.</p>
+          <p>Missing: ${!ppt ? 'sret_id ' : ''}${!session ? 'sret_session ' : ''}${!arm ? 'sret_arm' : ''}</p>
+        </div></body></html>`);
+      return;
+    }
+
+    var session_arm_key = session + '_' + arm;
+    var survey_code = surveyCodeMap[session_arm_key];
+    var confirmation_code = 'TASK_COMPLETE';
+
+    if (!survey_code) {
+      document.write(`
+        <!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
+          <h1>Missing redirect</h1>
+          <p>Invalid session/arm combination: ${session_arm_key}</p>
+          <p>Please contact the research team. Your data was recorded.</p>
+        </div></body></html>`);
+      return;
+    }
+
+    var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&confirmation_code=${confirmation_code}&sret_id=${ppt}&sret_session=${session}`;
+
+    console.log("Posting data for ID " + ppt + " and session " + session);
+    
+    // Post data using AJAX - matching the tutorial pattern
+    $.ajax({
+      type: "POST",
+      url: "/experiment-data",
+      data: JSON.stringify(data),  // Send raw jsPsych data object
+      contentType: "application/json"
+    })
+    .done(function() {
+      console.log("Success posting data!");
+      window.location.href = finalurl;
+    })
+    .fail(function(xhr, status, error) {
+      console.error("A problem occurred while writing to the database:", error);
+      console.error("XHR Response:", xhr.responseText);
+      console.log("BACKUP DATA:", JSON.stringify(data));
+      // Still redirect on failure so participant can continue
+      window.location.href = finalurl;
+    });
 }
-
-var session_arm_key = session + '_' + arm;
-var survey_code = surveyCodeMap[session_arm_key];
-var confirmation_code = 'TASK_COMPLETE';
-
-if (!survey_code) {
-  document.write(`
-    <!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
-      <h1>Missing redirect</h1>
-      <p>Invalid session/arm combination: ${session_arm_key}</p>
-      <p>Please contact the research team. Your data was recorded.</p>
-    </div></body></html>`);
-  return;
-}
-
-var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&confirmation_code=${confirmation_code}&sret_id=${ppt}&sret_session=${session}`;
+});
 
 // Prepare data for saving
 var dataToSave = {
+  trials: data.values(),
   participant_id: ppt,
   session: session,
   arm: arm,
   task_start_time: taskStartTime,
-  task_end_time: Date.now(),
-  all_data: data.values()
+  task_end_time: Date.now()
 };
 
 // Post data then redirect
