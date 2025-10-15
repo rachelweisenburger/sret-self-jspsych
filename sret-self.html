@@ -31,78 +31,86 @@
 
 var taskStartTime = Date.now() // recording start time
     
-/* initialize jsPsych task */
-const jsPsych = initJsPsych({
-  use_webaudio: false,
-  on_finish: function(data) {
-    var urlvar = jsPsych.data.urlVariables();
-    var ppt = urlvar.sret_id;
-    var session = urlvar.sret_session;
-    var arm = urlvar.sret_arm;
-    var finalurl = urlvar.rc;
-    
-    if (finalurl) {
-      /*
-      //finalurl = 'https://sret-self-4774526bcb1e.herokuapp.com/' // just start it over if they don't have the URL
-    } else {*/
-      finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&' // s= for survey string; code= for access code
-    }
-    
-   /* // Your survey code mapping
-    var surveyCodeMap = {
-      'w0_arm_1': '4RMCANPJA',
-      'w2_arm_1': 'PNRK3FMEA',
-      'w4_arm_1': 'EAK8KP4PT',
-      'w6_arm_1': 'FPCRTDEC8',
-      'w0_arm_2': 'LLRMWNYFM',
-      'w2_arm_2': 'FF9NWPEMF',
-      'w4_arm_2': '3F48PTC3K',
-      'w6_arm_2': 'KRD9M4WPM'
-    };
-    
-    // Build the session_arm key and get survey code
-    var session_arm_key = session + '_' + arm;
-    var survey_code = surveyCodeMap[session_arm_key];
-    var confirmation_code = 'TASK_COMPLETE'; */
-    
-    var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?code=${return_code}&sret_id=${ppt}&sret_session=${session}`;
+    /* initialize jsPsych task */
+    const jsPsych = initJsPsych({
+      use_webaudio: false,
+      on_finish: function(data) {
+        // Get URL variables
+        var urlvar = jsPsych.data.urlVariables();
+        var ppt = urlvar.record_id;        // REDCap sends 'record_id'
+        var event = urlvar.event;          // REDCap sends 'event'
+        var return_code = urlvar.rc;       // REDCap sends 'rc' (return code)
         
-    var jqxhr = $.post({
-      url: "/experiment-data",
-      data: JSON.stringify(data),
-      contentType: "application/json"
-    })
-    .done(function(data) {
-      if(finalurl) {
-        window.location.href = newurlgo;
-      } else {
-        // if they don't have an RC, tell them there's a problem
-        document.write('<!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;"><h1>Missing redirect</h1><p>This page cannot redirect you as expected. Please be sure that you followed the correct link. While your data has been recorded, you will not be redirected to finish data collection for today. You do not need to complete the task again, but may contact the researchers if you have questions.</p></div></body></html>')
+        // Build the redirect URL back to REDCap
+        var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?code=${return_code}`;
+        
+        // Post data to your server
+        $.post({
+          url: "/experiment-data",
+          data: JSON.stringify(data),
+          contentType: "application/json"
+        })
+        .done(function() {
+          if(return_code) {
+            // If we have a return code, redirect back to REDCap
+            window.location.href = finalurl;
+          } else {
+            // If no return code, show error message
+            document.write('<!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;"><h1>Missing redirect</h1><p>This page cannot redirect you as expected. Please be sure that you followed the correct link. While your data has been recorded, you will not be redirected to finish data collection for today. You do not need to complete the task again, but may contact the researchers if you have questions.</p></div></body></html>')
+          }
+        })
+        .fail(function() {
+          // Even if data save fails, redirect so participant can continue
+          if(return_code) {
+            window.location.href = finalurl;
+          }
+        })
       }
-    })
-    .fail(function() {
-      window.location.href = newurlgo;
-    })
-  }
-});
+    });
 
-const timeline = [];
+    const timeline = [];
 
+    /* get URL variables */
+    var urlvar = jsPsych.data.urlVariables();
 
-/* adding properties to all trials */
-jsPsych.data.addProperties({
-  ppt: urlvar.sret_id,
-  session: urlvar.sret_session,
-  arm: urlvar.sret_arm,
-  rc: urlvar.rc,
-  task_start: taskStartTime
-});
-    
-/* check to confirm that they're on mobile */
-const checkMobile = {
-  type: jsPsychBrowserCheck,
-  features: ["mobile", "browser"],
-};
+    // Parse event name to extract session and arm
+    var event_name = urlvar.event || '';
+
+    // Extract session from event name
+    var session = 'w0'; // default
+    if (event_name.includes('baseline')) {
+      session = 'w0';
+    } else if (event_name.includes('week_2') || event_name.includes('2_week') || event_name.includes('week2')) {
+      session = 'w2';
+    } else if (event_name.includes('week_4') || event_name.includes('4_week') || event_name.includes('week4')) {
+      session = 'w4';
+    } else if (event_name.includes('week_6') || event_name.includes('6_week') || event_name.includes('week6')) {
+      session = 'w6';
+    }
+
+    // Extract arm from event name
+    var arm = 'arm_1'; // default
+    if (event_name.includes('arm_2')) {
+      arm = 'arm_2';
+    } else if (event_name.includes('arm_1')) {
+      arm = 'arm_1';
+    }
+
+    // Add to ALL trials
+    jsPsych.data.addProperties({
+      ppt: urlvar.record_id,
+      session: session,
+      arm: arm,
+      event_name: event_name,
+      rc: urlvar.rc,
+      task_start: taskStartTime
+    });
+        
+    /* check to confirm that they're on mobile */
+    const checkMobile = {
+      type: jsPsychBrowserCheck,
+      features: ["mobile", "browser"],
+    };
 
 //timeline.push(checkMobile);
 
