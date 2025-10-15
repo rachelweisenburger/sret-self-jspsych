@@ -38,7 +38,7 @@ const jsPsych = initJsPsych({
       // Get URL variables
       var urlvar = jsPsych.data.urlVariables();
       var ppt = urlvar.sret_id;
-      var event_label = urlvar.sret_session;
+      var event_name = urlvar.sret_session;
       
       // Map event labels to their survey codes and event IDs
       var event_map = {
@@ -77,7 +77,7 @@ const jsPsych = initJsPsych({
       };
       
       // Get the survey code and event_id for this event
-      var event_info = event_map[event_label];
+      var event_info = event_map[event_name];
       
       if (!event_info) {
         console.error('No mapping found for event:', event_label);
