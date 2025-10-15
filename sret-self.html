@@ -34,54 +34,61 @@ var taskStartTime = Date.now() // recording start time
 /* initialize jsPsych task */
 const jsPsych = initJsPsych({
   use_webaudio: false,
+  
+  /* redirect logic & data management */
+  on_finish: function(data) {
+    var ppt = data.trials[1].ppt;           // record_id
+    var session = data.trials[1].session;   // "week_0", etc.
+    var arm = data.trials[1].arm;           // "arm_1", "arm_2"
+    
+    var surveyCodeMap = {
+      'week_0_arm_1': '4RMCANPJA', // sona arm
+      'week_2_arm_1': 'PNRK3FMEA',
+      'week_4_arm_1': 'EAK8KP4PT',
+      'week_6_arm_1': 'FPCRTDEC8',
+      'week_0_arm_2': 'LLRMWNYFM', // main study arm
+      'week_2_arm_2': 'FF9NWPEMF',
+      'week_4_arm_2': '3F48PTC3K',
+      'week_6_arm_2': 'KRD9M4WPM'
+    };
+    
+    var session_arm_key = session + '_' + arm;
+    var survey_code = surveyCodeMap[session_arm_key];
+    var confirmation_code = 'TASK_COMPLETE';
 
-var surveyCodeMap = {
-'week_0_arm_1': '4RMCANPJA', // sona arm
-'week_2_arm_1': 'PNRK3FMEA',
-'week_4_arm_1': 'EAK8KP4PT',
-'week_6_arm_1': 'FPCRTDEC8',
-'week_0_arm_2': 'LLRMWNYFM', // main study arm
-'week_2_arm_2': 'FF9NWPEMF',
-'week_4_arm_2': '3F48PTC3K',
-'week_6_arm_2': 'KRD9M4WPM'
-};
+    if (!survey_code) {
+      document.write(`
+        <!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
+          <h1>Missing redirect</h1>
+          <p>This page cannot redirect you as expected. Please check the link or contact the research team. Your data was recorded.</p>
+        </div></body></html>`);
+      return;
+    }
 
-/* redirect logic & data management */
-on_finish: function(data) {
-var ppt = data.trials[1].ppt;           // record_id
-var session = data.trials[1].session;   // "week_0", etc.
-var arm = data.trials[1].arm;            // "arm_1", "arm_2"
-var session_arm_key = session + '_' + arm;
-var survey_code = surveyCodeMap[session_arm_key];
-var confirmation_code = 'TASK_COMPLETE';
+    var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&confirmation_code=${confirmation_code}&sret_id=${ppt}&sret_session=${session}`;
 
-if (!survey_code) {
-  document.write(`
-    <!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
-      <h1>Missing redirect</h1>
-      <p>This page cannot redirect you as expected. Please check the link or contact the research team. Your data was recorded.</p>
-    </div></body></html>`);
-  return;
-}
-
-var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&confirmation_code=${confirmation_code}&sret_id=${ppt}&sret_session=${session}`;
-
-// Post data then redirect
-$.post({
-  url: "/experiment-data",
-  data: JSON.stringify(data),
-  contentType: "application/json"
-})
-.done(function() {
-  window.location.href = finalurl;
-})
-.fail(function() {
-  // Redirect anyway if posting fails
-  window.location.href = finalurl;
+    // Post data then redirect
+    if (typeof $ !== 'undefined' && $.post) {
+      $.post({
+        url: "/experiment-data",
+        data: JSON.stringify(data),
+        contentType: "application/json"
+      })
+      .done(function() {
+        window.location.href = finalurl;
+      })
+      .fail(function() {
+        // Redirect anyway if posting fails
+        window.location.href = finalurl;
+      });
+    } else {
+      // Fallback if jQuery not available
+      window.location.href = finalurl;
+    }
+  }
 });
-}
 
-const timeline = []
+const timeline = [];
 
 /* get URL variables */
 var urlvar = jsPsych.data.urlVariables();
@@ -89,9 +96,9 @@ var urlvar = jsPsych.data.urlVariables();
 jsPsych.data.addProperties({
   ppt: urlvar.sret_id,
   session: urlvar.sret_session,
+  arm: urlvar.sret_arm,  // Add this if arm should come from URL
   rc: urlvar.rc,
 });
-
 
 // console.log("ID " + urlvar.sret_id + " at session " + urlvar.sret_session + " began the task.")
 
