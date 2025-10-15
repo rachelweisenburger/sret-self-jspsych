@@ -35,38 +35,34 @@ var taskStartTime = Date.now() // recording start time
     const jsPsych = initJsPsych({
       use_webaudio: false,
       on_finish: function(data) {
-        // Get URL variables
-        var urlvar = jsPsych.data.urlVariables();
-        var ppt = urlvar.record_id;        // REDCap sends 'record_id'
-        var event = urlvar.event;          // REDCap sends 'event'
-        var return_code = urlvar.rc;       // REDCap sends 'rc' (return code)
-        
-        // Build the redirect URL back to REDCap
-        var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?code=${return_code}`;
-        
-        // Post data to your server
-        $.post({
-          url: "/experiment-data",
-          data: JSON.stringify(data),
-          contentType: "application/json"
-        })
-        .done(function() {
-          if(return_code) {
-            // If we have a return code, redirect back to REDCap
-            window.location.href = finalurl;
-          } else {
-            // If no return code, show error message
-            document.write('<!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;"><h1>Missing redirect</h1><p>This page cannot redirect you as expected. Please be sure that you followed the correct link. While your data has been recorded, you will not be redirected to finish data collection for today. You do not need to complete the task again, but may contact the researchers if you have questions.</p></div></body></html>')
-          }
-        })
-        .fail(function() {
-          // Even if data save fails, redirect so participant can continue
-          if(return_code) {
-            window.location.href = finalurl;
-          }
-        })
-      }
-    });
+          // Get URL variables
+          var urlvar = jsPsych.data.urlVariables();
+          var ppt = urlvar.record_id;
+          var event = urlvar.event;
+          var return_code = urlvar.rc;
+          
+          // Build the redirect URL back to REDCap - TRY THIS FORMAT
+          var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?__return=${return_code}`;
+          
+          // Post data to your server
+          $.post({
+            url: "/experiment-data",
+            data: JSON.stringify(data),
+            contentType: "application/json"
+          })
+          .done(function() {
+            if(return_code) {
+              window.location.href = finalurl;
+            } else {
+              document.write('<!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;"><h1>Missing redirect</h1><p>This page cannot redirect you as expected. Please be sure that you followed the correct link. While your data has been recorded, you will not be redirected to finish data collection for today. You do not need to complete the task again, but may contact the researchers if you have questions.</p></div></body></html>')
+            }
+          })
+          .fail(function() {
+            if(return_code) {
+              window.location.href = finalurl;
+            }
+          })
+        }
 
     const timeline = [];
 
