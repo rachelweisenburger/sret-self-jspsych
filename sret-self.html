@@ -38,18 +38,18 @@ const jsPsych = initJsPsych({
   /* redirect logic & data management */
   on_finish: function(data) {
     var ppt = data.trials[1].ppt;           // record_id
-    var session = data.trials[1].session;   // "week_0", etc.
+    var session = data.trials[1].session;   // "w0", etc.
     var arm = data.trials[1].arm;           // "arm_1", "arm_2"
     
     var surveyCodeMap = {
-      'week_0_arm_1': '4RMCANPJA', // sona arm
-      'week_2_arm_1': 'PNRK3FMEA',
-      'week_4_arm_1': 'EAK8KP4PT',
-      'week_6_arm_1': 'FPCRTDEC8',
-      'week_0_arm_2': 'LLRMWNYFM', // main study arm
-      'week_2_arm_2': 'FF9NWPEMF',
-      'week_4_arm_2': '3F48PTC3K',
-      'week_6_arm_2': 'KRD9M4WPM'
+      'w0_arm_1': '4RMCANPJA', // sona arm
+      'w2_arm_1': 'PNRK3FMEA',
+      'w4_arm_1': 'EAK8KP4PT',
+      'w6_arm_1': 'FPCRTDEC8',
+      'w0_arm_2': 'LLRMWNYFM', // main study arm
+      'w2_arm_2': 'FF9NWPEMF',
+      'w4_arm_2': '3F48PTC3K',
+      'w6_arm_2': 'KRD9M4WPM'
     };
     
     var session_arm_key = session + '_' + arm;
