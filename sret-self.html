@@ -37,15 +37,59 @@ const jsPsych = initJsPsych({
   on_finish: function(data) {
       // Get URL variables
       var urlvar = jsPsych.data.urlVariables();
-      var record_id = urlvar.sret_id;
+      var ppt = urlvar.sret_id;
       var event_label = urlvar.sret_session;
       
-      // Get the survey access code from the rc parameter
-      var rc_param = urlvar.rc;
+      // Map event labels to their survey codes and event IDs
+      var event_map = {
+        'w0_arm_1': {
+          survey_code: 'MRX3AYCDP',  // postsret_w0_arm_1
+          event_id: '11371'
+        },
+        'w2_arm_1': {
+          survey_code: 'K9LCPWRWE',  // postsret_w2_arm_1
+          event_id: '11372'
+        },
+        'w4_arm_1': {
+          survey_code: 'FPP3WXR8F',  // postsret_w4_arm_1
+          event_id: '11373'
+        },
+        'w6_arm_1': {
+          survey_code: 'FKN43733P',  // postsret_w6_arm_1
+          event_id: '11374'
+        },
+        'w0_arm_2': {
+          survey_code: 'W9F3HHN8C',  // postsret_w0_arm_2
+          event_id: '11377'
+        },
+        'w2_arm_2': {
+          survey_code: '9RJDRHF9P',  // postsret_w2_arm_2
+          event_id: '11378'
+        },
+        'w4_arm_2': {
+          survey_code: 'WLFL3WND4',  // postsret_w4_arm_2
+          event_id: '11379'
+        },
+        'w6_arm_2': {
+          survey_code: 'MEM87D7FJ',  // postsret_w5_arm_2
+          event_id: '11380'
+        }
+      };
       
-      // Build the redirect URL using the access code (NOT the s parameter)
-      // The access code format is used with the ?s= parameter
-      var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${rc_param}`;
+      // Get the survey code and event_id for this event
+      var event_info = event_map[event_label];
+      
+      if (!event_info) {
+        console.error('No mapping found for event:', event_label);
+        // Fallback - you might want to handle this differently
+        return;
+      }
+      
+      var survey_code = event_info.survey_code;
+      var event_id = event_info.event_id;
+      
+      // Build the redirect URL
+      var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&record=${ppt}&event_id=${event_id}`;
       
       // Post data to your server
       $.post({
@@ -63,49 +107,48 @@ const jsPsych = initJsPsych({
   }
 });
 
-const timeline = [];
+    const timeline = [];
 
-/* get URL variables */
-var urlvar = jsPsych.data.urlVariables();
+    /* get URL variables */
+    var urlvar = jsPsych.data.urlVariables();
 
-// Parse event name to extract session and arm
-var event_name = urlvar.event || '';
+    // Parse event label to extract session and arm
+    var event_label = urlvar.sret_session || '';
 
-// Extract session from event name
-var session = 'w0'; // default
-if (event_name.includes('baseline') || event_name.includes('w0')) {
-  session = 'w0';
-} else if (event_name.includes('week_2') || event_name.includes('2_week') || event_name.includes('week2') || event_name.includes('w2')) {
-  session = 'w2';
-} else if (event_name.includes('week_4') || event_name.includes('4_week') || event_name.includes('week4') || event_name.includes('w4')) {
-  session = 'w4';
-} else if (event_name.includes('week_6') || event_name.includes('6_week') || event_name.includes('week6') || event_name.includes('w6')) {
-  session = 'w6';
-}
+    // Extract session from event label
+    var session = 'w0'; // default
+    if (event_label.includes('baseline') || event_label.includes('w0') || event_label.includes('wave_0')) {
+      session = 'w0';
+    } else if (event_label.includes('week_2') || event_label.includes('2_week') || event_label.includes('week2') || event_label.includes('w2') || event_label.includes('wave_2')) {
+      session = 'w2';
+    } else if (event_label.includes('week_4') || event_label.includes('4_week') || event_label.includes('week4') || event_label.includes('w4') || event_label.includes('wave_4')) {
+      session = 'w4';
+    } else if (event_label.includes('week_6') || event_label.includes('6_week') || event_label.includes('week6') || event_label.includes('w6') || event_label.includes('wave_6')) {
+      session = 'w6';
+    }
 
-// Extract arm from event name
-var arm = 'arm_1'; // default
-if (event_name.includes('arm_2')) {
-  arm = 'arm_2';
-} else if (event_name.includes('arm_1')) {
-  arm = 'arm_1';
-}
+    // Extract arm from event label
+    var arm = 'arm_1'; // default
+    if (event_label.includes('arm_2')) {
+      arm = 'arm_2';
+    } else if (event_label.includes('arm_1')) {
+      arm = 'arm_1';
+    }
 
-// Add to ALL trials
-jsPsych.data.addProperties({
-  ppt: urlvar.record_id,
-  session: session,
-  arm: arm,
-  event_name: event_name,
-  task_start: taskStartTime
-});
-    
-/* check to confirm that they're on mobile */
-const checkMobile = {
-  type: jsPsychBrowserCheck,
-  features: ["mobile", "browser"],
-};
-
+    // Add to ALL trials
+    jsPsych.data.addProperties({
+      ppt: urlvar.sret_id,
+      session: session,
+      arm: arm,
+      event_name: event_label,
+      task_start: taskStartTime
+    });
+        
+    /* check to confirm that they're on mobile */
+    const checkMobile = {
+      type: jsPsychBrowserCheck,
+      features: ["mobile", "browser"],
+    };
 //timeline.push(checkMobile);
 
 const notifyMobile = {
