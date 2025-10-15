@@ -33,111 +33,51 @@ var taskStartTime = Date.now() // recording start time
     
 /* initialize jsPsych task */
 const jsPsych = initJsPsych({
-use_webaudio: false,
-
-/* redirect logic & data management */
-on_finish: function(data) {
-    // Get URL variables using correct jsPsych v8 method
-    var urlvar = jsPsych.data.urlVariables();
-    var ppt = urlvar.sret_id;
-    var session = urlvar.sret_session;   // "w0", etc.
-    var arm = urlvar.sret_arm;           // "arm_1", "arm_2"
-
+  use_webaudio: false,
+  on_finish: function(data) {
+    var ppt = data.trials[1].ppt;
+    var session = data.trials[1].session;
+    var arm = data.trials[1].arm;
+    
+    // Your survey code mapping
     var surveyCodeMap = {
-      'w0_arm_1': '4RMCANPJA', // sona arm
+      'w0_arm_1': '4RMCANPJA',
       'w2_arm_1': 'PNRK3FMEA',
       'w4_arm_1': 'EAK8KP4PT',
       'w6_arm_1': 'FPCRTDEC8',
-      'w0_arm_2': 'LLRMWNYFM', // main arm
+      'w0_arm_2': 'LLRMWNYFM',
       'w2_arm_2': 'FF9NWPEMF',
       'w4_arm_2': '3F48PTC3K',
       'w6_arm_2': 'KRD9M4WPM'
     };
-
-    // Validation
-    if (!ppt || !session || !arm) {
-      document.write(`
-        <!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
-          <h1>Missing Information</h1>
-          <p>Required URL parameters are missing. Please contact the research team.</p>
-          <p>Missing: ${!ppt ? 'sret_id ' : ''}${!session ? 'sret_session ' : ''}${!arm ? 'sret_arm' : ''}</p>
-        </div></body></html>`);
-      return;
-    }
-
+    
+    // Build the session_arm key and get survey code
     var session_arm_key = session + '_' + arm;
     var survey_code = surveyCodeMap[session_arm_key];
     var confirmation_code = 'TASK_COMPLETE';
-
-    if (!survey_code) {
-      document.write(`
-        <!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;">
-          <h1>Missing redirect</h1>
-          <p>Invalid session/arm combination: ${session_arm_key}</p>
-          <p>Please contact the research team. Your data was recorded.</p>
-        </div></body></html>`);
-      return;
-    }
-
-    var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&confirmation_code=${confirmation_code}&sret_id=${ppt}&sret_session=${session}`;
-
-    console.log("Posting data for ID " + ppt + " and session " + session);
     
-    // Post data using AJAX - matching the tutorial pattern
-    $.ajax({
-      type: "POST",
+    // Build the redirect URL
+    var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&confirmation_code=${confirmation_code}&sret_id=${ppt}&sret_session=${session}`;
+    
+    // Post data to server (Justin's exact pattern)
+    var jqxhr = $.post({
       url: "/experiment-data",
-      data: JSON.stringify(data),  // Send raw jsPsych data object
+      data: JSON.stringify(data),
       contentType: "application/json"
     })
-    .done(function() {
-      console.log("Success posting data!");
+    .done(function(data) {
+      if(survey_code) {
+        window.location.href = finalurl;
+      } else {
+        // Error message if no valid survey code found
+        document.write('<!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;"><h1>Missing redirect</h1><p>This page cannot redirect you as expected. Please be sure that you followed the correct link. While your data has been recorded, you will not be redirected to finish data collection for today. You do not need to complete the task again, but may contact the researchers if you have questions.</p></div></body></html>')
+      }
+    })
+    .fail(function() {
+      // On failure, still redirect so participant can continue
       window.location.href = finalurl;
     })
-    .fail(function(xhr, status, error) {
-      console.error("A problem occurred while writing to the database:", error);
-      console.error("XHR Response:", xhr.responseText);
-      console.log("BACKUP DATA:", JSON.stringify(data));
-      // Still redirect on failure so participant can continue
-      window.location.href = finalurl;
-    });
-}
-});
-
-// Prepare data for saving
-var dataToSave = {
-  trials: data.values(),
-  participant_id: ppt,
-  session: session,
-  arm: arm,
-  task_start_time: taskStartTime,
-  task_end_time: Date.now()
-};
-
-// Post data then redirect
-if (typeof $ !== 'undefined' && $.post) {
-  $.post({
-    url: "/experiment-data",
-    data: JSON.stringify(dataToSave),
-    contentType: "application/json",
-    timeout: 10000  // 10 second timeout
-  })
-  .done(function(response) {
-    console.log('Data saved successfully:', response);
-    window.location.href = finalurl;
-  })
-  .fail(function(xhr, status, error) {
-    console.error('Data save failed:', status, error);
-    // Try to save to console as backup
-    console.log('BACKUP DATA:', JSON.stringify(dataToSave));
-    // Redirect anyway
-    window.location.href = finalurl;
-  });
-} else {
-  console.error('jQuery not available');
-  window.location.href = finalurl;
-}
-}
+  }
 });
 
 const timeline = [];
@@ -145,13 +85,13 @@ const timeline = [];
 /* get URL variables */
 var urlvar = jsPsych.data.urlVariables();
 
-// Add to ALL trials
+// Add properties to ALL trials (Justin's method)
 jsPsych.data.addProperties({
-ppt: urlvar.sret_id,
-session: urlvar.sret_session,
-arm: urlvar.sret_arm,
-rc: urlvar.rc,
-task_start: taskStartTime
+  ppt: urlvar.sret_id,
+  session: urlvar.sret_session,
+  arm: urlvar.sret_arm,
+  rc: urlvar.rc,
+  task_start: taskStartTime
 });
     
 /* check to confirm that they're on mobile */
