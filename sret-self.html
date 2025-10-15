@@ -629,9 +629,17 @@ const retry_instructions = {
 /* Correction feedback for caps? practice trials */
 const caps_correction = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: `<div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
-      <p>Remember, if the cue word is <strong>"caps?"</strong>, you will have to decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
-    </div>`,
+  stimulus: function() {
+    const last_trial = jsPsych.data.get().last(1).values()[0];
+    const word = last_trial.word;
+    const isUpper = word === word.toUpperCase();
+    const caseType = isUpper ? 'uppercase' : 'lowercase';
+    
+    return `<div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
+      <p><strong>"${word}"</strong> is in ${caseType} letters.</p>
+      <p>Remember, if the cue word is <strong>"caps?"</strong>, decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
+    </div>`;
+  },
   choices: ['Continue'],
   button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`},
   post_trial_gap: 500
@@ -694,27 +702,10 @@ const practice_procedure_second_round = {
   timeline_variables: practice_stimuli_second_round,
   randomize_order: true
 };
-    
-/* third practice round */
-const practice_procedure_third_round = {
-  timeline: [fixation, practice_trial, conditional_caps_correction],  // Added correction
-  timeline_variables: practice_stimuli_third_round,
-  randomize_order: true
-};
 
 /* second practice round */
 const check_case_correctness = {
   timeline: [retry_instructions, practice_procedure_second_round],
-  conditional_function: function(){
-    const practice_data = jsPsych.data.get().filter({trialtype: 'practice'}).last(6).values();
-    const case_trials = practice_data.filter(trial => trial.cue === "caps?");
-    return case_trials.some(trial => trial.correct === false);
-  }
-};
-
-/* third practice round */
-const check_case_correctness_third = {
-  timeline: [retry_instructions, practice_procedure_third_round],
   conditional_function: function(){
     const practice_data = jsPsych.data.get().filter({trialtype: 'practice2'}).last(6).values();
     const case_trials = practice_data.filter(trial => trial.cue === "caps?");
@@ -791,7 +782,6 @@ timeline.push(instructions_pg1, instructions_pg2, instructions_ex_self, instruct
 
 timeline.push(practice_procedure);
 timeline.push(check_case_correctness);
-timeline.push(check_case_correctness_third);
 timeline.push(check_in)
     
 const block_procedure = {
