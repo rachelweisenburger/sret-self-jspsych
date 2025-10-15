@@ -41,7 +41,7 @@ const jsPsych = initJsPsych({
       var event = urlvar.event;
       var return_code = urlvar.rc;
       
-      // Build the redirect URL back to REDCap - TRY THIS FORMAT
+      // Build the redirect URL back to REDCap
       var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?__return=${return_code}`;
       
       // Post data to your server
@@ -62,7 +62,8 @@ const jsPsych = initJsPsych({
           window.location.href = finalurl;
         }
       })
-    }
+  }
+});
 
 const timeline = [];
 
