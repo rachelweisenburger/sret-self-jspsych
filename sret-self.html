@@ -636,7 +636,7 @@ const caps_correction = {
     const caseType = isUpper ? 'uppercase' : 'lowercase';
     
     return `<div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
-      <p><strong>"${word}"</strong> is in ${caseType} letters.</p>
+      <p><strong>"${word}"</strong> was in ${caseType} letters.</p>
       <p>Remember, if the cue word is <strong>"caps?"</strong>, decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
     </div>`;
   },
@@ -707,7 +707,7 @@ const practice_procedure_second_round = {
 const check_case_correctness = {
   timeline: [retry_instructions, practice_procedure_second_round],
   conditional_function: function(){
-    const practice_data = jsPsych.data.get().filter({trialtype: 'practice2'}).last(6).values();
+    const practice_data = jsPsych.data.get().filter({trialtype: 'practice'}).last(6).values();
     const case_trials = practice_data.filter(trial => trial.cue === "caps?");
     return case_trials.some(trial => trial.correct === false);
   }
