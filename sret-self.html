@@ -43,35 +43,35 @@ const jsPsych = initJsPsych({
       // Map event labels to their survey codes and event IDs
       var event_map = {
         'w0_arm_1': {
-          survey_code: 'MRX3AYCDP',  // postsret_w0_arm_1
+          survey_code: 'MRX3AYCDP',  // postsret_w0_arm_1 (sona)
           event_id: '11371'
         },
         'w2_arm_1': {
-          survey_code: 'K9LCPWRWE',  // postsret_w2_arm_1
+          survey_code: 'K9LCPWRWE',  // postsret_w2_arm_1 (sona)
           event_id: '11372'
         },
         'w4_arm_1': {
-          survey_code: 'FPP3WXR8F',  // postsret_w4_arm_1
+          survey_code: 'FPP3WXR8F',  // postsret_w4_arm_1 (sona)
           event_id: '11373'
         },
         'w6_arm_1': {
-          survey_code: 'FKN43733P',  // postsret_w6_arm_1
+          survey_code: 'FKN43733P',  // postsret_w6_arm_1 (sona)
           event_id: '11374'
         },
         'w0_arm_2': {
-          survey_code: 'W9F3HHN8C',  // postsret_w0_arm_2
+          survey_code: 'W9F3HHN8C',  // postsret_w0_arm_2 (main)
           event_id: '11377'
         },
         'w2_arm_2': {
-          survey_code: '9RJDRHF9P',  // postsret_w2_arm_2
+          survey_code: '9RJDRHF9P',  // postsret_w2_arm_2 (main)
           event_id: '11378'
         },
         'w4_arm_2': {
-          survey_code: 'WLFL3WND4',  // postsret_w4_arm_2
+          survey_code: 'WLFL3WND4',  // postsret_w4_arm_2 (main)
           event_id: '11379'
         },
         'w6_arm_2': {
-          survey_code: 'MEM87D7FJ',  // postsret_w5_arm_2
+          survey_code: 'MEM87D7FJ',  // postsret_w5_arm_2 (main)
           event_id: '11380'
         }
       };
@@ -697,10 +697,10 @@ const practice_trial = {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
     const word = jsPsych.evaluateTimelineVariable('stimulus');
     return `
-      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${cue}</div>
-        <div style="font-size: 3em; margin: 2vh 0;">+</div>
-        <div style="margin-bottom: 5vh; font-size: 2.3em;">${word}</div>
+      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
+        <div style="font-size: 3em; font-weight: bold; letter-spacing: 0.05em;">${cue}</div>
+        <div style="font-size: 4.5em;">+</div>
+        <div style="font-size: 4em; line-height: 1.2;">${word}</div>
       </div>
     `;
   },
@@ -755,10 +755,10 @@ const sret = {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
     const word = jsPsych.evaluateTimelineVariable('stimulus');
     return `
-      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-        <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">${cue}</div>
-        <div style="font-size: 3em; margin: 2vh 0;">+</div>
-        <div style="margin-bottom: 5vh; font-size: 2.3em;">${word}</div>
+      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
+        <div style="font-size: 3em; font-weight: bold; letter-spacing: 0.05em;">${cue}</div>
+        <div style="font-size: 4.5em;">+</div>
+        <div style="font-size: 4em; line-height: 1.2;">${word}</div>
       </div>
     `;
   },
