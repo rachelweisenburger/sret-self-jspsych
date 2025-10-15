@@ -34,7 +34,7 @@ app.get('/experiment', function(request, response) {
 
 // --- Tell the data where to go
 app.post('/experiment-data', urlencodedparser, function(request, response) {
-    // console.log('app.post-ing the data');
+    console.log('app.post-ing the data');
     class Sret extends Model {}
     Sret.init({
       data: DataTypes.JSON
@@ -43,12 +43,16 @@ app.post('/experiment-data', urlencodedparser, function(request, response) {
       modelName: 'sret'
     });
     (async () => {
-      await sequelize.sync();
-      const data = await Sret.create({
-        data: request.body
-      });
-      //console.log(data);
-})();
+      try {
+        await sequelize.sync();
+        const data = await Sret.create({
+          data: request.body
+        });
+        console.log('Data saved successfully with ID:', data.id);
+      } catch (error) {
+        console.error('Error saving data to database:', error);
+      }
+    })();
     response.redirect('/');
 });
 
@@ -59,6 +63,7 @@ if (port == null || port == "") {
 }
 
 var server = app.listen(port, function(){
+    console.log('Listening on port %d', server.address().port);
 });
 
 
