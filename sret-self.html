@@ -561,7 +561,7 @@ const instructions_pg1 = {
       <p>For this task, you will see a cross on the screen. Please
       look at the cross when it appears. It will be followed by a
       single word.</p>
-      <p>Each word will be paired with a cue word at the top of the screen, either <strong>"self?"</strong> or <strong>"caps?"</strong>.</p>`,
+      <p>Each word will be paired with a cue word at the top of the screen, either <strong>"SELF?"</strong> or <strong>"CAPS?"</strong>.</p>`,
 choices: ['Next'],
 button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`},
 post_trial_gap: 0
@@ -657,8 +657,8 @@ const retry_instructions = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `<div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
       <p>Let's try some more!</p>
-      <p>Remember, decide whether the word is written in <strong>UPPERCASE</strong> letters if the cue word is <strong>"caps?"</strong>.</p>
-      <p>If the cue word is <strong>"self?"</strong>, then decide whether you think that the word shown could be <strong>used to describe you</strong>.</p>
+      <p>Remember, decide whether the word is written in <strong>UPPERCASE</strong> letters if the cue word is <strong>"CAPS?"</strong>.</p>
+      <p>If the cue word is <strong>"SELF?"</strong>, then decide whether you think that the word shown could be <strong>used to describe you</strong>.</p>
     </div>`,
     choices: ['Continue'],
     button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`},
@@ -676,7 +676,7 @@ const caps_correction = {
     
     return `<div style='width: 85%; margin: 0 auto; font-size: 1.3em; line-height: 1.4em;'>
       <p><strong>"${word}"</strong> was in ${caseType} letters.</p>
-      <p>Remember, if the cue word is <strong>"caps?"</strong>, decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
+      <p>Remember, if the cue word is <strong>"CAPS?"</strong>, decide whether the word is written in <strong>UPPERCASE</strong> letters.</p>
     </div>`;
   },
   choices: ['Continue'],
