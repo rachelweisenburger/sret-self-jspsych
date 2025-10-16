@@ -582,10 +582,10 @@ post_trial_gap: 0
 const instructions_ex_self = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-     <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-             <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">SELF?</div>
-             <div style="font-size: 3em; margin: 2vh 0;">+</div>
-             <div style="margin-bottom: 5vh; font-size: 2.3em;">AWAKE</div>
+     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
+             <div style="font-size: 1.8em; font-weight: bold;">SELF?</div>
+             <div style="font-size: 2.2em;">+</div>
+             <div style="font-size: 1.8em; font-weight: bold;">AWAKE</div>
            </div>
     `,
   choices: ['yes', 'no'],
@@ -607,13 +607,11 @@ post_trial_gap: 0
 };
     
 const instructions_ex_caps = {
-  type: jsPsychHtmlButtonResponse,
   stimulus: `
-     <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; height: 65vh;">
-             <div style="margin-top: 5vh; font-size: 2.3em; font-weight: bold;">CAPS?</div>
-             <div style="font-size: 3em; margin: 2vh 0;">+</div>
-             <div style="margin-bottom: 5vh; font-size: 2.3em;">AWAKE</div>
-           </div>
+     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
+             <div style="font-size: 1.8em; font-weight: bold;">CAPS?</div>
+             <div style="font-size: 2.2em;">+</div>
+             <div style="font-size: 1.8em; font-weight: bold;">AWAKE</div>
     `,
   choices: ['yes', 'no'],
   button_html: choice =>
@@ -643,7 +641,7 @@ post_trial_gap: 0
 /* Fixation Cross Setup*/
 const fixation = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: '<div style="font-size: 3em">+</div>',
+  stimulus: '<div style="font-size: 2.2em">+</div>',
   choices: [],
   trial_duration: function(){
     return jsPsych.randomization.sampleWithoutReplacement([600, 700, 800, 900, 1000], 1)[0];
@@ -698,12 +696,10 @@ const practice_trial = {
   stimulus: function() {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
     const word = jsPsych.evaluateTimelineVariable('stimulus');
-    return `
-      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
-        <div style="font-size: 2.8em; font-weight: bold; letter-spacing: 0.05em;">${cue}</div>
-        <div style="font-size: 4.5em;">+</div>
-        <div style="font-size: 2.8em; line-height: 1.2;">${word}</div>
-      </div>
+    return ` <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
+        <div style="font-size: 1.8em; font-weight: bold;">${cue}</div>
+        <div style="font-size: 2.2em;">+</div>
+        <div style="font-size: 1.8em; font-weight: bold;">${word}</div>
     `;
   },
   choices: ['yes', 'no'],
