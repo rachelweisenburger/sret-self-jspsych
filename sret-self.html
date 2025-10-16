@@ -80,7 +80,7 @@ const jsPsych = initJsPsych({
       var event_info = event_map[event_name];
       
       if (!event_info) {
-        console.error('No mapping found for event:', event_label);
+        console.error('No mapping found for event:', event_name);
         // Fallback - you might want to handle this differently
         return;
       }
