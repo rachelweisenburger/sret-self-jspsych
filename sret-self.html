@@ -579,19 +579,20 @@ button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4
 post_trial_gap: 0
 };
     
+/* Instructions Example - Self Trial */
 const instructions_ex_self = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
-             <div style="font-size: 2.52em; font-weight: bold;">SELF?</div>
-             <div style="font-size: 3.08em;">+</div>
-             <div style="font-size: 2.52em; font-weight: bold;">AWAKE</div>
-           </div>
-    `,
+    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; min-height: 400px; padding-top: 60px; gap: 1.5em; position: relative;">
+      <div style="font-size: 3em; font-weight: bold;">SELF?</div>
+      <div style="font-size: 3.5em;">+</div>
+      <div style="font-size: 3em;">AWAKE</div>
+    </div>
+  `,
   choices: ['yes', 'no'],
   button_html: choice =>
-    `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`,
-    trial_duration: 5000,
+    `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; position: absolute; bottom: 40px;">${choice}</button>`,
+  trial_duration: 5000,
   post_trial_gap: 0
 };
     
@@ -606,18 +607,20 @@ button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4
 post_trial_gap: 0
 };
     
+/* Instructions Example - Caps Trial */
 const instructions_ex_caps = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
-             <div style="font-size: 2.52em; font-weight: bold;">CAPS?</div>
-             <div style="font-size: 3.08em;">+</div>
-             <div style="font-size: 2.52em; font-weight: bold;">AWAKE</div>
-    `,
+    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; min-height: 400px; padding-top: 60px; gap: 1.5em; position: relative;">
+      <div style="font-size: 3em; font-weight: bold;">CAPS?</div>
+      <div style="font-size: 3.5em;">+</div>
+      <div style="font-size: 3em;">AWAKE</div>
+    </div>
+  `,
   choices: ['yes', 'no'],
   button_html: choice =>
-    `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 1.8em;">${choice}</button>`,
-    trial_duration: 5000,
+    `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`,
+  trial_duration: 5000,
   post_trial_gap: 0
 };
     
@@ -639,16 +642,16 @@ post_trial_gap: 0
 };
     
 
-/* Fixation Cross Setup*/
+/* Fixation Cross Setup */
 const fixation = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: '<div style="font-size: 2.2em">+</div>',
+  stimulus: '<div style="font-size: 3.5em">+</div>',
   choices: [],
   trial_duration: function(){
     return jsPsych.randomization.sampleWithoutReplacement([600, 700, 800, 900, 1000], 1)[0];
   }
 };
-
+    
 /* Retry Instructions */
 const retry_instructions = {
   type: jsPsychHtmlButtonResponse,
@@ -697,14 +700,18 @@ const practice_trial = {
   stimulus: function() {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
     const word = jsPsych.evaluateTimelineVariable('stimulus');
-    return ` <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
-        <div style="font-size: 2.52em; font-weight: bold;">${cue}</div>
-        <div style="font-size: 3.08em;">+</div>
-        <div style="font-size: 2.52em; font-weight: bold;">${word}</div>
+    return `
+      <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; min-height: 400px; padding-top: 60px; gap: 1.5em;">
+        <div style="font-size: 3em; font-weight: bold;">${cue}</div>
+        <div style="font-size: 3.5em;">+</div>
+        <div style="font-size: 3em;">${word}</div>
+      </div>
     `;
   },
   choices: ['yes', 'no'],
-  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`},
+  button_html: (choice) => {
+    return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`;
+  },
   data: {
     cue: jsPsych.timelineVariable('cue'),
     valence: jsPsych.timelineVariable('valence'),
@@ -712,7 +719,7 @@ const practice_trial = {
     word: jsPsych.timelineVariable('word'),
   },
   on_finish: function(data){
-    // For caps? trials, mark correct if (cue=='caps?' && uppercase) or (cue=='caps?' && !uppercase) etc.
+    // For caps? trials, mark correct if answer matches case
     if(data.cue === "caps?") {
       const isUpper = data.word === data.word.toUpperCase();
       data.correct = (isUpper && data.response == 0) || (!isUpper && data.response == 1);
@@ -721,7 +728,8 @@ const practice_trial = {
     }
     data.endorse = data.response == 0;
   }
-}
+};
+
 
 /* first practice round */
 const practice_procedure = {
@@ -754,15 +762,17 @@ const sret = {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
     const word = jsPsych.evaluateTimelineVariable('stimulus');
     return `
-      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
-        <div style="font-size: 2.52em; font-weight: bold; letter-spacing: 0.05em;">${cue}</div>
-        <div style="font-size: 3.08em;">+</div>
-        <div style="font-size: 2.52em; line-height: 1.2;">${word}</div>
+      <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; min-height: 400px; padding-top: 60px; gap: 1.5em;">
+        <div style="font-size: 3em; font-weight: bold;">${cue}</div>
+        <div style="font-size: 3.5em;">+</div>
+        <div style="font-size: 3em;">${word}</div>
       </div>
     `;
   },
   choices: ['yes', 'no'],
-  button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em; margin-top: 50px;">${choice}</button>`},
+  button_html: (choice) => {
+    return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`;
+  },
   data: {
     cue: jsPsych.timelineVariable('cue'),
     valence: jsPsych.timelineVariable('valence'),
@@ -772,7 +782,7 @@ const sret = {
   on_finish: function(data){
     data.endorse = data.response == 0;
   }
-}
+};
 
 /* Check In Block */
 const check_in = {
