@@ -583,9 +583,9 @@ post_trial_gap: 0
 const instructions_ex_self = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-    <div style="padding-top: 40px; margin-bottom: 150px;">
+    <div style="padding-top: 40px; margin-bottom: 130px;">
       <div style="font-size: 3em; font-weight: bold; margin-bottom: 90px;">SELF?</div>
-      <div style="font-size: 3.5em; margin: 90px 0;">+</div>
+      <div style="font-size: 3.5em; margin: 70px 0 90px 0;">+</div>
       <div style="font-size: 3em;">AWAKE</div>
     </div>
   `,
@@ -645,7 +645,7 @@ post_trial_gap: 0
 /* Fixation Cross Setup */
 const fixation = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: '<div style="font-size: 3.5em; margin-top: 40px;">+</div>',
+  stimulus: '<div style="font-size: 3.5em; margin-top: 60px;">+</div>',
   choices: [],
   trial_duration: function(){
     return jsPsych.randomization.sampleWithoutReplacement([600, 700, 800, 900, 1000], 1)[0];
