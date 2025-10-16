@@ -697,9 +697,9 @@ const practice_trial = {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
     const word = jsPsych.evaluateTimelineVariable('stimulus');
     return ` <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
-        <div style="font-size: 1.8em; font-weight: bold;">${cue}</div>
-        <div style="font-size: 2.2em;">+</div>
-        <div style="font-size: 1.8em; font-weight: bold;">${word}</div>
+        <div style="font-size: 3.6em; font-weight: bold;">${cue}</div>
+        <div style="font-size: 4.4em;">+</div>
+        <div style="font-size: 3.6em; font-weight: bold;">${word}</div>
     `;
   },
   choices: ['yes', 'no'],
@@ -754,9 +754,9 @@ const sret = {
     const word = jsPsych.evaluateTimelineVariable('stimulus');
     return `
       <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 1.5em;">
-        <div style="font-size: 3em; font-weight: bold; letter-spacing: 0.05em;">${cue}</div>
-        <div style="font-size: 4.5em;">+</div>
-        <div style="font-size: 4em; line-height: 1.2;">${word}</div>
+        <div style="font-size: 3.6em; font-weight: bold; letter-spacing: 0.05em;">${cue}</div>
+        <div style="font-size: 4.4em;">+</div>
+        <div style="font-size: 3.6em; line-height: 1.2;">${word}</div>
       </div>
     `;
   },
