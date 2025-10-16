@@ -611,9 +611,9 @@ post_trial_gap: 0
 const instructions_ex_caps = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; min-height: 400px; padding-top: 60px; gap: 1.5em; position: relative;">
-      <div style="font-size: 3em; font-weight: bold;">CAPS?</div>
-      <div style="font-size: 3.5em;">+</div>
+    <div style="padding-top: 40px; margin-bottom: 130px;">
+      <div style="font-size: 3em; font-weight: bold; margin-bottom: 90px;">CAPS?</div>
+      <div style="font-size: 3.5em; margin: 70px 0 90px 0;">+</div>
       <div style="font-size: 3em;">AWAKE</div>
     </div>
   `,
@@ -701,9 +701,9 @@ const practice_trial = {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
     const word = jsPsych.evaluateTimelineVariable('stimulus');
     return `
-      <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; min-height: 400px; padding-top: 60px; gap: 1.5em;">
-        <div style="font-size: 3em; font-weight: bold;">${cue}</div>
-        <div style="font-size: 3.5em;">+</div>
+      <div style="padding-top: 40px; margin-bottom: 130px;">
+        <div style="font-size: 3em; font-weight: bold; margin-bottom: 90px;">${cue}</div>
+        <div style="font-size: 3.5em; margin: 70px 0 90px 0;">+</div>
         <div style="font-size: 3em;">${word}</div>
       </div>
     `;
@@ -762,9 +762,9 @@ const sret = {
     const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
     const word = jsPsych.evaluateTimelineVariable('stimulus');
     return `
-      <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; min-height: 400px; padding-top: 60px; gap: 1.5em;">
-        <div style="font-size: 3em; font-weight: bold;">${cue}</div>
-        <div style="font-size: 3.5em;">+</div>
+      <div style="padding-top: 40px; margin-bottom: 130px;">
+        <div style="font-size: 3em; font-weight: bold; margin-bottom: 90px;">${cue}</div>
+        <div style="font-size: 3.5em; margin: 70px 0 90px 0;">+</div>
         <div style="font-size: 3em;">${word}</div>
       </div>
     `;
