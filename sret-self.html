@@ -35,122 +35,57 @@ var taskStartTime = Date.now() // recording start time
 const jsPsych = initJsPsych({
   use_webaudio: false,
   on_finish: function(data) {
-      // Get URL variables
-      var urlvar = jsPsych.data.urlVariables();
-      var ppt = urlvar.sret_id;
-      var event_name = urlvar.sret_session;
-      console.log('Received sret_id:', ppt);
-      console.log('Received sret_session:', event_name);
-      
-      // Map event labels to their survey codes and event IDs
-      var event_map = {
-        'w0_arm_1': {
-          survey_code: 'MRX3AYCDP',  // postsret_w0_arm_1 (sona)
-          event_id: '11371'
-        },
-        'w2_arm_1': {
-          survey_code: 'K9LCPWRWE',  // postsret_w2_arm_1 (sona)
-          event_id: '11372'
-        },
-        'w4_arm_1': {
-          survey_code: 'FPP3WXR8F',  // postsret_w4_arm_1 (sona)
-          event_id: '11373'
-        },
-        'w6_arm_1': {
-          survey_code: 'FKN43733P',  // postsret_w6_arm_1 (sona)
-          event_id: '11374'
-        },
-        'w0_arm_2': {
-          survey_code: 'W9F3HHN8C',  // postsret_w0_arm_2 (main)
-          event_id: '11377'
-        },
-        'w2_arm_2': {
-          survey_code: '9RJDRHF9P',  // postsret_w2_arm_2 (main)
-          event_id: '11378'
-        },
-        'w4_arm_2': {
-          survey_code: 'WLFL3WND4',  // postsret_w4_arm_2 (main)
-          event_id: '11379'
-        },
-        'w6_arm_2': {
-          survey_code: 'MEM87D7FJ',  // postsret_w5_arm_2 (main)
-          event_id: '11380'
-        }
-      };
-      
-      // Get the survey code and event_id for this event
-      var event_info = event_map[event_name];
-      
-      if (!event_info) {
-        console.error('No mapping found for event:', event_name);
-        alert('Configuration error. Please contact the study administrator.');
-        return;
+    var ppt = data.trials[1].ppt;
+    var session = data.trials[1].session; // This will be like "w0_arm_1"
+    var arm = data.trials[1].arm; // This will be "1" or "2"
+    var finalurl = data.trials[1].rc; // redcap survey access code
+    
+    if (finalurl) {
+      finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&'
+    }
+    
+    // Construct the return URL with all parameters
+    var newurlgo = `${finalurl}sret_id=${ppt}&sret_session=${session}&sret_arm=${arm}`
+    
+    // Post experiment data to server
+    var jqxhr = $.post({
+      url: "/experiment-data",
+      data: JSON.stringify(data),
+      contentType: "application/json"
+    })
+    .done(function(data) {
+      if(finalurl) {
+        window.location.href = newurlgo;
+      } else {
+        // Error handling if no redirect URL
+        document.write('<!DOCTYPE html><html><body><div style="border: 2px solid black; padding: 20px; margin: 0 auto; width: 70%;"><h1>Missing redirect</h1><p>This page cannot redirect you as expected. Please be sure that you followed the correct link. While your data has been recorded, you will not be redirected to finish data collection for today. You do not need to complete the task again, but may contact the researchers if you have questions.</p></div></body></html>')
       }
-      
-      var survey_code = event_info.survey_code;
-      var event_id = event_info.event_id;
-      
-      // Build the redirect URL
-      var finalurl = `https://redcap.prc.utexas.edu/redcap/surveys/?s=${survey_code}&record=${ppt}&event_id=${event_id}`;
-      
-      // Post data to your server
-      $.post({
-        url: "/experiment-data",
-        data: JSON.stringify(data),
-        contentType: "application/json"
-      })
-      .done(function() {
-        window.location.href = finalurl;
-      })
-      .fail(function() {
-        // Even if data save fails, redirect so participant can continue
-        window.location.href = finalurl;
-      })
+    })
+    .fail(function() {
+      // Redirect even if POST fails
+      window.location.href = newurlgo;
+    })
   }
 });
 
-    const timeline = [];
+const timeline = []
 
-    /* get URL variables */
-    var urlvar = jsPsych.data.urlVariables();
+/* get URL variables */
+var urlvar = jsPsych.data.urlVariables();
 
-    // Parse event label to extract session and arm
-    var event_label = urlvar.sret_session || '';
-
-    // Extract session from event label
-    var session = 'w0'; // default
-    if (event_label.includes('baseline') || event_label.includes('w0') || event_label.includes('wave_0')) {
-      session = 'w0';
-    } else if (event_label.includes('week_2') || event_label.includes('2_week') || event_label.includes('week2') || event_label.includes('w2') || event_label.includes('wave_2')) {
-      session = 'w2';
-    } else if (event_label.includes('week_4') || event_label.includes('4_week') || event_label.includes('week4') || event_label.includes('w4') || event_label.includes('wave_4')) {
-      session = 'w4';
-    } else if (event_label.includes('week_6') || event_label.includes('6_week') || event_label.includes('week6') || event_label.includes('w6') || event_label.includes('wave_6')) {
-      session = 'w6';
-    }
-
-    // Extract arm from event label
-    var arm = 'arm_1'; // default
-    if (event_label.includes('arm_2')) {
-      arm = 'arm_2';
-    } else if (event_label.includes('arm_1')) {
-      arm = 'arm_1';
-    }
-
-    // Add to ALL trials
-    jsPsych.data.addProperties({
-      ppt: urlvar.sret_id,
-      session: session,
-      arm: arm,
-      event_name: event_label,
-      task_start: taskStartTime
-    });
+jsPsych.data.addProperties({
+  ppt: urlvar.sret_id,
+  session: urlvar.sret_session, // e.g., "w0_arm_1"
+  arm: urlvar.sret_arm, // e.g., "1" or "2"
+  rc: urlvar.rc
+});
         
-    /* check to confirm that they're on mobile */
-    const checkMobile = {
-      type: jsPsychBrowserCheck,
-      features: ["mobile", "browser"],
-    };
+/* check to confirm that they're on mobile */
+const checkMobile = {
+  type: jsPsychBrowserCheck,
+  features: ["mobile", "browser"],
+};
+    
 //timeline.push(checkMobile);
 
 const notifyMobile = {
