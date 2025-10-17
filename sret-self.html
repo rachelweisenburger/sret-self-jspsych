@@ -78,7 +78,8 @@ var urlvar = jsPsych.data.urlVariables();
 
 jsPsych.data.addProperties({
   ppt: urlvar.sret_id,
-  event: urlvar.sret_event, // e.g., "w0_arm_1", "w2_arm_1", etc.
+  event: urlvar.sret_event,
+  sona_id: urlvar.sona_id || null, // sona_id for SONA sample, null for main sample
   rc: urlvar.rc
 });
         
