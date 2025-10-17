@@ -36,16 +36,19 @@ const jsPsych = initJsPsych({
   use_webaudio: false,
   on_finish: function(data) {
     var ppt = data.trials[1].ppt;
-    var session = data.trials[1].session; // This will be like "w0_arm_1"
-    var arm = data.trials[1].arm; // This will be "1" or "2"
+    var event = data.trials[1].event; // "w0_arm_1", "w2_arm_1", etc.
     var finalurl = data.trials[1].rc; // redcap survey access code
     
     if (finalurl) {
-      finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&'
-    }
+          finalurl = 'https://redcap.prc.utexas.edu/redcap/surveys/?code=' + finalurl + '&'
+        }
     
     // Construct the return URL with all parameters
-    var newurlgo = `${finalurl}sret_id=${ppt}&sret_session=${session}&sret_arm=${arm}`
+    // redcap url: https://sret-self-4774526bcb1e.herokuapp.com/?sret_id=[record-name]&sret_session=[event-name]&sret_arm=[arm-num]&rc=[event-name][survey-access-code:postsret_w0] // w0, w2, etc
+    
+    var newurlgo = `${finalurl}sret_id=${ppt}&sret_event=${event}`
+    
+   /* `${finalurl}sret_id=${ppt}&sret_session=${session}` */
     
     // Post experiment data to server
     var jqxhr = $.post({
@@ -75,8 +78,7 @@ var urlvar = jsPsych.data.urlVariables();
 
 jsPsych.data.addProperties({
   ppt: urlvar.sret_id,
-  session: urlvar.sret_session, // e.g., "w0_arm_1"
-  arm: urlvar.sret_arm, // e.g., "1" or "2"
+  event: urlvar.sret_event, // e.g., "w0_arm_1", "w2_arm_1", etc.
   rc: urlvar.rc
 });
         
