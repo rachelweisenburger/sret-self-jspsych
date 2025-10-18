@@ -739,7 +739,8 @@ const check_in = {
     return "<div style='width: 85%; margin: 0 auto;'><p>Your average response time was "+rt+" seconds.</p>"+
       speedcomment+
       "<p>After you read each word, "+
-      "quickly respond as to whether it describes you OR is capitalized. To start the main task, click 'begin'. </p></div>";
+      "quickly respond as to whether it describes you OR is capitalized.</p>"+
+      "<p>To start the main task, click 'begin'.</p></div>";
   },
   button_html: (choice) => {return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`},
   choices: ['Begin'],
