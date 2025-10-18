@@ -110,18 +110,17 @@ var if_mobile = {
         // get the data from the previous trial,
         // and check whether it's mobile or not
         var data = jsPsych.data.get().last(1).values()[0];
-        // change CSS for fonts based if they're NOT on mobile:
+        // change CSS for fonts based on device:
         if(!data.mobile) {
+          // Desktop/laptop: use smaller font
           $('.jspsych-display-element').css('font-size', '1.5em')
           $('.jspsych-display-element').css('line-height', '1.7em')
-          //dStyle.innerHTML = '.jspsych-display-element {font-family: "Open Sans", "Arial", sans-serif; font-size: 2.5em; line-height: 2em;}';
+        } else {
+          // Mobile: use larger font
+          $('.jspsych-display-element').css('font-size', '2.5em')
+          $('.jspsych-display-element').css('line-height', '2em')
         }
         return(!data.mobile)
-        /*if(data.mobile){
-          return false;
-        } else {
-          return true;
-        }*/
     }
 }
 
