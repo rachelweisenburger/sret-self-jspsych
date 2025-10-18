@@ -520,10 +520,10 @@ post_trial_gap: 0
 const instructions_ex_self = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-    <div style="padding-top: 20px; margin-bottom: 180px;">
-      <div style="font-size: 3em; font-weight: bold; margin-bottom: 60px;">SELF?</div>
-      <div style="font-size: 3.5em; margin: 50px 0 60px 0;">+</div>
-      <div style="font-size: 3em; margin-bottom: 60px;">AWAKE</div>
+    <div style="padding-top: 40px; margin-bottom: 130px;">
+      <div style="font-size: 3em; font-weight: bold; margin-bottom: 90px;">SELF?</div>
+      <div style="font-size: 3.5em; margin: 70px 0 90px 0;">+</div>
+      <div style="font-size: 3em;">AWAKE</div>
     </div>
   `,
   choices: ['yes', 'no'],
@@ -548,10 +548,10 @@ post_trial_gap: 0
 const instructions_ex_caps = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
-    <div style="padding-top: 20px; margin-bottom: 180px;">
-      <div style="font-size: 3em; font-weight: bold; margin-bottom: 60px;">CAPS?</div>
-      <div style="font-size: 3.5em; margin: 50px 0 60px 0;">+</div>
-      <div style="font-size: 3em; margin-bottom: 60px;">AWAKE</div>
+    <div style="padding-top: 40px; margin-bottom: 130px;">
+      <div style="font-size: 3em; font-weight: bold; margin-bottom: 90px;">CAPS?</div>
+      <div style="font-size: 3.5em; margin: 70px 0 90px 0;">+</div>
+      <div style="font-size: 3em;">AWAKE</div>
     </div>
   `,
   choices: ['yes', 'no'],
@@ -635,16 +635,16 @@ const conditional_caps_correction = {
 const practice_trial = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
-      const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
-      const word = jsPsych.evaluateTimelineVariable('stimulus');
-      return `
-        <div style="padding-top: 20px; margin-bottom: 180px;">
-          <div style="font-size: 3em; font-weight: bold; margin-bottom: 60px;">${cue}</div>
-          <div style="font-size: 3.5em; margin: 50px 0 60px 0;">+</div>
-          <div style="font-size: 3em; margin-bottom: 60px;">${word}</div>
-        </div>
-      `;
-    },
+    const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
+    const word = jsPsych.evaluateTimelineVariable('stimulus');
+    return `
+      <div style="padding-top: 40px; margin-bottom: 130px;">
+        <div style="font-size: 3em; font-weight: bold; margin-bottom: 90px;">${cue}</div>
+        <div style="font-size: 3.5em; margin: 70px 0 90px 0;">+</div>
+        <div style="font-size: 3em;">${word}</div>
+      </div>
+    `;
+  },
   choices: ['yes', 'no'],
   button_html: (choice) => {
     return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`;
@@ -696,16 +696,16 @@ const check_case_correctness = {
 const sret = {
   type: jsPsychHtmlButtonResponse,
   stimulus: function() {
-      const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
-      const word = jsPsych.evaluateTimelineVariable('stimulus');
-      return `
-        <div style="padding-top: 20px; margin-bottom: 180px;">
-          <div style="font-size: 3em; font-weight: bold; margin-bottom: 60px;">${cue}</div>
-          <div style="font-size: 3.5em; margin: 50px 0 60px 0;">+</div>
-          <div style="font-size: 3em; margin-bottom: 60px;">${word}</div>
-        </div>
-      `;
-    },
+    const cue = jsPsych.evaluateTimelineVariable('cue').toUpperCase();
+    const word = jsPsych.evaluateTimelineVariable('stimulus');
+    return `
+      <div style="padding-top: 40px; margin-bottom: 130px;">
+        <div style="font-size: 3em; font-weight: bold; margin-bottom: 90px;">${cue}</div>
+        <div style="font-size: 3.5em; margin: 70px 0 90px 0;">+</div>
+        <div style="font-size: 3em;">${word}</div>
+      </div>
+    `;
+  },
   choices: ['yes', 'no'],
   button_html: (choice) => {
     return `<button class="jspsych-btn" style="color: #1B4D3E; font-weight: bold; font-size: 2.5em;">${choice}</button>`;
