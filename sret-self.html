@@ -460,9 +460,9 @@ const w6_unique_stimuli = [
 ]
 
 /* Defining SRET stimuli for each biweekly session */
-var session = urlvar.sret_session ? urlvar.sret_session.split('_')[0] : 'w0';
+// var session = urlvar.sret_session ? urlvar.sret_session.split('_')[0] : 'w0';
     
-switch(session) {
+switch(urlvar.sret_session) {
   case "w0":
     sret_stimuli = w0_unique_stimuli;
     break;
